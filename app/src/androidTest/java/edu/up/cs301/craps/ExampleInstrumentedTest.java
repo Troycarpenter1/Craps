@@ -1,4 +1,4 @@
-package edu.up.cs301.counter;
+package edu.up.cs301.craps;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("edu.up.cs301.counter", appContext.getPackageName());
+        assertEquals("edu.up.cs301.craps", appContext.getPackageName());
     }
 }

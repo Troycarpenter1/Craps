@@ -1,4 +1,4 @@
-package edu.up.cs301.counter;
+package edu.up.cs301.craps;
 
 import edu.up.cs301.GameFramework.infoMessage.GameState;
 
@@ -10,7 +10,7 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
  * @author Steven R. Vegdahl
  * @version July 2013
  */
-public class CounterState extends GameState {
+public class CrapsState extends GameState {
 	
 	// to satisfy Serializable interface
 	private static final long serialVersionUID = 7737393762469851826L;
@@ -24,7 +24,7 @@ public class CounterState extends GameState {
 	 * @param counterVal
 	 * 		the value to which the counter's value should be initialized
 	 */
-	public CounterState(int counterVal) {
+	public CrapsState(int counterVal) {
 		counter = counterVal;
 	}
 	
@@ -34,7 +34,7 @@ public class CounterState extends GameState {
 	 * @param orig
 	 * 		the object from which the copy should be made
 	 */
-	public CounterState(CounterState orig) {
+	public CrapsState(CrapsState orig) {
 		// set the counter to that of the original
 		this.counter = orig.counter;
 	}
