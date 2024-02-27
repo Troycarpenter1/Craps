@@ -53,7 +53,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	public View getTopView() {
 		return myActivity.findViewById(R.id.top_gui_layout);
 	}
-	
+	//samba
 	/**
 	 * sets the counter value in the text view
 	 */
