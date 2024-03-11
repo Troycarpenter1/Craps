@@ -10,17 +10,19 @@ import android.widget.TextView;
 import android.view.View.OnClickListener;
 
 /**
- * A GUI of a counter-player. The GUI displays the current value of the counter,
- * and allows the human player to press the '+' and '-' buttons in order to
- * send moves to the game.
- * 
- * Just for fun, the GUI is implemented so that if the player presses either button
- * when the counter-value is zero, the screen flashes briefly, with the flash-color
- * being dependent on whether the player is player 0 or player 1.
+ * A GUI of a craps-player. The GUI displays the current bets placed, and allows the
+ * user to edit bets, ready up, join a game, or roll.
+ *
  * 
  * @author Steven R. Vegdahl
  * @author Andrew M. Nuxoll
- * @version July 2013
+ *
+ * @author Wes Helms
+ * @author Troy Carpenter
+ * @author Sydney Dean
+ * @author Rowena Archer
+ *
+ * @version March 2024
  */
 public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener {
 
@@ -34,6 +36,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	
 	// the android activity that we are running
 	private GameMainActivity myActivity;
+	// player's money
+	private int playerMoney;
+	private boolean isShooter;
 	
 	/**
 	 * constructor
@@ -137,7 +142,47 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		if (state != null) {
 			receiveInfo(state);
 		}
+
 	}
+
+	/**
+	 * Rowena's Edits start here
+	 */
+
+	/**
+	 * This method gets called when the user clicks/places a bet.
+	 * Creates a new bet and sends it to the game.
+	 */
+	public void bet(){
+
+	}
+	/**
+	 * This method gets called when the user clicks on an already existing bet.
+	 * Removes an existing bet and sends it to the game.
+	 */
+	public void removeBet(){
+
+	}
+
+	/**
+	 * This method is called when the user
+	 */
+	public void selectBet(){
+	// this works w the seekbar, basically a seekbar list
+	}
+
+	public void ready(){
+
+	}
+
+	public void join(){
+
+	}
+
+	public void roll(){
+
+	}
+
 
 }// class CounterHumanPlayer
 
