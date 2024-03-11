@@ -6,8 +6,11 @@ import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+
+import java.util.Random;
 
 /**
  * A GUI of a craps-player. The GUI displays the current bets placed, and allows the
@@ -39,6 +42,12 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	// player's money
 	private int playerMoney;
 	private boolean isShooter;
+	private int die1;
+	private int die2;
+
+	// instance of
+	// private Bet myBetArray;
+	// this doesn't exist yet bc Wes is making it
 	
 	/**
 	 * constructor
@@ -104,12 +113,13 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	 */
 	@Override
 	public void receiveInfo(GameInfo info) {
-		// ignore the message if it's not a CounterState message
+		// ignore the message if it's not a CrapState message
 		if (!(info instanceof CrapsState)) return;
 		
 		// update our state; then update the display
 		this.state = (CrapsState)info;
 		updateDisplay();
+
 	}
 	
 	/**
@@ -146,41 +156,55 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	}
 
 	/**
-	 * Rowena's Edits start here
+	 * Rowena's added classes start here
 	 */
 
 	/**
 	 * This method gets called when the user clicks/places a bet.
-	 * Creates a new bet and sends it to the game.
+	 * Creates a new bet and sends it to the Bet Array
+	 * @param button
+	 * 		the button that was clicked
 	 */
-	public void bet(){
-
+	public void bet(View button){
+		// check if a bet already exists here
+		// if no:
+		// take button id, update myBetArray
+		// if yes:
 	}
 	/**
 	 * This method gets called when the user clicks on an already existing bet.
 	 * Removes an existing bet and sends it to the game.
 	 */
-	public void removeBet(){
-
+	public void removeBet(View button){
+		// check if bet already exists here
+		// if yes:
+		// take button id, set respective bet in myBetArray to 0
 	}
 
 	/**
-	 * This method is called when the user
+	 * This method is called when the user changes the seekbar for the amount
+	 * they want to bet
 	 */
-	public void selectBet(){
-	// this works w the seekbar, basically a seekbar list
+
+
+	//	the seekbar value doesn't exist yet....
+	public void selectBet(SeekBar seekBar, int progress, boolean fromUser){
+		// set info in myBetArray
 	}
 
-	public void ready(){
 
+	public void ready(){
+		// send info to game that I'm ready
 	}
 
 	public void join(){
-
+	// what
 	}
 
 	public void roll(){
-
+		Random rand = new Random();
+		die1 = (rand.nextInt(6)+1);
+		die2 = (rand.nextInt(6)+1);
 	}
 
 
