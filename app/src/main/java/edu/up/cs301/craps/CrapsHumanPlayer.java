@@ -42,12 +42,11 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	private int playerMoney;// player's money
 	private int amountBet;// amount player wants to bet
 	private boolean isShooter;// shooter status
+	private boolean isReady; // player is ready (done placing bets)
 	private int die1;
 	private int die2;
 
-	// instance of
-	// private Bet myBetArray;
-	// this doesn't exist yet bc Wes is making it
+	// we'll get the bet array by going to game state
 	
 	/**
 	 * constructor
@@ -119,7 +118,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		// update our state; then update the display
 		this.state = (CrapsState)info;
 		updateDisplay();
-
 	}
 	
 	/**
@@ -156,56 +154,85 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	}
 
 	/**
-	 * Rowena's added classes start here
-	 */
-
-	/**
 	 * This method gets called when the user clicks/places a bet.
-	 * Creates a new bet and updates the bet array
+	 * Update bet in array of bets
 	 * @param button
 	 * 		the button that was clicked
 	 */
 	public void bet(View button){
-		// check if a bet already exists here
-		// if no:
-		// take button id, update myBetArray
-		// if yes:
+
+		// TODO: change "the bet" to a reference to my bet array (in game state)
+
+
+		// if bet is != 0:
+		// set this bet amount to amountBet
+		// subtract bet amount from player money
+		// else:
+		// do nothing
+
+		/*
+		if (the bet != 0){
+		the bet.setBetAmount(amountBet);
+		playerMoney = playerMoney - amountBet;
+		}
+		else{
+		do nothing
+
+		 */
+
 	}
+
 	/**
 	 * This method gets called when the user clicks on an already existing bet.
 	 * Removes an existing bet and sends it to the game.
 	 */
 	public void removeBet(View button){
-		// check if bet already exists here
-		// if yes:
-		// take button id, set respective bet in myBetArray to 0
+		// if the bet here is 0:
+		// set respective bet in myBetArray to 0
+
+		/*
+		if (the bet.betAmount != 0){
+		the bet.setBetAmount(0);
+		}
+		else{
+		do nuthin
+		}
+		 */
 	}
 
 	/**
 	 * This method is called when the user changes the seekbar for the amount
 	 * they want to bet
+	 *  ~basically an OnProgressChanged method
 	 */
-
 	public void selectBet(SeekBar seekBar, int progress, boolean fromUser){
-		// set info in myBetArray
+		/*
+		  if (seekbar.getid() == R.id.moneySeekBar){
+		  amountBet = progress;
+		  }
+		 */
 	}
 
-
-	public void ready(){
-		// send info to game that I'm ready
+	/**
+	 * sets player to ready if ready button is clicked
+	 * @param button
+	 */
+	public void ready(View button){
+		/*
+		if (button instanceof readyButton) {
+			isReady = true;
+		}
+		*/
 	}
 
-	public void join(){
-	// what
-	}
-
-	public void roll(){
+	public void roll() {
 		// check if Im shooter, otherwise return
-
-		// randomize dice
-		Random rand = new Random();
-		die1 = (rand.nextInt(6)+1);
-		die2 = (rand.nextInt(6)+1);
+		if (isShooter) {
+			// randomize dice
+			Random rand = new Random();
+			die1 = (rand.nextInt(6) + 1);
+			die2 = (rand.nextInt(6) + 1);
+		}
 	}
 
 	/**
@@ -225,5 +252,12 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	public boolean getIsShooter(){
 		return isShooter;
 	}
+	public boolean getIsReady(){
+		return isReady;
+	}
+	public void setPlayerMoney(int newVal){
+		playerMoney = newVal;
+	}
+
 }// class CounterHumanPlayer
 
