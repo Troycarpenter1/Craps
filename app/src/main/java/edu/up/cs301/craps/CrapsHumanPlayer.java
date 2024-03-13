@@ -39,9 +39,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	
 	// the android activity that we are running
 	private GameMainActivity myActivity;
-	// player's money
-	private int playerMoney;
-	private boolean isShooter;
+	private int playerMoney;// player's money
+	private int amountBet;// amount player wants to bet
+	private boolean isShooter;// shooter status
 	private int die1;
 	private int die2;
 
@@ -161,7 +161,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
 	/**
 	 * This method gets called when the user clicks/places a bet.
-	 * Creates a new bet and sends it to the Bet Array
+	 * Creates a new bet and updates the bet array
 	 * @param button
 	 * 		the button that was clicked
 	 */
@@ -186,8 +186,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	 * they want to bet
 	 */
 
-
-	//	the seekbar value doesn't exist yet....
 	public void selectBet(SeekBar seekBar, int progress, boolean fromUser){
 		// set info in myBetArray
 	}
@@ -202,11 +200,30 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	}
 
 	public void roll(){
+		// check if Im shooter, otherwise return
+
+		// randomize dice
 		Random rand = new Random();
 		die1 = (rand.nextInt(6)+1);
 		die2 = (rand.nextInt(6)+1);
 	}
 
+	/**
+	 * getters & setters
+	 */
+	public int getPlayerMoney(){
+		return playerMoney;
+	}
 
+	public int getDie1() {
+		return die1;
+	}
+
+	public int getDie2() {
+		return die2;
+	}
+	public boolean getIsShooter(){
+		return isShooter;
+	}
 }// class CounterHumanPlayer
 
