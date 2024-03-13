@@ -1,28 +1,27 @@
 package edu.up.cs301.craps;
 
 /**
- * @author Wes H.       Last Revision: 3/11/2024
+ * @author Wes H.       Last Revision: 3/13/2024
  * @author Troy C.      Last Revision: TBD
  * @author Rowena A.    Last Revision: TBD
  * @author Sydney D.    Last Revision: TBD
- * @version 3/11/2024
- *
+ * @version 3/13/2024
+ * <p>
  * Important notes for this version:
  * Completed:
- * Instance variables, public static final variables, constructors (including deep copy), getters, setters, toString, checkPair, checkSum
+ * Instance variables, public static final variables, constructors (including deep copy),
+ * getters, setters, toString, checkPair, checkSum, checkFieldBet checkCrapsBet
  * Incomplete:
- * Bet payout, checkThisBetWon method (includes most helper methods)
- * Other:
- * Bets need to have a known payout for each type and the game state needs to pay players accordingly
- * It would be helpful if every bet also had a known payout with their chances, odds, winning, etc. info displayed to the player
+ * checkThisBetWon method (includes most helper methods)
  */
 
 public class Bet {
     //instance variables
 
-    private int betAmount; //the amount of money this bet has put on it
-    private int betID; //value that represents the type of bet in a public static final (PSF) string array of bet names
-    private String betName; //name of the bet
+    private int amount; //the amount of money this bet has put on it
+    private double payout;
+    private int ID; //value that represents the type of bet in a public static final (PSF) string array of bet names
+    private String name; //name of the bet
 
     //public static final variables
     //list of all names of all bets
@@ -36,64 +35,65 @@ public class Bet {
 
     //default cnstr
     public Bet() {
-        this.betAmount = 0;
-        this.betID = 0;
-        this.betName = ALL_BET_NAMES[0];
+        this.amount = 0;
+        this.payout = 1.0;
+        this.ID = 0;
+        this.name = ALL_BET_NAMES[0];
     }
 
     //betID cnstr
-    public Bet(int givenBetID) {
-        this.betAmount = 0;
-        this.betID = givenBetID;
-        this.betName = ALL_BET_NAMES[givenBetID];
+    public Bet(int newAmount, int newPayout, int newID) {
+        this.amount = newAmount;
+        this.payout = newPayout;
+        this.ID = newID;
+        this.name = ALL_BET_NAMES[newID];
     }
 
     //copy cnstr
     public Bet(Bet copyBet) {
-        this.betAmount = copyBet.betAmount;
-        this.betID = copyBet.betID;
-        this.betName = ALL_BET_NAMES[copyBet.betID];
+        this.amount = copyBet.amount;
+        this.ID = copyBet.ID;
+        this.name = ALL_BET_NAMES[copyBet.ID];
     }
 
     //simple getter methods
-    public int getBetAmount() {
-        return betAmount;
+    public int getAmount() {
+        return this.amount;
     }
 
-    public int getBetID() {
-        return betID;
+    public double getPayout() {
+        return this.payout;
     }
 
-    public String getBetName() {
-        return betName;
+    public int getID() {
+        return this.ID;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     //set bet amount
-    public void setBetAmount(int newBetAmount) {
-        this.betAmount = newBetAmount;
-    }
-
-    //set bet ID & bet Name
-    public void setBetID(int newBetID) {
-        this.betID = newBetID;
-        this.betName = ALL_BET_NAMES[newBetID];
+    public void setBetAmount(int newAmount) {
+        this.amount = newAmount;
     }
 
     /**
      * big bad method that checks if bet is won overall
      * NOT YET HAS ALL BET TYPES CODED NOR ARE THE HELPER METHODS DONE
+     *
      * @param die1      dice 1
      * @param die2      dice 2
      * @param diceTotal the sum of the dice
      * @return boolean true if bet is won otherwise false (check comment on first line of method for more info)
      */
-    public boolean checkThisBetWon(int die1, int die2, int diceTotal) {
+    public boolean checkThisBetWon(int die1, int die2, int diceTotal, int firstRoll) {
         /*
         conditional that checks what the name of the bet is
         and calls the appropriate helper method that determines
         if the bet is won based on the rules
          */
-        switch (this.betName) {
+        switch (this.name) {
             case "4":
                 return this.checkDiceSum(diceTotal, 4);
             case "5":
@@ -107,7 +107,10 @@ public class Bet {
             case "10":
                 return this.checkDiceSum(diceTotal, 10);
             case "E":
+            case "5 & 6":
                 return this.checkDiceSum(diceTotal, 11);
+            case "2 & 1":
+                return this.checkDiceSum(diceTotal, 3);
             case "Pair of 1s":
                 return this.checkPairOfN(die1, die2, 1);
             case "Pair of 2s":
@@ -120,6 +123,10 @@ public class Bet {
                 return this.checkPairOfN(die1, die2, 5);
             case "Pair of 6s":
                 return this.checkPairOfN(die1, die2, 6);
+            case "FIELD":
+                return this.checkFieldBet(diceTotal);
+            case "CRAPS":
+                return this.checkCrapsBet(diceTotal);
         }
         return false; //returns false if none of the previous cases are met
     }
@@ -149,10 +156,38 @@ public class Bet {
         return (dieSum == winningVal);
     }
 
+    /**
+     * Field bet is won if any of the following are rolled:
+     * 2 3 4 9 10 11 12
+     *
+     * @param dieSum the sum of the dice total roll
+     * @return true if field bet is won otherwise false
+     */
+    public boolean checkFieldBet(int dieSum) {
+        //the values that will win a field bet
+        int[] winningVals = new int[]{
+                2, 3, 4, 9, 10, 11, 12
+        };
+        //checks if the dice total will win
+        for (int num : winningVals) {
+            if (dieSum == num) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // returns true if a craps bet is won
+    public boolean checkCrapsBet(int dieSum) {
+        // 2 3 or 12 win a craps bet
+        return checkDiceSum(dieSum, 2) || checkDiceSum(dieSum, 3) || checkDiceSum(dieSum, 12);
+    }
+
     //toString method
     @Override
     public String toString() {
-        return this.betName + " Bet with $" + this.betAmount;
+        return this.name + " Bet ID of: " + this.ID + " with $" + this.amount + " and Pays out: " + this.payout;
     }
+
 
 }
