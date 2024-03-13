@@ -163,7 +163,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
 		// TODO: change "the bet" to a reference to my bet array (in game state)
 
-
 		// if bet is != 0:
 		// set this bet amount to amountBet
 		// subtract bet amount from player money
