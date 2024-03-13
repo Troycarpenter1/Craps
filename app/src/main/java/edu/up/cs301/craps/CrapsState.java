@@ -14,20 +14,25 @@ public class CrapsState extends GameState {
 
     //the players in the game, and their current net worth
     private int playerTurn;
-    private int player0Funds;
-    private int player1Funds;
+    private double player0Funds;
+    private double player1Funds;
+    //x controls player, y controls bet
+    //private Bet[][] bets;
 
     //the dice every roll
     private int die1CurrVal;
     private int die2CurrVal;
     private int dieTotal;
 
-	//TODO make this constructor instantiate properly
-    public CrapsState(int playerTurn) {
-        this.playerTurn = playerTurn;
-
+    public CrapsState(){
+        this.playerTurn=0;
+        this.player0Funds=1000.0;
+        this.player1Funds=1000.0;
+        this.setDice(0,0);
+        //this.bets=new Bet[2][23];
     }
 
+    //copy constructor, currently is deep since no objects are used as variables atm
     public CrapsState(CrapsState crap) {
 		this.playerTurn=crap.playerTurn;
 		this.dieTotal=crap.dieTotal;
@@ -35,14 +40,17 @@ public class CrapsState extends GameState {
 		this.die2CurrVal=crap.die2CurrVal;
 		this.player0Funds=crap.player0Funds;
 		this.player1Funds= crap.player1Funds;
+        //TODO: make this deeper
+        //this.bets= new Bet(craps.bets.);
+
     }
 
 	//getters for instance variables
     public int getPlayerTurn() {return this.playerTurn;}
 
-    public int getPlayer0Funds() {return this.player0Funds;}
+    public double getPlayer0Funds() {return this.player0Funds;}
 
-    public int getPlayer1Funds() {return this.player1Funds;}
+    public double getPlayer1Funds() {return this.player1Funds;}
 
     public int getDie1CurrVal() {return this.die1CurrVal;}
 
@@ -75,4 +83,9 @@ public class CrapsState extends GameState {
 	public void setPlayer1Funds(int player1Funds) {
 		this.player1Funds = player1Funds;
 	}
+    @Override
+    public String toString(){
+        return "Player 0 has "+this.player0Funds+" and Player 1 has "+this.player1Funds+
+                ". The current dice are "+this.die1CurrVal+" and "+this.die2CurrVal;
+    }
 }
