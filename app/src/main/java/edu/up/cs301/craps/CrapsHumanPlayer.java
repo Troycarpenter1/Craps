@@ -154,10 +154,10 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	}
 
 	/**
-	 * This method gets called when the user clicks/places a bet.
+	 * This method gets called when the user clicks/places a bet that has no money on it
 	 * Update bet in array of bets
 	 * @param button
-	 * 		the button that was clicked
+	 * 		the bet that was clicked
 	 */
 	public void bet(View button){
 
@@ -182,8 +182,10 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	}
 
 	/**
-	 * This method gets called when the user clicks on an already existing bet.
-	 * Removes an existing bet and sends it to the game.
+	 * This method is called when a user clicks on a bet with money on it.
+	 * Changes the money placed on that bet to zero.
+	 * @param button
+	 * 			The respective bet clicked
 	 */
 	public void removeBet(View button){
 		// if the bet here is 0:
@@ -200,9 +202,14 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	}
 
 	/**
-	 * This method is called when the user changes the seekbar for the amount
-	 * they want to bet
-	 *  ~basically an OnProgressChanged method
+	 * This method is called when the betting money seekbar progress is changed
+	 *
+	 * @param seekBar
+	 * 			Money to bet seekbar
+	 * @param progress
+	 * 			Seekbar progress
+	 * @param fromUser
+	 * 			If progress change is from user or not
 	 */
 	public void selectBet(SeekBar seekBar, int progress, boolean fromUser){
 		/*
@@ -216,6 +223,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	/**
 	 * sets player to ready if ready button is clicked
 	 * @param button
+	 * 			The ready button
 	 */
 	public void ready(View button){
 		/*
@@ -228,6 +236,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	/**
 	 * roll randomize dice value when roll button is clicked
 	 * @param button
+	 * 			The roll button
 	 */
 	public void roll(View button) {
 		// check if Im shooter, if yes roll dice
