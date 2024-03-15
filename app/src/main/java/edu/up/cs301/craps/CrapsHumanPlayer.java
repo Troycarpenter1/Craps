@@ -154,51 +154,35 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	}
 
 	/**
-	 * This method gets called when the user clicks/places a bet that has no money on it
-	 * Update bet in array of bets
+	 * This method gets called when the user clicks on a bet
+	 *
+	 * If there is no money on the bet, changes that bet to amountBet
+	 * If there is money on the bet, set the bet amount to 0
+	 *
 	 * @param button
-	 * 		the bet that was clicked
+	 * 		The respective bet that was clicked
 	 */
-	public void bet(View button){
+	public void changeBet(View button){
 
 		// TODO: change "the bet" to a reference to my bet array (in game state)
-
-		// if bet is != 0:
-		// set this bet amount to amountBet
-		// subtract bet amount from player money
-		// else:
-		// do nothing
-
 		/*
 		if (the bet != 0){
 		the bet.setBetAmount(amountBet);
 		playerMoney = playerMoney - amountBet;
 		}
-		else{
-		do nothing
-
+		else if (the bet.betAmount != 0){
+		the bet.setBetAmount(0);
+		}
 		 */
-
 	}
 
 	/**
-	 * This method is called when a user clicks on a bet with money on it.
-	 * Changes the money placed on that bet to zero.
+	 * This method is called when the user clicks on the bet setting buttons
 	 * @param button
-	 * 			The respective bet clicked
 	 */
-	public void removeBet(View button){
-		// if the bet here is 0:
-		// set respective bet in myBetArray to 0
+	public void changeBetAmount(View button){
 
-		/*
-		if (the bet.betAmount != 0){
-		the bet.setBetAmount(0);
-		}
-		else{
-		do nuthin
-		}
-		 */
+
 	}
 
 	/**
