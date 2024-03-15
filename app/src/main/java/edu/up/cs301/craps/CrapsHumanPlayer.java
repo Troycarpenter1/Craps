@@ -211,6 +211,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		  }
 		 */
 	}
+	//TODO: need to implement functionality of betting buttons
 
 	/**
 	 * sets player to ready if ready button is clicked
@@ -224,8 +225,12 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		*/
 	}
 
-	public void roll() {
-		// check if Im shooter, otherwise return
+	/**
+	 * roll randomize dice value when roll button is clicked
+	 * @param button
+	 */
+	public void roll(View button) {
+		// check if Im shooter, if yes roll dice
 		if (isShooter) {
 			// randomize dice
 			Random rand = new Random();
@@ -256,6 +261,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	}
 	public void setPlayerMoney(int newVal){
 		playerMoney = newVal;
+	}
+	public void setShooter(boolean shooterChange){
+		isShooter = shooterChange;
 	}
 
 }// class CounterHumanPlayer
