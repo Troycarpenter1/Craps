@@ -321,11 +321,13 @@ public abstract class LocalGame implements Game, Tickable {
         // changed. Send all players the updated state.
         sendAllUpdatedState();
 
+        //TODO: commented out to not end game immediately.
+
         // determine whether there is a winner; if so, finish up the game
-        String overMsg = checkIfGameOver();
-        if (overMsg != null) {
-            finishUpGame(overMsg);
-        }
+//        String overMsg = checkIfGameOver();
+//        if (overMsg != null) {
+//            finishUpGame(overMsg);
+//        }
     }
 
     /**

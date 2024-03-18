@@ -73,7 +73,7 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
 		else if (info instanceof CrapsState) {
 			// if we indeed have a counter-state, update the GUI
 			currentGameState = (CrapsState)info;
-			updateDisplay();
+			//updateDisplay();
 		}
 	}
 	
@@ -81,20 +81,20 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
 	/** 
 	 * sets the counter value in the text view
 	 *  */
-	private void updateDisplay() {
-		// if the guiHandler is available, set the new counter value
-		// in the counter-display widget, doing it in the Activity's
-		// thread.
-		if (guiHandler != null) {
-			guiHandler.post(
-					new Runnable() {
-						public void run() {
-						if (counterValueTextView != null && currentGameState != null) {
-							counterValueTextView.setText("" + currentGameState.getCounter());
-						}
-					}});
-		}
-	}
+//	private void updateDisplay() {
+//		// if the guiHandler is available, set the new counter value
+//		// in the counter-display widget, doing it in the Activity's
+//		// thread.
+//		if (guiHandler != null) {
+//			guiHandler.post(
+//					new Runnable() {
+//						public void run() {
+//						if (counterValueTextView != null && currentGameState != null) {
+//							counterValueTextView.setText("" + currentGameState.getCounter());
+//						}
+//					}});
+//		}
+//	}
 	
 	/**
 	 * Tells whether we support a GUI
@@ -137,7 +137,7 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
 		
 		// if the state is non=null, update the display
 		if (currentGameState != null) {
-			updateDisplay();
+			//updateDisplay();
 		}
 	}
 
