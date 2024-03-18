@@ -43,7 +43,7 @@ public class Bet {
     }
 
     //betID cnstr
-    public Bet(int newAmount, int newPayout, int newID) {
+    public Bet(int newAmount, double newPayout, int newID) {
         this.amount = newAmount;
         this.payout = newPayout;
         this.ID = newID;

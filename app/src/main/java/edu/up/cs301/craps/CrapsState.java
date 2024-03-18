@@ -6,6 +6,12 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
 /**
  * This contains the state for the Craps game. The state consist the player and their money,
  * and the state of the dice
+ * <p>
+ * Not implementing select dice at the current time: will add if time (see actions.txt)
+ * join is being handled automatically by the game framework so not implementing join button
+ * consolidated place/remove bet into single method
+ * <p>
+ * selecting the bet is always legal and is in the player class
  *
  * @author Troy Carpenter
  * @author Rowena Archer
@@ -22,7 +28,8 @@ public class CrapsState extends GameState {
     private double player1Funds;
     private boolean player1Ready;
     //x controls player, y controls bet
-    private Bet[][] bets = new Bet[2][23];;
+    private Bet[][] bets = new Bet[2][23];
+    ;
 
     //the dice every roll
     private int die1CurrVal;
@@ -39,9 +46,11 @@ public class CrapsState extends GameState {
         this.player1Ready = false;
         this.setDice(0, 0);
         this.offOn = false;
-        for (int x = 0; x < bets.length; x++) {
-            for (int y = 0; y < bets[x].length; y++) {
-                this.bets[x][y] = new Bet();
+        // iterates through a master 2d array and makes all bets for each player
+        for (int p = 0; p < bets.length; p++) { // iterates through number of players
+            for (int b = 0; b < bets[p].length; b++) { // iterates through all bet IDs
+                this.bets[p][b] = new Bet();
+                //this.bets[p][b] = new Bet(0, 1.0, b);
             }
         }
     }
@@ -56,7 +65,7 @@ public class CrapsState extends GameState {
         this.player1Funds = crap.player1Funds;
         this.player0Ready = crap.player0Ready;
         this.player1Ready = crap.player1Ready;
-       //uses the copy constructor of the bet class
+        //uses the copy constructor of the bet class
         for (int x = 0; x < bets.length; x++) {
             for (int y = 0; y < bets[x].length; y++) {
                 this.bets[x][y] = new Bet(crap.bets[x][y]);
@@ -66,7 +75,9 @@ public class CrapsState extends GameState {
     }
 
     //getters for instance variables
-    public int getPlayerTurn() {return this.playerTurn;}
+    public int getPlayerTurn() {
+        return this.playerTurn;
+    }
 
     public double getPlayer0Funds() {
         return this.player0Funds;
@@ -115,9 +126,29 @@ public class CrapsState extends GameState {
         this.player1Funds = player1Funds;
     }
 
+    //tells the tale of the game
     @Override
     public String toString() {
         return "Player 0 has " + this.player0Funds + " and Player 1 has " + this.player1Funds +
                 ". The current dice are " + this.die1CurrVal + " and " + this.die2CurrVal;
+    }
+
+    //Actions.txt checkers
+    public boolean checkCanRoll() {
+        if (this.player0Ready && this.player1Ready) {
+
+            return true;
+            //player will update the Game State from here
+        }
+        return false;
+    }
+
+    //checks if players can bet (can't bet negative money)
+    public boolean check0CanBet() {
+        return player0Funds != 0;
+    }
+
+    public boolean check1CanBet() {
+        return player1Funds != 0;
     }
 }
