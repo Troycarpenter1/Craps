@@ -83,7 +83,7 @@ public class CrapsMainActivity extends GameMainActivity {
 	 */
 	@Override
 	public LocalGame createLocalGame(GameState state) {
-		if (state == null) state = new CrapsState(0);
+		if (state == null) state = new CrapsState();
 		return new CrapsLocalGame(state);
 	}
 
