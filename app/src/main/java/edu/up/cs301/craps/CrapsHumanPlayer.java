@@ -76,7 +76,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		counterValueTextView.setText("" + state.getCounter());
 	}
 
-	/*
+
 	/**
 	 * this method gets called when the user clicks the '+' or '-' button. It
 	 * creates a new CounterMoveAction to return to the parent activity.
@@ -90,6 +90,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
 		// Construct the action and send it to the game
 		GameAction action = null;
+		/*
+		Replace this stuff later with our own buttons
 		if (button.getId() == R.id.plusButton) {
 			// plus button: create "increment" action
 			action = new CrapsMoveAction(this, true);
@@ -102,7 +104,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 			// something else was pressed: ignore
 			return;
 		}
-		
+		 */
 		game.sendAction(action); // send action to the game
 	}// onClick
 	
@@ -138,12 +140,10 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		activity.setContentView(R.layout.counter_human_player);
 		
 		// make this object the listener for both the '+' and '-' 'buttons
-		Button plusButton = (Button) activity.findViewById(R.id.plusButton);
-		plusButton.setOnClickListener(this);
-		Button minusButton = (Button) activity.findViewById(R.id.minusButton);
-		minusButton.setOnClickListener(this);
-
-		// DO I HAVE TO SET EACH BUTTON TO AN ON CLICK LISTENER
+//		Button plusButton = (Button) activity.findViewById(R.id.plusButton);
+//		plusButton.setOnClickListener(this);
+//		Button minusButton = (Button) activity.findViewById(R.id.minusButton);
+//		minusButton.setOnClickListener(this);
 
 		// remember the field that we update to display the counter's value
 		this.counterValueTextView =
@@ -163,12 +163,13 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	 * If there is no money on the bet, changes that bet to amountBet
 	 * If there is money on the bet, set the bet amount to 0
 	 *
+	 * NOTE: Methods "bet" and "removeBet" have been combined into this one method
+	 *
 	 * @param button
 	 * 		The respective bet that was clicked
 	 */
 	public void changeBet(View button){
 
-		// TODO: change "the bet" to a reference to my bet array (in game state)
 		/*
 		if (the bet != 0){
 		the bet.setBetAmount(amountBet);
@@ -188,17 +189,17 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	 */
 	public void changeBetAmount(View button){
 		/*
-		if (button == $1){
-		increment seekbar progress by 1
+		if (button == R.id.moneyButton1){
+		amountBet++;
 		}
-		else if (button == $5){
-		increment by 5
+		else if (button == R.id.moneyButton5){
+		amountBet = amountBet + 5;
 		}
-		else if (button == $10){
-		increment by 10
+		else if (button == R.id.moneyButton10){
+		amountBet = amountBet + 10;
 		}
-		else if (button == $100){
-		increment by 100
+		else if (button == R.id.moneyButton100){
+		amountBet = amountBet + 100;
 		}
 		 */
 	}
@@ -220,8 +221,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		  }
 		 */
 	}
-
-	//TODO: need to implement functionality of betting buttons
 
 	/**
 	 * sets player to ready if ready button is clicked
@@ -257,11 +256,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	public int getPlayerMoney(){
 		return playerMoney;
 	}
-
 	public int getDie1() {
 		return die1;
 	}
-
 	public int getDie2() {
 		return die2;
 	}
@@ -277,11 +274,16 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	public void setShooter(boolean shooterChange){
 		isShooter = shooterChange;
 	}
+	public void setDie1(int newDieVal){
+		die1 = newDieVal;
+	}
+	public void setDie2(int newDieVal){
+		die2 = newDieVal;
+	}
 
-
+	//Unused methods for seekbar listener
 	@Override
 	public void onStartTrackingTouch(SeekBar seekBar) {}
-
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {}
 }// class CounterHumanPlayer
