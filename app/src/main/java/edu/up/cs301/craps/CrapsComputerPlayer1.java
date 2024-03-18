@@ -1,5 +1,8 @@
 package edu.up.cs301.craps;
 
+import java.util.Random;
+
+import edu.up.cs301.GameFramework.GameMainActivity;
 import edu.up.cs301.GameFramework.players.GameComputerPlayer;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 import edu.up.cs301.GameFramework.utilities.Tickable;
@@ -14,7 +17,25 @@ import edu.up.cs301.GameFramework.utilities.Tickable;
  * @version September 2013
  */
 public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable {
-	
+
+	//instance variables
+	private GameMainActivity myActivity;
+	private int playerMoney;// player's money
+	private int amountBet;// amount player wants to bet
+	private boolean isShooter;// shooter status
+	private boolean isReady; // player is ready (done placing bets)
+	private int die1;
+	private int die2;
+
+	//TODO should I have a local version of this bet array? didn't see one in human player
+	//I'll put one here for now just for me
+
+	int numTypes = 23; //TODO this should be a static variable in the Bet class
+	                   //TODO so delete this later
+	                   //represents how many types of bets there are
+	//private Bet [] bets = new Bet[numTypes];
+
+
     /**
      * Constructor for objects of class CounterComputerPlayer1
      * 
@@ -28,7 +49,99 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         // start the timer, ticking 20 times per second
         getTimer().setInterval(50);
         getTimer().start();
+
+		//initialize instance variables
+		this.playerMoney = 1000;
+		this.amountBet = 0;
+		this.isShooter = false;
+		this.isReady = false;
+		this.die1 = 0;
+		this.die2 = 0;
+
+		//initializes the bet array
+		//TODO delete/edit if we don't end up using the local array
+		//commented out until we merge
+		/*
+		int num_bets = 23;
+		for (int i = 0; i < num_bets; i++){
+			bets[i] = new Bet(0, 1, i);
+			//somehow set the name to the name in the public static array
+			//TODO add a way to set name in the bet? or is there something
+			//TODO that automatically in bet??
+
+		}
+		*/
     }
+
+	//roll
+	//this part is copied directly from Rowena's code
+	public void roll() {
+		// check if Im shooter, otherwise return
+		if (isShooter) {
+			// randomize dice
+			Random rand = new Random();
+			die1 = (rand.nextInt(6) + 1);
+			die2 = (rand.nextInt(6) + 1);
+		}
+	}
+
+	//place a random set of bets on a turn, then ready up
+
+	/**
+	 * takeTurn
+	 * called when it's time to take bets (shooter has rolled, or everyone
+	 * is ready and they are the shooter)
+	 * shoots if they're the shooter, then
+	 * places a random number (between 0-5) of random bets
+	 *
+	 */
+	public void takeTurn(){
+
+		if (isShooter){
+			roll(); //roll the dice
+					//TODO where does the roll get sent?
+		}
+
+		//make a random amount of bets
+		Random rand = new Random();
+		int numBets = rand.nextInt(5); //make 0 to 4 bets
+		for (int i = 0; i < numBets; i++){
+			bet();
+		}
+
+		//ready up
+		this.isReady = true;
+
+	}
+
+	/**
+	 * bet
+	 * places a bet of a semi-random amount on a random spot
+	 * adds the bet to the local bet array
+	 */
+	public void bet(){
+		Random rand = new Random();
+
+		//TODO this won't compile until merged, commented out
+
+		/*
+
+		//choose random bet amount
+		//the random bet is between 1/6 and 1/2 of player's total money
+		int cap = (2*this.playerMoney)/6;
+		this.amountBet =  rand.nextInt(cap) + this.playerMoney/6;
+
+		//random bet Type, adjust for more sophisticated AI
+		//have to confirm with Troy, assuming
+		//betID = spot in strings array
+		int betID = rand.nextInt(numTypes);
+
+		//create a new bet and add to the local bet array
+		this.bets[betID] = new Bet(this.amountBet, 1, betID);
+
+		 */
+
+	}
     
     /**
      * callback method--game's state has changed
