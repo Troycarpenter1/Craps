@@ -24,6 +24,8 @@ public class CrapsState extends GameState {
     private int die2CurrVal;
     private int dieTotal;
 
+    private boolean offOn;
+
     public CrapsState(){
         this.playerTurn=0;
         this.player0Funds=1000.0;
