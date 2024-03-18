@@ -15,6 +15,18 @@ import edu.up.cs301.GameFramework.utilities.Tickable;
  * @author Steven R. Vegdahl
  * @author Andrew M. Nuxoll
  * @version September 2013
+ *
+ * @author Wes Helms
+ * @author Troy Carpenter
+ * @author Sydney Dean
+ * @author Rowena Archer
+ *
+ * note to self (Sydney), I wrote this class
+ * when I wasn't around for some changes to the design decisions in our
+ * meetings last week, so some of these private variables might
+ * be deleted/moved in the future. - 3/18/24
+ *
+ *
  */
 public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable {
 
