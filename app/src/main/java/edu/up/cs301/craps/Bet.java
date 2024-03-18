@@ -1,16 +1,17 @@
 package edu.up.cs301.craps;
 
 /**
- * @author Wes H.       Last Revision: 3/13/2024
+ * @author Wes H.       Last Revision: 3/18/2024
  * @author Troy C.      Last Revision: TBD
  * @author Rowena A.    Last Revision: TBD
  * @author Sydney D.    Last Revision: TBD
- * @version 3/13/2024
+ * @version 3/18/2024
  * <p>
  * Important notes for this version:
  * Completed:
  * Instance variables, public static final variables, constructors (including deep copy),
- * getters, setters, toString, checkPair, checkSum, checkFieldBet checkCrapsBet
+ * getters, setters, toString, checkPair, checkSum, checkFieldBet, checkCrapsBet, checkComeBetWon,
+ * checkComeBetVal
  * Incomplete:
  * checkThisBetWon method (includes most helper methods)
  */
@@ -27,7 +28,7 @@ public class Bet {
     //list of all names of all bets
     public static final String[] ALL_BET_NAMES = new String[]{
             "NO BET", "PASS", "DON'T PASS", "COME", "FIELD", "4",
-            "5", "SIX", "8", "NINE", "10", "C", "E",
+            "5", "6", "8", "9", "10", "C", "E",
             "7 (4 to 1)", "Pair of 2s", "Pair of 3s",
             "Pair of 4s", "Pair of 5s", "2 & 1", "Pair of 1s",
             "Pair of 6s", "5 & 6", "CRAPS"
@@ -52,6 +53,7 @@ public class Bet {
     //copy cnstr
     public Bet(Bet copyBet) {
         this.amount = copyBet.amount;
+        this.payout = copyBet.payout;
         this.ID = copyBet.ID;
         this.name = ALL_BET_NAMES[copyBet.ID];
     }
@@ -98,11 +100,11 @@ public class Bet {
                 return this.checkDiceSum(diceTotal, 4);
             case "5":
                 return this.checkDiceSum(diceTotal, 5);
-            case "SIX":
+            case "6":
                 return this.checkDiceSum(diceTotal, 6);
             case "8":
                 return this.checkDiceSum(diceTotal, 8);
-            case "NINE":
+            case "9":
                 return this.checkDiceSum(diceTotal, 9);
             case "10":
                 return this.checkDiceSum(diceTotal, 10);
@@ -127,6 +129,13 @@ public class Bet {
                 return this.checkFieldBet(diceTotal);
             case "CRAPS":
                 return this.checkCrapsBet(diceTotal);
+            case "COME":
+                // this code needs to be in a player class somewhere later to change
+                // the bet amount to 0 and add the old bet amount to the new place bet
+                // if (this.checkComeBetVal(diceTotal) >= 0) {
+                //   this.name = "" + this.checkComeBet(diceTotal); //wrong as of this version
+                //  }
+                return this.checkComeBetWon(diceTotal);
         }
         return false; //returns false if none of the previous cases are met
     }
@@ -177,10 +186,67 @@ public class Bet {
         return false;
     }
 
-    // returns true if a craps bet is won
+    /**
+     * Craps bet is won if any of the following are rolled:
+     * 2 3 12
+     *
+     * @param dieSum the sum of the dice total roll
+     * @return dieSum if a craps bet is won otherwise -1
+     */
     public boolean checkCrapsBet(int dieSum) {
-        // 2 3 or 12 win a craps bet
-        return checkDiceSum(dieSum, 2) || checkDiceSum(dieSum, 3) || checkDiceSum(dieSum, 12);
+        //the values that will win a Craps bet
+        int[] winningVals = new int[]{
+                2, 3, 12
+        };
+        //checks if the dice total will win
+        for (int num : winningVals) {
+            if (dieSum == num) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Come bet is won if any of the following are rolled: (after first roll)
+     * 4, 5, 6, 8, 9, 10
+     *
+     * @param dieSum the sum of the dice total roll
+     * @return true if a Come bet is won otherwise false
+     */
+    public boolean checkComeBetWon(int dieSum) {
+        //the values that will win a Come bet
+        int[] winningVals = new int[]{
+                4, 5, 6, 8, 9, 10
+        };
+        //checks if the dice total will win
+        for (int num : winningVals) {
+            if (dieSum == num) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Come bet is won if any of the following are rolled: (after first roll)
+     * 4, 5, 6, 8, 9, 10
+     *
+     * @param dieSum the sum of the dice total roll
+     * @return dieSum if a craps bet is won otherwise -1
+     */
+    public int checkComeBetVal(int dieSum) {
+        //the values that will win a Come bet
+        int[] winningVals = new int[]{
+                4, 5, 6, 8, 9, 10
+        };
+        //checks if the dice total will win
+        for (int num : winningVals) {
+            if (dieSum == num) {
+                return dieSum;
+            }
+        }
+        return -1;
     }
 
     //toString method
@@ -188,6 +254,5 @@ public class Bet {
     public String toString() {
         return this.name + " Bet ID of: " + this.ID + " with $" + this.amount + " and Pays out: " + this.payout;
     }
-
 
 }
