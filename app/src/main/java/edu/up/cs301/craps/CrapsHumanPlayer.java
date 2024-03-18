@@ -6,21 +6,26 @@ import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
+import java.util.Random;
+
 /**
- * A GUI of a counter-player. The GUI displays the current value of the counter,
- * and allows the human player to press the '+' and '-' buttons in order to
- * send moves to the game.
- * 
- * Just for fun, the GUI is implemented so that if the player presses either button
- * when the counter-value is zero, the screen flashes briefly, with the flash-color
- * being dependent on whether the player is player 0 or player 1.
+ * A GUI of a craps-player. The GUI displays the current bets placed, and allows the
+ * user to edit bets, ready up, join a game, or roll.
+ *
  * 
  * @author Steven R. Vegdahl
  * @author Andrew M. Nuxoll
- * @version July 2013
+ *
+ * @author Wes Helms
+ * @author Troy Carpenter
+ * @author Sydney Dean
+ * @author Rowena Archer
+ *
+ * @version March 2024
  */
 public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener {
 
@@ -34,6 +39,14 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	
 	// the android activity that we are running
 	private GameMainActivity myActivity;
+	private int playerMoney;// player's money
+	private int amountBet;// amount player wants to bet
+	private boolean isShooter;// shooter status
+	private boolean isReady; // player is ready (done placing bets)
+	private int die1;
+	private int die2;
+
+	// we'll get the bet array by going to game state
 	
 	/**
 	 * constructor
@@ -99,7 +112,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	 */
 	@Override
 	public void receiveInfo(GameInfo info) {
-		// ignore the message if it's not a CounterState message
+		// ignore the message if it's not a CrapState message
 		if (!(info instanceof CrapsState)) return;
 		
 		// update our state; then update the display
@@ -137,6 +150,113 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		if (state != null) {
 			receiveInfo(state);
 		}
+
+	}
+
+	/**
+	 * This method gets called when the user clicks on a bet
+	 *
+	 * If there is no money on the bet, changes that bet to amountBet
+	 * If there is money on the bet, set the bet amount to 0
+	 *
+	 * @param button
+	 * 		The respective bet that was clicked
+	 */
+	public void changeBet(View button){
+
+		// TODO: change "the bet" to a reference to my bet array (in game state)
+		/*
+		if (the bet != 0){
+		the bet.setBetAmount(amountBet);
+		playerMoney = playerMoney - amountBet;
+		}
+		else if (the bet.betAmount != 0){
+		the bet.setBetAmount(0);
+		}
+		 */
+	}
+
+	/**
+	 * This method is called when the user clicks on the bet setting buttons
+	 * @param button
+	 */
+	public void changeBetAmount(View button){
+
+
+	}
+
+	/**
+	 * This method is called when the betting money seekbar progress is changed
+	 *
+	 * @param seekBar
+	 * 			Money to bet seekbar
+	 * @param progress
+	 * 			Seekbar progress
+	 * @param fromUser
+	 * 			If progress change is from user or not
+	 */
+	public void selectBet(SeekBar seekBar, int progress, boolean fromUser){
+		/*
+		  if (seekbar.getid() == R.id.moneySeekBar){
+		  amountBet = progress;
+		  }
+		 */
+	}
+	//TODO: need to implement functionality of betting buttons
+
+	/**
+	 * sets player to ready if ready button is clicked
+	 * @param button
+	 * 			The ready button
+	 */
+	public void ready(View button){
+		/*
+		if (button instanceof readyButton) {
+			isReady = true;
+		}
+		*/
+	}
+
+	/**
+	 * roll randomize dice value when roll button is clicked
+	 * @param button
+	 * 			The roll button
+	 */
+	public void roll(View button) {
+		// check if Im shooter, if yes roll dice
+		if (isShooter) {
+			// randomize dice
+			Random rand = new Random();
+			die1 = (rand.nextInt(6) + 1);
+			die2 = (rand.nextInt(6) + 1);
+		}
+	}
+
+	/**
+	 * getters & setters
+	 */
+	public int getPlayerMoney(){
+		return playerMoney;
+	}
+
+	public int getDie1() {
+		return die1;
+	}
+
+	public int getDie2() {
+		return die2;
+	}
+	public boolean getIsShooter(){
+		return isShooter;
+	}
+	public boolean getIsReady(){
+		return isReady;
+	}
+	public void setPlayerMoney(int newVal){
+		playerMoney = newVal;
+	}
+	public void setShooter(boolean shooterChange){
+		isShooter = shooterChange;
 	}
 
 }// class CounterHumanPlayer
