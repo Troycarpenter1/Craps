@@ -27,10 +27,11 @@ import java.util.Random;
  *
  * @version March 2024
  */
-public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener {
+public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener, SeekBar.OnSeekBarChangeListener {
 
 	/* instance variables */
-	
+
+
 	// The TextView the displays the current counter value
 	private TextView counterValueTextView;
 	
@@ -75,6 +76,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		counterValueTextView.setText("" + state.getCounter());
 	}
 
+	/*
 	/**
 	 * this method gets called when the user clicks the '+' or '-' button. It
 	 * creates a new CounterMoveAction to return to the parent activity.
@@ -141,6 +143,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		Button minusButton = (Button) activity.findViewById(R.id.minusButton);
 		minusButton.setOnClickListener(this);
 
+		// DO I HAVE TO SET EACH BUTTON TO AN ON CLICK LISTENER
+
 		// remember the field that we update to display the counter's value
 		this.counterValueTextView =
 				(TextView) activity.findViewById(R.id.counterValueTextView);
@@ -169,6 +173,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		if (the bet != 0){
 		the bet.setBetAmount(amountBet);
 		playerMoney = playerMoney - amountBet;
+
 		}
 		else if (the bet.betAmount != 0){
 		the bet.setBetAmount(0);
@@ -179,12 +184,24 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	/**
 	 * This method is called when the user clicks on the bet setting buttons
 	 * @param button
+	 * 			Respective bet setting button
 	 */
 	public void changeBetAmount(View button){
-
-
+		/*
+		if (button == $1){
+		increment seekbar progress by 1
+		}
+		else if (button == $5){
+		increment by 5
+		}
+		else if (button == $10){
+		increment by 10
+		}
+		else if (button == $100){
+		increment by 100
+		}
+		 */
 	}
-
 	/**
 	 * This method is called when the betting money seekbar progress is changed
 	 *
@@ -195,13 +212,15 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 	 * @param fromUser
 	 * 			If progress change is from user or not
 	 */
-	public void selectBet(SeekBar seekBar, int progress, boolean fromUser){
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 		/*
 		  if (seekbar.getid() == R.id.moneySeekBar){
 		  amountBet = progress;
 		  }
 		 */
 	}
+
 	//TODO: need to implement functionality of betting buttons
 
 	/**
@@ -259,5 +278,11 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		isShooter = shooterChange;
 	}
 
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {}
 }// class CounterHumanPlayer
 
