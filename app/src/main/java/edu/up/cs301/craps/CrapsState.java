@@ -1,6 +1,7 @@
 package edu.up.cs301.craps;
 
 import edu.up.cs301.GameFramework.infoMessage.GameState;
+import edu.up.cs301.craps.Actions.PlaceBetAction;
 
 /**
  * This contains the state for the Craps game. The state consist the player and

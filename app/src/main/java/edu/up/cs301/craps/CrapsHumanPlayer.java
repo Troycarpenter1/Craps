@@ -1,9 +1,12 @@
 package edu.up.cs301.craps;
 
+import edu.up.cs301.GameFramework.actionMessage.ReadyAction;
 import edu.up.cs301.GameFramework.players.GameHumanPlayer;
 import edu.up.cs301.GameFramework.GameMainActivity;
 import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
+import edu.up.cs301.craps.Actions.PlaceBetAction;
+import edu.up.cs301.craps.Actions.RollAction;
 
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +28,7 @@ import java.util.Random;
  * @author Rowena Archer
  * @version March 2024
  */
-public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener {
+public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     /* instance variables */
 
@@ -74,8 +77,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     }
 
     /**
-     * this method gets called when the user clicks the '+' or '-' button. It
-     * creates a new CounterMoveAction to return to the parent activity.
+     * This method gets called when the user clicks a button. It
+     * creates a new action to return to the parent activity.The
+     * action type depends on the respective button clicked.
      *
      * @param button the button that was clicked
      */
@@ -85,19 +89,42 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         // Construct the action and send it to the game
         GameAction action = null;
-        if (button.getId() == R.id.plusButton) {
-            // plus button: create "increment" action
-            action = new CrapsMoveAction(this, true);
-        } else if (button.getId() == R.id.minusButton) {
-            // minus button: create "decrement" action
-            action = new CrapsMoveAction(this, false);
-        } else {
-            // something else was pressed: ignore
-            return;
+
+        int anyBet = R.id.plusButton; // placeholder
+        int rollButton = R.id.plusButton; //placeholder
+        int readyButton = R.id.plusButton; //placeholder
+
+        // creating and sending action
+        // this conditional will later be expanded to include all bets
+        if (button.getId() == anyBet){
+            action = new PlaceBetAction(this, 0, 0);
         }
+        else if (button.getId() == rollButton){
+            action = new RollAction(this);
+        }
+        else if (button.getId() == readyButton){
+            isReady = true;
+            action = new ReadyAction(this);
+        }
+
 
         game.sendAction(action); // send action to the game
     }// onClick
+
+    /**
+     * This method gets called each time the money seekbar is changed
+     *
+     * @param seekBar The SeekBar whose progress has changed
+     * @param progress The current progress level. This will be in the
+     *                 range 0..playerMoney, where min and max were set by the
+     *                 money progress bar. (The default values for min
+     *                 is 0 and max is 100.)
+     * @param fromUser True if the progress change was initiated by the user.
+     */
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        amountBet = progress;
+    }
 
     /**
      * callback method when we get a message (e.g., from the game)
@@ -146,18 +173,14 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
     }
 
-    /**
-     * This method gets called when the user clicks on a bet
-     * <p>
-     * If there is no money on the bet, changes that bet to amountBet
-     * If there is money on the bet, set the bet amount to 0
-     *
-     * @param button The respective bet that was clicked
-     */
+    /*
+    I don't think we need these methods anymore but
+     I'm keeping these here in case I need to copy
+     some code later - Rowena
+
     public void changeBet(View button) {
 
-        // TODO: change "the bet" to a reference to my bet array (in game state)
-		/*
+
 		if (the bet != 0){
 		the bet.setBetAmount(amountBet);
 		playerMoney = playerMoney - amountBet;
@@ -165,53 +188,19 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		else if (the bet.betAmount != 0){
 		the bet.setBetAmount(0);
 		}
-		 */
-    }
-
-    /**
-     * This method is called when the user clicks on the bet setting buttons
-     *
-     * @param button
-     */
-    public void changeBetAmount(View button) {
-
 
     }
 
-    /**
-     * This method is called when the betting money seekbar progress is changed
-     *
-     * @param seekBar  Money to bet seekbar
-     * @param progress Seekbar progress
-     * @param fromUser If progress change is from user or not
-     */
-    public void selectBet(SeekBar seekBar, int progress, boolean fromUser) {
-		/*
-		  if (seekbar.getid() == R.id.moneySeekBar){
-		  amountBet = progress;
-		  }
-		 */
-    }
-    //TODO: need to implement functionality of betting buttons
 
-    /**
-     * sets player to ready if ready button is clicked
-     *
-     * @param button The ready button
-     */
     public void ready(View button) {
-		/*
+
 		if (button instanceof readyButton) {
 			isReady = true;
 		}
-		*/
+
     }
 
-    /**
-     * roll randomize dice value when roll button is clicked
-     *
-     * @param button The roll button
-     */
+
     public void roll(View button) {
         // check if Im shooter, if yes roll dice
         if (this.state.checkCanRoll() && isShooter) {
@@ -219,23 +208,16 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             Random rand = new Random();
             die1 = (rand.nextInt(6) + 1);
             die2 = (rand.nextInt(6) + 1);
-            this.state.setDice(die1, die2);
+            //this.state.setDice(die1, die2);
         }
     }
+    */
 
     /**
      * getters & setters
      */
     public int getPlayerMoney() {
         return playerMoney;
-    }
-
-    public int getDie1() {
-        return die1;
-    }
-
-    public int getDie2() {
-        return die2;
     }
 
     public boolean getIsShooter() {
@@ -254,5 +236,14 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         isShooter = shooterChange;
     }
 
-}// class CounterHumanPlayer
+
+    /**
+     * Unused methods (here to satisfy OnSeekbarChangedListener)
+     */
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {}
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {}
+
+}// class CrapsHumanPlayer
 
