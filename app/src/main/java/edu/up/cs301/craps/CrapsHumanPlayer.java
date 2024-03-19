@@ -179,8 +179,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      some code later - Rowena
 
     public void changeBet(View button) {
-
-
 		if (the bet != 0){
 		the bet.setBetAmount(amountBet);
 		playerMoney = playerMoney - amountBet;
@@ -188,18 +186,13 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 		else if (the bet.betAmount != 0){
 		the bet.setBetAmount(0);
 		}
-
     }
 
-
     public void ready(View button) {
-
 		if (button instanceof readyButton) {
 			isReady = true;
 		}
-
     }
-
 
     public void roll(View button) {
         // check if Im shooter, if yes roll dice
@@ -219,23 +212,19 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     public int getPlayerMoney() {
         return playerMoney;
     }
-
+    public int getAmountBet(){return amountBet;}
     public boolean getIsShooter() {
         return isShooter;
     }
-
     public boolean getIsReady() {
         return isReady;
     }
-
     public void setPlayerMoney(int newVal) {
         playerMoney = newVal;
     }
-
     public void setShooter(boolean shooterChange) {
         isShooter = shooterChange;
     }
-
 
     /**
      * Unused methods (here to satisfy OnSeekbarChangedListener)
