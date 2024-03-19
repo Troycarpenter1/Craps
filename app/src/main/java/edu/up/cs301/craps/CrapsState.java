@@ -2,14 +2,13 @@ package edu.up.cs301.craps;
 
 import edu.up.cs301.GameFramework.infoMessage.GameState;
 
-
 /**
- * This contains the state for the Craps game. The state consist the player and their money,
- * and the state of the dice
+ * This contains the state for the Craps game. The state consist the player and
+ * their money,and the state of the dice
  * <p>
- * Not implementing select dice at the current time: will add if time (see actions.txt)
- * join is being handled automatically by the game framework so not implementing join button
- * consolidated place/remove bet into single method
+ * Not implementing select dice at the current time: will add if time (see
+ * actions.txt) join is being handled automatically by the game framework so
+ * not implementing join button consolidated place/remove bet into single method
  * <p>
  * selecting the bet is always legal and is in the player class
  *
@@ -19,6 +18,7 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
  * @author Sydney Dean
  * @version March 2024
  */
+
 public class CrapsState extends GameState {
 
     //the players in the game, and their current net worth
@@ -29,15 +29,14 @@ public class CrapsState extends GameState {
     private boolean player1Ready;
     //x controls player, y controls bet
     private Bet[][] bets = new Bet[2][23];
-    ;
 
     //the dice every roll
     private int die1CurrVal;
     private int die2CurrVal;
     private int dieTotal;
-
     private boolean offOn;
 
+    //ctor
     public CrapsState() {
         this.playerTurn = 0;
         this.player0Funds = 1000.0;
@@ -65,13 +64,13 @@ public class CrapsState extends GameState {
         this.player1Funds = crap.player1Funds;
         this.player0Ready = crap.player0Ready;
         this.player1Ready = crap.player1Ready;
+        this.offOn = crap.offOn;
         //uses the copy constructor of the bet class
         for (int x = 0; x < bets.length; x++) {
             for (int y = 0; y < bets[x].length; y++) {
                 this.bets[x][y] = new Bet(crap.bets[x][y]);
             }
         }
-
     }
 
     //getters for instance variables
@@ -101,15 +100,23 @@ public class CrapsState extends GameState {
 
     //setters
 
-    //sets die1 and die 2, and gets the total from those numbers
+    /**
+     * setDice
+     * sets dice and finds sum
+     * @param die1Val
+     * @param die2Val
+     */
     public void setDice(int die1Val, int die2Val) {
         this.die1CurrVal = die1Val;
         this.die2CurrVal = die2Val;
         this.dieTotal = this.die1CurrVal + this.die2CurrVal;
     }
 
-    //changes the current turn to the other player
-    //only 2 player currently
+    /**
+     * changeTurn
+     * switches whose turn it is
+     * only works for 2 players at the moment
+     */
     public void changeTurn() {
         if (this.playerTurn == 0) {
             this.playerTurn = 1;
@@ -134,9 +141,16 @@ public class CrapsState extends GameState {
     }
 
     //Actions.txt checkers
+    //see header comment for omitted methods
+
+    /**
+     * called when a player wants to roll
+     * only for two players at this time
+     *
+     * @return boolean
+     */
     public boolean checkCanRoll() {
         if (this.player0Ready && this.player1Ready) {
-
             return true;
             //player will update the Game State from here
         }
@@ -151,4 +165,25 @@ public class CrapsState extends GameState {
     public boolean check1CanBet() {
         return player1Funds != 0;
     }
+
+    public boolean placeBet(PlaceBetAction action) {
+        //Is it the player's turn?
+
+
+        //Does the player have enough money?
+        //action.betAmount <= action.getPlayer()
+
+        // ^ that's what he had
+
+        //Is the bet location valid?
+
+        //Change the state to add the new bet
+
+
+        return true;
+    }
+
 }
+
+
+
