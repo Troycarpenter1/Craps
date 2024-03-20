@@ -31,7 +31,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     /* instance variables */
 
     // The TextView the displays the current counter value
-    private TextView counterValueTextView;
+    private TextView testResultsTextView;
 
     // the most recent game state, as given to us by the CounterLocalGame
     private CrapsState state;
@@ -62,6 +62,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      * @return the top object in the GUI's view heirarchy
      */
     public View getTopView() {
+        // TODO: change to our test layout
         return myActivity.findViewById(R.id.top_gui_layout);
     }
     //samba
@@ -85,6 +86,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // if we are not yet connected to a game, ignore
         if (game == null) return;
 
+        /* project e removal - but saving this stuff for later!
         // Construct the action and send it to the game
         GameAction action = null;
 
@@ -105,8 +107,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             action = new Ready2CrapAction(this, true, playerNum);
         }
 
-
         game.sendAction(action); // send action to the game
+
+         */
     }// onClick
 
     /**
@@ -150,9 +153,18 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // remember the activity
         this.myActivity = activity;
 
-        // Load the layout resource for our GUI
+        // TODO: Load test layout file
         activity.setContentView(R.layout.counter_human_player);
 
+        // TODO: initialize this var with a ref to the multi-line EditText in our layout
+        this.testResultsTextView =
+                (TextView) activity.findViewById(R.id.counterValueTextView);
+
+        // TODO: change R.id.plusButton to our test button
+        Button testButton = (Button) activity.findViewById(R.id.plusButton);
+        testButton.setOnClickListener(this);
+
+        /* project e removal - but saving this stuff for later!
         // make this object the listener for both the '+' and '-' 'buttons
         Button plusButton = (Button) activity.findViewById(R.id.plusButton);
         plusButton.setOnClickListener(this);
@@ -160,7 +172,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         minusButton.setOnClickListener(this);
 
         // remember the field that we update to display the counter's value
-        this.counterValueTextView =
+        this.testResultsTextView =
                 (TextView) activity.findViewById(R.id.counterValueTextView);
 
         // if we have a game state, "simulate" that we have just received
@@ -168,41 +180,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if (state != null) {
             receiveInfo(state);
         }
-
+         */
     }
-
-    /*
-    I don't think we need these methods anymore but
-     I'm keeping these here in case I need to copy
-     some code later - Rowena
-
-    public void changeBet(View button) {
-		if (the bet != 0){
-		the bet.setBetAmount(amountBet);
-		playerMoney = playerMoney - amountBet;
-		}
-		else if (the bet.betAmount != 0){
-		the bet.setBetAmount(0);
-		}
-    }
-
-    public void ready(View button) {
-		if (button instanceof readyButton) {
-			isReady = true;
-		}
-    }
-
-    public void roll(View button) {
-        // check if Im shooter, if yes roll dice
-        if (this.state.checkCanRoll() && isShooter) {
-            // randomize dice
-            Random rand = new Random();
-            die1 = (rand.nextInt(6) + 1);
-            die2 = (rand.nextInt(6) + 1);
-            //this.state.setDice(die1, die2);
-        }
-    }
-    */
 
     /**
      * getters & setters
