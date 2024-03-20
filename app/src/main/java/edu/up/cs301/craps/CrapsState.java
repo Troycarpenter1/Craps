@@ -166,7 +166,7 @@ public class CrapsState extends GameState {
         return player1Funds != 0;
     }
 
-    public boolean placeBet(PlaceBetAction action) {
+    public boolean placeBet(PlaceBetAction action, int id, int betAmount) {
         //Is it the player's turn?
 
 
@@ -182,7 +182,7 @@ public class CrapsState extends GameState {
 
         return true;
     }
-    public boolean removeBet(RemoveBetAction action){
+    public boolean removeBet(RemoveBetAction action, int betLocation, int betAmount){
         return true;
     }
     public boolean ready(ReadyAction action){

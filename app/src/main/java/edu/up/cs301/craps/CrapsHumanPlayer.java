@@ -92,13 +92,11 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         // creating and sending action
         // this conditional will later be expanded to include all bets
-        if (button.getId() == anyBet){
+        if (button.getId() == anyBet) {
             action = new PlaceBetAction(this, 0, 0);
-        }
-        else if (button.getId() == rollButton){
+        } else if (button.getId() == rollButton) {
             action = new RollAction(this);
-        }
-        else if (button.getId() == readyButton){
+        } else if (button.getId() == readyButton) {
             isReady = true;
             action = new ReadyAction(this);
         }
@@ -110,7 +108,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     /**
      * This method gets called each time the money seekbar is changed
      *
-     * @param seekBar The SeekBar whose progress has changed
+     * @param seekBar  The SeekBar whose progress has changed
      * @param progress The current progress level. This will be in the
      *                 range 0..playerMoney, where min and max were set by the
      *                 money progress bar. (The default values for min
@@ -208,16 +206,23 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     public int getPlayerMoney() {
         return playerMoney;
     }
-    public int getAmountBet(){return amountBet;}
+
+    public int getAmountBet() {
+        return amountBet;
+    }
+
     public boolean getIsShooter() {
         return isShooter;
     }
+
     public boolean getIsReady() {
         return isReady;
     }
+
     public void setPlayerMoney(int newVal) {
         playerMoney = newVal;
     }
+
     public void setShooter(boolean shooterChange) {
         isShooter = shooterChange;
     }
@@ -226,9 +231,12 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      * Unused methods (here to satisfy OnSeekbarChangedListener)
      */
     @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {}
+    public void onStartTrackingTouch(SeekBar seekBar) {
+    }
+
     @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {}
+    public void onStopTrackingTouch(SeekBar seekBar) {
+    }
 
 }// class CrapsHumanPlayer
 
