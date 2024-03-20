@@ -1,7 +1,6 @@
 package edu.up.cs301.craps;
 
 import edu.up.cs301.GameFramework.infoMessage.GameState;
-import edu.up.cs301.craps.Actions.PlaceBetAction;
 
 /**
  * This contains the state for the Craps game. The state consist the player and
@@ -181,6 +180,15 @@ public class CrapsState extends GameState {
         //Change the state to add the new bet
 
 
+        return true;
+    }
+    public boolean removeBet(RemoveBetAction action){
+        return true;
+    }
+    public boolean ready(ReadyAction action){
+        return true;
+    }
+    public boolean roll(RollAction action){
         return true;
     }
 

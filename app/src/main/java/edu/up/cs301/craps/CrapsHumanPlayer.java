@@ -5,16 +5,12 @@ import edu.up.cs301.GameFramework.players.GameHumanPlayer;
 import edu.up.cs301.GameFramework.GameMainActivity;
 import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
-import edu.up.cs301.craps.Actions.PlaceBetAction;
-import edu.up.cs301.craps.Actions.RollAction;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
-
-import java.util.Random;
 
 /**
  * A GUI of a craps-player. The GUI displays the current bets placed, and allows the

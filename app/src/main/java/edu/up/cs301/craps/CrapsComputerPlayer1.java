@@ -6,7 +6,6 @@ import edu.up.cs301.GameFramework.GameMainActivity;
 import edu.up.cs301.GameFramework.players.GameComputerPlayer;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 import edu.up.cs301.GameFramework.utilities.Tickable;
-import edu.up.cs301.craps.Actions.CrapsMoveAction;
 
 /**
  * A computer-version of a counter-player.  Since this is such a simple game,

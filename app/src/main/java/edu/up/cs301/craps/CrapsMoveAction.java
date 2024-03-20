@@ -1,4 +1,4 @@
-package edu.up.cs301.craps.Actions;
+package edu.up.cs301.craps;
 
 import edu.up.cs301.GameFramework.players.GamePlayer;
 import edu.up.cs301.GameFramework.actionMessage.GameAction;
