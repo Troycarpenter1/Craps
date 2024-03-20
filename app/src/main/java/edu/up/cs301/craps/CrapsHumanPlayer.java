@@ -62,8 +62,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      * @return the top object in the GUI's view heirarchy
      */
     public View getTopView() {
-        // TODO: change to our test layout
-        return myActivity.findViewById(R.id.top_gui_layout);
+        return myActivity.findViewById(R.id.top_test_gui_layout);
     }
     //samba
 
@@ -86,7 +85,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // if we are not yet connected to a game, ignore
         if (game == null) return;
 
-        /* project e removal - but saving this stuff for later!
+        /* removed for proj e but saving this stuff for later! - R
         // Construct the action and send it to the game
         GameAction action = null;
 
@@ -153,18 +152,15 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // remember the activity
         this.myActivity = activity;
 
-        // TODO: Load test layout file
-        activity.setContentView(R.layout.counter_human_player);
+        activity.setContentView(R.layout.teste);
 
-        // TODO: initialize this var with a ref to the multi-line EditText in our layout
         this.testResultsTextView =
-                (TextView) activity.findViewById(R.id.counterValueTextView);
+                (TextView) activity.findViewById(R.id.editTextTest);
 
-        // TODO: change R.id.plusButton to our test button
-        Button testButton = (Button) activity.findViewById(R.id.plusButton);
+        Button testButton = (Button) activity.findViewById(R.id.testButton);
         testButton.setOnClickListener(this);
 
-        /* project e removal - but saving this stuff for later!
+        /* Removed for proj e but saving this stuff for later! - R
         // make this object the listener for both the '+' and '-' 'buttons
         Button plusButton = (Button) activity.findViewById(R.id.plusButton);
         plusButton.setOnClickListener(this);
