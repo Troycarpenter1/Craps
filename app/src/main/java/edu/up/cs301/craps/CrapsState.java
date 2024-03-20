@@ -157,6 +157,7 @@ public class CrapsState extends GameState {
         return false;
     }
 
+    /*
     //checks if players can bet (can't bet negative money)
     public boolean check0CanBet() {
         return player0Funds != 0;
@@ -166,30 +167,119 @@ public class CrapsState extends GameState {
         return player1Funds != 0;
     }
 
-    public boolean placeBet(PlaceBetAction action, int id, int betAmount) {
+     */
+
+    /**
+     * placeBet
+     * checks to see if bet is valid
+     * changes the bet in the GameState bet array
+     *
+     * @param action
+     * @return
+     */
+    public boolean placeBet(PlaceBetAction action) {
         //Is it the player's turn?
 
-
         //Does the player have enough money?
-        //action.betAmount <= action.getPlayer()
+        if (action.betAmount > action.playerMoney){
+            return false;
+        }
 
-        // ^ that's what he had
-
-        //Is the bet location valid?
+        //Is the bet ID a valid point in the array?
+        //23 is how many types of bets there are
+        if (action.betID > 22 || action.betID  < 0){
+            return false;
+        }
 
         //Change the state to add the new bet
 
+        //assumes that a bet's bet ID is the same as it's position in the array
+        // get the bet from the proper location based on the ID
+
+        /*
+           TODO: need to figure out how to get the ID of the player
+            we could put the ID in the RemoveBetAction like we did for ReadyAction
+         */
+        //adjust the bet's amount
+        this.bets[0][action.betID].setBetAmount(action.betAmount);
+
+        //note that we will eventually initialize all bets in the array to have
+        //the correct IDs and names before the game is started.
 
         return true;
     }
-    public boolean removeBet(RemoveBetAction action, int betLocation, int betAmount){
+
+    /**
+     * removeBet
+     * checks to see if there is a bet to remove
+     * changes the bet in the GameState bet array
+     *
+     * @param action
+     * @return
+     */
+    public boolean removeBet(RemoveBetAction action, int id, int betAmount){
+
+        //Does the player have enough money?
+        if (action.betAmount <= 0){
+            return false;
+        }
+
+        /*
+           TODO: need to figure out how to get the ID of the player
+            we could put the ID in the RemoveBetAction like we did for ReadyAction
+         */
+
+        //adjust the bet's amount
+        this.bets[0][action.betID].setBetAmount(0); //'removes' the bet (set to 0)
+
         return true;
     }
-    public boolean ready(ReadyAction action){
+
+    /**
+     * ready
+     *
+     * if player is ready, set player to ready :)
+     *
+     * @param action
+     * @return
+     */
+    public boolean ready (Ready2CrapAction action){
+        //what conditions should a person ready under...
+        //might have to time that later
+
+        //note this is only for 2 players right now :)
+        //if ready then changes appropriate player to ready
+        if (action.playerID == 0){
+            this.player0Ready = action.isReady;
+        }
+        else if (action.playerID ==1){
+            this.player1Ready = action.isReady;
+        }
+
         return true;
     }
+
+    /**
+     * roll
+     *
+     * if player is shooter they can roll
+     *
+     * @param action
+     * @return
+     */
     public boolean roll(RollAction action){
+        if (action.isShooter == false){
+            return false;
+        }
+
+        this.die1CurrVal = action.die1;
+        this.die2CurrVal = action.die2;
+        this.dieTotal = action.dieTotal;
+
         return true;
+
+        //note, later on we might want to calculate roll in here instead
+
     }
 
 }

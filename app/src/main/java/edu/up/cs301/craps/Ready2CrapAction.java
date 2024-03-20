@@ -4,7 +4,7 @@ import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.players.GamePlayer;
 
 /**
- * Roll Action
+ * Ready2Crap Action (the Ready action name was taken)
  *
  * @author Wes Helms
  * @author Troy Carpenter
@@ -13,23 +13,21 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
  * @version March 2024
  */
 
-public class RollAction extends GameAction {
+public class Ready2CrapAction extends GameAction {
 
-    public boolean isShooter;
-    public int die1;
-    public int die2;
-    public int dieTotal;
+    public boolean isReady;
+
+    public int playerID;
 
     /**
      * constructor for GameAction
      *
      * @param player the player who created the action
      */
-    public RollAction(GamePlayer player, boolean isShooter, int die1, int die2, int dieTotal) {
+    public Ready2CrapAction(GamePlayer player, boolean isReady, int playerID) {
         super(player);
-        this.isShooter = isShooter;
-        this.die1 = die1;
-        this.die2 = die2;
-        this.dieTotal = dieTotal;
+        this.isReady = isReady;
+        this.playerID = playerID;
+
     }
 }

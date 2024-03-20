@@ -12,6 +12,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
+import java.util.Random;
+
 /**
  * A GUI of a craps-player. The GUI displays the current bets placed, and allows the
  * user to edit bets, ready up, join a game, or roll.
@@ -93,12 +95,14 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // creating and sending action
         // this conditional will later be expanded to include all bets
         if (button.getId() == anyBet) {
-            action = new PlaceBetAction(this, 0, 0);
+            action = new PlaceBetAction(this, 0, 0, 0);
         } else if (button.getId() == rollButton) {
-            action = new RollAction(this);
+            Random rand = new Random();
+            die1 = (rand.nextInt(6) + 1);
+            die2 = (rand.nextInt(6) + 1);
+            action = new RollAction(this, isShooter, die1, die2, die1 + die2);
         } else if (button.getId() == readyButton) {
-            isReady = true;
-            action = new ReadyAction(this);
+            action = new Ready2CrapAction(this, true, playerNum);
         }
 
 
