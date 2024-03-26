@@ -14,19 +14,23 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
  */
 
 public class PlaceBetAction extends GameAction {
-
     public int betID;
-    public int betAmount;
-
-    public int playerMoney;
+    public double betAmount;
+    public int playerId;
+    public double playerMoney;
 
     /**
      * constructor for GameAction
      *
      * @param player the player who created the action
      */
-    public PlaceBetAction(GamePlayer player, int betID, int betAmount, int playerMoney) {
-        super(player);                  //I don't remember what super(player) does - S
+    public PlaceBetAction(GamePlayer player){
+        super(player);
+    }
+    public PlaceBetAction(GamePlayer player,int playerId, int betID, double betAmount,
+                          double playerMoney) {
+        super(player);  //I don't remember what super(player) does - S
+        this.playerId=playerId;
         this.betAmount = betAmount;
         this.betID = betID;
         this.playerMoney = playerMoney;

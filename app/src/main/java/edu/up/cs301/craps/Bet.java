@@ -19,7 +19,7 @@ package edu.up.cs301.craps;
 public class Bet {
     //instance variables
 
-    private int amount; //the amount of money this bet has put on it
+    private double amount; //the amount of money this bet has put on it
     private double payout;
     private int ID; //value that represents the type of bet in a public static final (PSF) string array of bet names
     private String name; //name of the bet
@@ -59,7 +59,7 @@ public class Bet {
     }
 
     //simple getter methods
-    public int getAmount() {
+    public double getAmount() {
         return this.amount;
     }
 
@@ -76,7 +76,7 @@ public class Bet {
     }
 
     //set bet amount
-    public void setBetAmount(int newAmount) {
+    public void setBetAmount(double newAmount) {
         this.amount = newAmount;
     }
 

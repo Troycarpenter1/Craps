@@ -125,11 +125,11 @@ public class CrapsState extends GameState {
         }
     }
 
-    public void setPlayer0Funds(int player0Funds) {
+    public void setPlayer0Funds(double player0Funds) {
         this.player0Funds = player0Funds;
     }
 
-    public void setPlayer1Funds(int player1Funds) {
+    public void setPlayer1Funds(double player1Funds) {
         this.player1Funds = player1Funds;
     }
 
@@ -201,7 +201,12 @@ public class CrapsState extends GameState {
             we could put the ID in the RemoveBetAction like we did for ReadyAction
          */
         //adjust the bet's amount
-        this.bets[0][action.betID].setBetAmount(action.betAmount);
+        this.bets[action.playerId][action.betID].setBetAmount(action.betAmount);
+        if(action.playerId==0) {
+            this.setPlayer0Funds(this.getPlayer0Funds() - action.betAmount);
+        }else{
+            this.setPlayer1Funds(this.getPlayer1Funds() - action.betAmount);
+        }
 
         //note that we will eventually initialize all bets in the array to have
         //the correct IDs and names before the game is started.
@@ -217,10 +222,10 @@ public class CrapsState extends GameState {
      * @param action
      * @return
      */
-    public boolean removeBet(RemoveBetAction action, int id, int betAmount){
+    public boolean removeBet(RemoveBetAction action){
 
         //Does the player have enough money?
-        if (action.betAmount <= 0){
+        if (bets[action.playerId][action.betID].getAmount()<=0){
             return false;
         }
 
@@ -229,8 +234,16 @@ public class CrapsState extends GameState {
             we could put the ID in the RemoveBetAction like we did for ReadyAction
          */
 
+        if(action.playerId==0) {
+            this.setPlayer0Funds(this.getPlayer0Funds() +
+                    bets[action.playerId][action.betID].getAmount());
+        }else{
+            this.setPlayer1Funds(this.getPlayer1Funds() +
+                    bets[action.playerId][action.betID].getAmount());
+        }
+
         //adjust the bet's amount
-        this.bets[0][action.betID].setBetAmount(0); //'removes' the bet (set to 0)
+        this.bets[action.playerId][action.betID].setBetAmount(0); //'removes' the bet (set to 0)
 
         return true;
     }
@@ -268,13 +281,11 @@ public class CrapsState extends GameState {
      * @return
      */
     public boolean roll(RollAction action){
-        if (action.isShooter == false){
+        if (!action.isShooter){
             return false;
         }
 
-        this.die1CurrVal = action.die1;
-        this.die2CurrVal = action.die2;
-        this.dieTotal = action.dieTotal;
+        this.setDice(action.die1, action.die2);
 
         return true;
 

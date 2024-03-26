@@ -16,18 +16,18 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
 public class RemoveBetAction extends GameAction {
     public int betID;
     public int betAmount;
-    public int playerMoney;
+    public int playerId;
 
     /**
      * constructor for GameAction
      *
      * @param player the player who created the action
      */
-    public RemoveBetAction(GamePlayer player, int betLocation, int betID) {
+    public RemoveBetAction(GamePlayer player,int playerId, int betID) {
         super(player);
         this.betAmount = 0;
         this.betID = betID;
-        this.playerMoney = playerMoney;
+        this.playerId=playerId;
 
     }
 

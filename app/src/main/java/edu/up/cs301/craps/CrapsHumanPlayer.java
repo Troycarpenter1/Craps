@@ -8,6 +8,7 @@ import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
@@ -69,10 +70,17 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     /**
      * sets the counter value in the text view
      */
-    protected void updateDisplay() {
+    protected void updateDisplay(){
         // set the text in the appropriate widget
         //counterValueTextView.setText("" + state.getCounter());
     }
+    protected void updateDisplay(String displayText) {
+        testResultsTextView.setText(testResultsTextView.getText()+"\n"+displayText, TextView.BufferType.NORMAL);
+    }
+    protected void updateDisplay(String displayText, int id) {
+        testResultsTextView.setText("", TextView.BufferType.NORMAL);
+    }
+
 
     /**
      * This method gets called when the user clicks a button. It
@@ -85,6 +93,52 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // if we are not yet connected to a game, ignore
         if (game == null) return;
 
+        CrapsState firstInstance=new CrapsState();
+        CrapsState firstCopy=new CrapsState(firstInstance);
+
+        if(button.getId()==R.id.testButton){
+            testResultsTextView=myActivity.findViewById(R.id.editTextTest);
+            updateDisplay("",1);
+
+            //players place bets
+            updateDisplay("Players place bets on field and a 9 place bet");
+
+            firstInstance.placeBet(new PlaceBetAction(this,0,4,30.0,
+                    firstInstance.getPlayer0Funds()));
+
+            firstInstance.placeBet((new PlaceBetAction(this,1,9,200.0,
+                    firstInstance.getPlayer1Funds())));
+
+
+            //players ready
+            updateDisplay("Players ready");
+            firstInstance.ready(new Ready2CrapAction(this,true,0));
+            firstInstance.ready(new Ready2CrapAction(this,true,1));
+
+            //first player rolls (still shooter)
+            updateDisplay("first player rolls 2 and 3 (not loss)");
+            firstInstance.roll(new RollAction(this,true,2,3,5));
+
+            //shows what happened
+            updateDisplay(firstInstance.toString());
+
+            //first player removes their bet
+            updateDisplay("first player removes bet");
+            firstInstance.removeBet(new RemoveBetAction(this,0,4));
+
+            //players ready
+            updateDisplay("players ready for roll  2");
+            firstInstance.ready(new Ready2CrapAction(this,true,0));
+            firstInstance.ready(new Ready2CrapAction(this,true,1));
+
+            //first player rolls
+            updateDisplay("player rolls 7 and loses, and player 2 loses their money");
+            firstInstance.roll(new RollAction(this,true,5,2,7));
+
+            //displays what happened
+            updateDisplay(firstInstance.toString());
+            updateDisplay("player 0 has won by being richer than player 2");
+        }
         /* removed for proj e but saving this stuff for later! - R
         // Construct the action and send it to the game
         GameAction action = null;
