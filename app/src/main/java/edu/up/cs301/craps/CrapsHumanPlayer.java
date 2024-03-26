@@ -139,6 +139,26 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             updateDisplay(firstInstance.toString());
             updateDisplay("player 0 has won by being richer than player 2");
         }
+
+        //making a secondInstance and its copy
+        CrapsState secondInstance = new CrapsState();
+        CrapsState secondCopy = new CrapsState(secondInstance);
+
+        //updating the display to show the new instance and its copy
+        testResultsTextView.setText(testResultsTextView.getText() + "\nfirstCopy.toString() is called below\n" + firstCopy.toString());
+        testResultsTextView.setText(testResultsTextView.getText() + "\nsecondCopy.toString() is called below\n" + secondCopy.toString());
+
+        String yesORno; //string that will be wither "Yes" or "No" depending on conditional
+        if ((firstCopy.toString()).equals(secondCopy.toString())) { //checks if the two strings are equal
+            yesORno = "Yes";
+        } else {
+            yesORno = "No";
+        }
+        //updates text to display if the strings are equal
+        testResultsTextView.setText(testResultsTextView.getText() + "\nAre these .toStrings of the copies the same value?\n" + yesORno);
+
+
+
         /* removed for proj e but saving this stuff for later! - R
         // Construct the action and send it to the game
         GameAction action = null;
@@ -256,12 +276,12 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         playerMoney = newVal;
     }
 
-    public void setShooter(boolean shooterChange) {
-        isShooter = shooterChange;
+    public void setShooter(boolean newShooter) {
+        isShooter = newShooter;
     }
 
     /**
-     * Unused methods (here to satisfy OnSeekbarChangedListener)
+     * Unused methods (here to satisfy implementing OnSeekbarChangedListener)
      */
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {

@@ -39,8 +39,8 @@ public class CrapsState extends GameState {
     //ctor
     public CrapsState() {
         this.playerTurn = 0;
-        this.player0Funds = 1000.0;
-        this.player1Funds = 1000.0;
+        this.player0Funds = 1000.00;
+        this.player1Funds = 1000.00;
         this.player0Ready = false;
         this.player1Ready = false;
         this.setDice(0, 0);
@@ -136,8 +136,8 @@ public class CrapsState extends GameState {
     //tells the tale of the game
     @Override
     public String toString() {
-        return "Player 0 has " + this.player0Funds + " and Player 1 has " + this.player1Funds +
-                ". The current dice are " + this.die1CurrVal + " and " + this.die2CurrVal;
+        return "Player 0 has " + this.player0Funds + "$, and Player 1 has " + this.player1Funds +
+                "$. The current dice are " + this.die1CurrVal + " and " + this.die2CurrVal;
     }
 
     //Actions.txt checkers
