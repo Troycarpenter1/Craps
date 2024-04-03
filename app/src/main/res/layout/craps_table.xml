@@ -733,14 +733,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10sp"
                         android:layout_weight="1"
-                        android:src="@drawable/side6dice" />
+                        android:src="@drawable/blankdice" />
 
                     <ImageView
                         android:id="@+id/dice2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@drawable/side1dice" />
+                        android:src="@drawable/blankdice" />
                 </LinearLayout>
 
                 <!-- End of Rowena's changes :3 -->
