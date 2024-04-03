@@ -26,7 +26,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:text="@string/pass_line"
-                android:cornerRadius="0dp"
+
                 android:backgroundTint="@color/dark_green"
                 android:fontFamily="serif"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -41,7 +41,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="100dp"
                 android:text="@string/don_t_pass"
-                android:cornerRadius="0dp"
+
                 android:backgroundTint="@color/dark_green"
                 android:fontFamily="serif"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -81,7 +81,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_weight="5"
                         android:text="@string/box4"
-                        android:cornerRadius="0dp"
+
                         android:backgroundTint="@color/dark_green"
                         android:fontFamily="serif"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -96,7 +96,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_weight="5"
                         android:text="@string/box5"
-                        android:cornerRadius="0dp"
+
                         android:backgroundTint="@color/dark_green"
                         android:fontFamily="serif"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -111,7 +111,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_weight="5"
                         android:text="@string/boxSIX"
-                        android:cornerRadius="0dp"
+
                         android:backgroundTint="@color/dark_green"
                         android:fontFamily="serif"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -126,7 +126,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_weight="5"
                         android:text="@string/box8"
-                        android:cornerRadius="0dp"
+
                         android:backgroundTint="@color/dark_green"
                         android:fontFamily="serif"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -141,7 +141,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_weight="5"
                         android:text="@string/boxNINE"
-                        android:cornerRadius="0dp"
+
                         android:backgroundTint="@color/dark_green"
                         android:fontFamily="serif"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -156,7 +156,7 @@
                         android:layout_marginRight="3dp"
                         android:layout_weight="5"
                         android:text="@string/box10"
-                        android:cornerRadius="0dp"
+
                         android:backgroundTint="@color/dark_green"
                         android:fontFamily="serif"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -177,7 +177,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Display3"
                     android:textColor="@color/come"
                     android:textStyle="bold"
-                    android:cornerRadius="0dp" />
+                    />
 
                 <Button
                     android:id="@+id/field"
@@ -189,8 +189,7 @@
                     android:text="@string/FIELD"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/thumb_tint"
-                    android:textStyle="bold"
-                    android:cornerRadius="0dp" />
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/dont_pass"
@@ -200,7 +199,6 @@
                     android:backgroundTint="@color/dark_green"
                     android:fontFamily="serif"
                     android:text="@string/dont_pass"
-                    android:cornerRadius="0dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
@@ -471,7 +469,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:cornerRadius="0dp" />
+                     />
 
                 <LinearLayout
                     android:id="@+id/pair3sAnd4s"
@@ -487,7 +485,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_weight="1"
                         android:text="@string/pair_of_2s"
-                        android:cornerRadius="0dp"
+
                         android:backgroundTint="@color/dark_green"
                         android:fontFamily="serif"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -503,7 +501,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_weight="1"
                         android:text="@string/pair_of_3s"
-                        android:cornerRadius="0dp"
+
                         android:backgroundTint="@color/dark_green"
                         android:fontFamily="serif"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -518,7 +516,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:orientation="horizontal"
-                    android:cornerRadius="0dp">
+                    >
                     <!-- 2 buttons-->
                     <Button
                         android:id="@+id/pair5s"
@@ -527,7 +525,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_weight="1"
                         android:text="@string/pair_of_5s"
-                        android:cornerRadius="0dp"
+
                         android:backgroundTint="@color/dark_green"
                         android:fontFamily="serif"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -542,7 +540,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_weight="1"
                         android:text="@string/pair_of_4s"
-                        android:cornerRadius="0dp"
+
                         android:backgroundTint="@color/dark_green"
                         android:fontFamily="serif"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -566,7 +564,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_weight="1"
                         android:text="@string/_21"
-                        android:cornerRadius="0dp"
+
                         android:backgroundTint="@color/dark_green"
                         android:fontFamily="serif"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -581,7 +579,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_weight="1"
                         android:text="@string/pair_of_1s"
-                        android:cornerRadius="0dp"
+
                         android:backgroundTint="@color/dark_green"
                         android:fontFamily="serif"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -596,7 +594,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_weight="1"
                         android:text="@string/pair_of_6s"
-                        android:cornerRadius="0dp"
+
                         android:backgroundTint="@color/dark_green"
                         android:fontFamily="serif"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -612,7 +610,7 @@
                     android:layout_marginRight="2dp"
                     android:layout_weight="2"
                     android:text="@string/_5_and_6"
-                    android:cornerRadius="0dp"
+
                     android:backgroundTint="@color/dark_green"
                     android:fontFamily="serif"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -628,7 +626,7 @@
                     android:layout_marginRight="2dp"
                     android:layout_weight="1"
                     android:text="@string/craps"
-                    android:cornerRadius="0dp"
+
                     android:backgroundTint="@color/dark_green"
                     android:fontFamily="serif"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -644,7 +642,7 @@
             android:id="@+id/passLineLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="5"
+            android:layout_weight="10"
             android:background="@color/table_bkgd"
             android:orientation="horizontal">
             <!--make text "pop" -->
@@ -655,7 +653,7 @@
                 android:layout_weight="2.64"
                 android:text="@string/pass_line"
                 android:backgroundTint="@color/dark_green"
-                android:cornerRadius="0dp"
+
                 android:fontFamily="serif"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/white"
@@ -735,14 +733,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10sp"
                         android:layout_weight="1"
-                        android:srcCompat="@drawable/side6dice" />
+                        android:src="@drawable/side6dice" />
 
                     <ImageView
                         android:id="@+id/dice2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:srcCompat="@drawable/side1dice" />
+                        android:src="@drawable/side1dice" />
                 </LinearLayout>
 
                 <!-- End of Rowena's changes :3 -->
@@ -757,7 +755,7 @@
                 android:layout_weight="0.05"
                 android:background="@color/black"
                 android:orientation="vertical"
-                android:ignore="DuplicateIds">
+                >
             </LinearLayout>
 
             <LinearLayout
@@ -908,7 +906,7 @@
                     android:layout_weight="5"
                     android:backgroundTint="@color/thumb_tint"
                     android:text="@string/join"
-                    android:cornerRadius="0dp"
+
                     android:fontFamily="serif"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     android:textColor="@color/black"
@@ -921,7 +919,7 @@
                     android:layout_weight="5"
                     android:backgroundTint="@color/thumb_tint"
                     android:text="@string/shoot"
-                    android:cornerRadius="0dp"
+
                     android:fontFamily="serif"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     android:textColor="@color/black"

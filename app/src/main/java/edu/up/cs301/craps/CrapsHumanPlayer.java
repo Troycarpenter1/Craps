@@ -226,13 +226,13 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // remember the activity
         this.myActivity = activity;
 
-        activity.setContentView(R.layout.teste);
+        activity.setContentView(R.layout.craps_table);
 
-        this.testResultsTextView =
-                (TextView) activity.findViewById(R.id.editTextTest);
+        //this.testResultsTextView =
+       //         (TextView) activity.findViewById(R.id.editTextTest);
 
-        Button testButton = (Button) activity.findViewById(R.id.testButton);
-        testButton.setOnClickListener(this);
+        //Button testButton = (Button) activity.findViewById(R.id.testButton);
+        //testButton.setOnClickListener(this);
 
         /* Removed for proj e but saving this stuff for later! - R
         // make this object the listener for both the '+' and '-' 'buttons
