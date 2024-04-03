@@ -93,69 +93,20 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // if we are not yet connected to a game, ignore
         if (game == null) return;
 
+
         CrapsState firstInstance=new CrapsState();
-        CrapsState firstCopy=new CrapsState(firstInstance);
 
-        if(button.getId()==R.id.testButton){
-            testResultsTextView=myActivity.findViewById(R.id.editTextTest);
-            updateDisplay("",1);
-
-            //players place bets
-            updateDisplay("Players place bets on field and a 9 place bet");
-
-            firstInstance.placeBet(new PlaceBetAction(this,0,4,30.0,
-                    firstInstance.getPlayer0Funds()));
-
-            firstInstance.placeBet((new PlaceBetAction(this,1,9,200.0,
-                    firstInstance.getPlayer1Funds())));
-
-
-            //players ready
-            updateDisplay("Players ready");
+        Random rand=new Random();
+        if(myActivity.findViewById(R.id.shoot)==button){
+            int die1=rand.nextInt(5)+1;
+            int die2=rand.nextInt(5)+1;
+            int totes=die1+die2;
+            RollAction roll= new RollAction(this,true,die1,die2,totes,(CrapsMainActivity) myActivity);
+            //game.sendAction(roll);
             firstInstance.ready(new Ready2CrapAction(this,true,0));
             firstInstance.ready(new Ready2CrapAction(this,true,1));
-
-            //first player rolls (still shooter)
-            updateDisplay("first player rolls 2 and 3 (not loss)");
-            firstInstance.roll(new RollAction(this,true,2,3,5));
-
-            //shows what happened
-            updateDisplay(firstInstance.toString());
-
-            //first player removes their bet
-            updateDisplay("first player removes bet");
-            firstInstance.removeBet(new RemoveBetAction(this,0,4));
-
-            //players ready
-            updateDisplay("players ready for roll  2");
-            firstInstance.ready(new Ready2CrapAction(this,true,0));
-            firstInstance.ready(new Ready2CrapAction(this,true,1));
-
-            //first player rolls
-            updateDisplay("player rolls 7 and loses, and player 2 loses their money");
-            firstInstance.roll(new RollAction(this,true,5,2,7));
-
-            //displays what happened
-            updateDisplay(firstInstance.toString());
-            updateDisplay("player 0 has won by being richer than player 2");
+            firstInstance.roll(roll);
         }
-
-        //making a secondInstance and its copy
-        CrapsState secondInstance = new CrapsState();
-        CrapsState secondCopy = new CrapsState(secondInstance);
-
-        //updating the display to show the new instance and its copy
-        testResultsTextView.setText(testResultsTextView.getText() + "\nfirstCopy.toString() is called below\n" + firstCopy.toString());
-        testResultsTextView.setText(testResultsTextView.getText() + "\nsecondCopy.toString() is called below\n" + secondCopy.toString());
-
-        String yesORno; //string that will be wither "Yes" or "No" depending on conditional
-        if ((firstCopy.toString()).equals(secondCopy.toString())) { //checks if the two strings are equal
-            yesORno = "Yes";
-        } else {
-            yesORno = "No";
-        }
-        //updates text to display if the strings are equal
-        testResultsTextView.setText(testResultsTextView.getText() + "\nAre these .toStrings of the copies the same value?\n" + yesORno);
 
 
 
@@ -227,6 +178,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         this.myActivity = activity;
 
         activity.setContentView(R.layout.craps_table);
+        Button shooter=(Button)activity.findViewById(R.id.shoot);
+        shooter.setOnClickListener(this);
 
         //this.testResultsTextView =
        //         (TextView) activity.findViewById(R.id.editTextTest);

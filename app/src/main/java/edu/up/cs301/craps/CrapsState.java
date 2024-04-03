@@ -1,5 +1,8 @@
 package edu.up.cs301.craps;
 
+import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+
 import edu.up.cs301.GameFramework.infoMessage.GameState;
 
 /**
@@ -41,8 +44,8 @@ public class CrapsState extends GameState {
         this.playerTurn = 0;
         this.player0Funds = 1000.00;
         this.player1Funds = 1000.00;
-        this.player0Ready = false;
-        this.player1Ready = false;
+        this.player0Ready = true;
+        this.player1Ready = true;
         this.setDice(0, 0);
         this.offOn = false;
         // iterates through a master 2d array and makes all bets for each player
@@ -286,6 +289,45 @@ public class CrapsState extends GameState {
         }
 
         this.setDice(action.die1, action.die2);
+
+        ImageView dice1=action.craps.findViewById(R.id.dice1);
+        ImageView dice2=action.craps.findViewById(R.id.dice2);
+
+        if(action.die1==1){
+            dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side1dice));
+        }else if(action.die1==2){
+            dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side2dice));
+        }else if(action.die1==3){
+            dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side3dice));
+
+        }else if(action.die1==4){
+            dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side4dice));
+
+        }else if(action.die1==5){
+            dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side5dice));
+
+        }else if(action.die1==6){
+            dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side6dice));
+
+        }
+
+        if(action.die2==1){
+            dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side1dice));
+        }else if(action.die2==2){
+            dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side2dice));
+        }else if(action.die2==3){
+            dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side3dice));
+
+        }else if(action.die2==4){
+            dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side4dice));
+
+        }else if(action.die2==5){
+            dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side5dice));
+
+        }else if(action.die2==6){
+            dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side6dice));
+
+        }
 
         return true;
 
