@@ -1,5 +1,36 @@
 <resources>
 
     <string name="app_name">Craps</string>
+    <string name="pass_line">PASS \nLINE</string>
+    <string name="don_t_pass">Don\'t \nPass</string>
+    <string name="box4">4</string>
+    <string name="box5">5</string>
+    <string name="boxSIX">SIX</string>
+    <string name="box7">7</string>
+    <string name="box8">8</string>
+    <string name="boxNINE">NINE</string>
+    <string name="box10">10</string>
+    <string name="COME">COME</string>
+    <string name="FIELD">FIELD \n 2   3   4   9   10   11   12</string>
+    <string name="dont_pass">Don\'t Pass</string>
+    <string name="c">C</string>
+    <string name="e">E</string>
+    <string name="_7_4_to_1">7 (4 to 1)</string>
+    <string name="pair_of_3s">Pair of 3s</string>
+    <string name="pair_of_4s">Pair of 4s</string>
+    <string name="_21">21</string>
+    <string name="pair_of_1s">Pair of 1s</string>
+    <string name="pair_of_6s">Pair of 6s</string>
+    <string name="craps">Craps</string>
+    <string name="_5_and_6">5 and 6</string>
+    <string name="pair_of_5s">Pair of 5s</string>
+    <string name="pair_of_2s">Pair of 2s</string>
+    <string name="_100">$100</string>
+    <string name="_10">$10</string>
+    <string name="_5">$5</string>
+    <string name="_1">$1</string>
+    <string name="current_bet">Current Bet:</string>
+    <string name="join">JOIN</string>
+    <string name="shoot">SHOOT</string>
 
 </resources>

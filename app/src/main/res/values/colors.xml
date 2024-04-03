@@ -3,4 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="dark_green">#08651F</color>
+    <color name="darker_green">#075A1C</color>
+    <color name="table_bkgd">#519F40</color>
+    <color name="management">#9A1E1E</color>
+    <color name="come">#D61818</color>
+    <color name="thumb_tint">#FFD700</color>
+    <color name="menu_butt">#83588F</color>
 </resources>
