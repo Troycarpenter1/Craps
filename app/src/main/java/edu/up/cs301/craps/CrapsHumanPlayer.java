@@ -94,7 +94,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if (game == null) return;
 
 
-        CrapsState firstInstance=new CrapsState();
+
 
         Random rand=new Random();
         if(myActivity.findViewById(R.id.shoot)==button){
@@ -103,9 +103,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             int totes=die1+die2;
             RollAction roll= new RollAction(this,true,die1,die2,totes,(CrapsMainActivity) myActivity);
             //game.sendAction(roll);
-            firstInstance.ready(new Ready2CrapAction(this,true,0));
-            firstInstance.ready(new Ready2CrapAction(this,true,1));
-            firstInstance.roll(roll);
+            state.ready(new Ready2CrapAction(this,true,0));
+            state.ready(new Ready2CrapAction(this,true,1));
+            state.roll(roll);
         }
 
 

@@ -34,13 +34,17 @@ public class CrapsState extends GameState {
     private Bet[][] bets = new Bet[2][23];
 
     //the dice every roll
+    private int firstRoll;
     private int die1CurrVal;
     private int die2CurrVal;
     private int dieTotal;
+    private boolean isFirstRoll;
     private boolean offOn;
 
     //ctor
     public CrapsState() {
+        this.isFirstRoll=true;
+        this.firstRoll = 0;
         this.playerTurn = 0;
         this.player0Funds = 1000.00;
         this.player1Funds = 1000.00;
@@ -59,6 +63,8 @@ public class CrapsState extends GameState {
 
     //copy constructor, currently is deep since no objects are used as variables atm
     public CrapsState(CrapsState crap) {
+        this.isFirstRoll = crap.isFirstRoll;
+        this.firstRoll = crap.firstRoll;
         this.playerTurn = crap.playerTurn;
         this.dieTotal = crap.dieTotal;
         this.die1CurrVal = crap.die1CurrVal;
@@ -106,6 +112,7 @@ public class CrapsState extends GameState {
     /**
      * setDice
      * sets dice and finds sum
+     *
      * @param die1Val
      * @param die2Val
      */
@@ -184,13 +191,13 @@ public class CrapsState extends GameState {
         //Is it the player's turn?
 
         //Does the player have enough money?
-        if (action.betAmount > action.playerMoney){
+        if (action.betAmount > action.playerMoney) {
             return false;
         }
 
         //Is the bet ID a valid point in the array?
         //23 is how many types of bets there are
-        if (action.betID > 22 || action.betID  < 0){
+        if (action.betID > 22 || action.betID < 0) {
             return false;
         }
 
@@ -205,9 +212,9 @@ public class CrapsState extends GameState {
          */
         //adjust the bet's amount
         this.bets[action.playerId][action.betID].setBetAmount(action.betAmount);
-        if(action.playerId==0) {
+        if (action.playerId == 0) {
             this.setPlayer0Funds(this.getPlayer0Funds() - action.betAmount);
-        }else{
+        } else {
             this.setPlayer1Funds(this.getPlayer1Funds() - action.betAmount);
         }
 
@@ -225,10 +232,10 @@ public class CrapsState extends GameState {
      * @param action
      * @return
      */
-    public boolean removeBet(RemoveBetAction action){
+    public boolean removeBet(RemoveBetAction action) {
 
         //Does the player have enough money?
-        if (bets[action.playerId][action.betID].getAmount()<=0){
+        if (bets[action.playerId][action.betID].getAmount() <= 0) {
             return false;
         }
 
@@ -237,10 +244,10 @@ public class CrapsState extends GameState {
             we could put the ID in the RemoveBetAction like we did for ReadyAction
          */
 
-        if(action.playerId==0) {
+        if (action.playerId == 0) {
             this.setPlayer0Funds(this.getPlayer0Funds() +
                     bets[action.playerId][action.betID].getAmount());
-        }else{
+        } else {
             this.setPlayer1Funds(this.getPlayer1Funds() +
                     bets[action.playerId][action.betID].getAmount());
         }
@@ -253,22 +260,21 @@ public class CrapsState extends GameState {
 
     /**
      * ready
-     *
+     * <p>
      * if player is ready, set player to ready :)
      *
      * @param action
      * @return
      */
-    public boolean ready (Ready2CrapAction action){
+    public boolean ready(Ready2CrapAction action) {
         //what conditions should a person ready under...
         //might have to time that later
 
         //note this is only for 2 players right now :)
         //if ready then changes appropriate player to ready
-        if (action.playerID == 0){
+        if (action.playerID == 0) {
             this.player0Ready = action.isReady;
-        }
-        else if (action.playerID ==1){
+        } else if (action.playerID == 1) {
             this.player1Ready = action.isReady;
         }
 
@@ -277,57 +283,85 @@ public class CrapsState extends GameState {
 
     /**
      * roll
-     *
+     * <p>
      * if player is shooter they can roll
      *
      * @param action
      * @return
      */
-    public boolean roll(RollAction action){
-        if (!action.isShooter){
+    public boolean roll(RollAction action) {
+        if (!action.isShooter) {
             return false;
         }
 
         this.setDice(action.die1, action.die2);
 
-        ImageView dice1=action.craps.findViewById(R.id.dice1);
-        ImageView dice2=action.craps.findViewById(R.id.dice2);
 
-        if(action.die1==1){
+        ImageView dice1 = action.craps.findViewById(R.id.dice1);
+        ImageView dice2 = action.craps.findViewById(R.id.dice2);
+
+        ImageView onOff = action.craps.findViewById(R.id.onOff);
+
+        //changes dice according to their values on the UI
+        if (action.die1 == 1) {
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side1dice));
-        }else if(action.die1==2){
+        } else if (action.die1 == 2) {
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side2dice));
-        }else if(action.die1==3){
+        } else if (action.die1 == 3) {
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side3dice));
 
-        }else if(action.die1==4){
+        } else if (action.die1 == 4) {
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side4dice));
 
-        }else if(action.die1==5){
+        } else if (action.die1 == 5) {
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side5dice));
 
-        }else if(action.die1==6){
+        } else if (action.die1 == 6) {
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side6dice));
 
         }
 
-        if(action.die2==1){
+        if (action.die2 == 1) {
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side1dice));
-        }else if(action.die2==2){
+        } else if (action.die2 == 2) {
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side2dice));
-        }else if(action.die2==3){
+        } else if (action.die2 == 3) {
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side3dice));
 
-        }else if(action.die2==4){
+        } else if (action.die2 == 4) {
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side4dice));
 
-        }else if(action.die2==5){
+        } else if (action.die2 == 5) {
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side5dice));
 
-        }else if(action.die2==6){
+        } else if (action.die2 == 6) {
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side6dice));
 
         }
+
+
+        //if it is the first roll of turn, change the on/off bar appropriately
+        if (this.isFirstRoll) {
+
+            this.firstRoll = dieTotal;
+
+            if (this.firstRoll == 4) {
+                onOff.setImageDrawable(action.craps.getDrawable(R.drawable.four));
+            } else if (this.firstRoll == 5) {
+                onOff.setImageDrawable(action.craps.getDrawable(R.drawable.blankdice));
+            } else if (this.firstRoll == 6) {
+                onOff.setImageDrawable(action.craps.getDrawable(R.drawable.four));
+            } else if (this.firstRoll == 8) {
+                onOff.setImageDrawable(action.craps.getDrawable(R.drawable.blankdice));
+            } else if (this.firstRoll == 9) {
+                onOff.setImageDrawable(action.craps.getDrawable(R.drawable.four));
+            } else if (this.firstRoll == 10) {
+                onOff.setImageDrawable(action.craps.getDrawable(R.drawable.blankdice));
+            }
+
+            this.isFirstRoll = false;
+        }
+
 
         return true;
 
