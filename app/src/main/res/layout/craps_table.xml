@@ -899,13 +899,13 @@
                 <!--2 Buttons-->
 
                 <Button
-                    android:id="@+id/join"
+                    android:id="@+id/ready"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="2dp"
                     android:layout_weight="5"
                     android:backgroundTint="@color/thumb_tint"
-                    android:text="@string/join"
+                    android:text="@string/ready"
 
                     android:fontFamily="serif"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1"

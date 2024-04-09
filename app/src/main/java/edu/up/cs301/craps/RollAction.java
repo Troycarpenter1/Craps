@@ -33,6 +33,6 @@ public class RollAction extends GameAction {
         this.die1 = die1;
         this.die2 = die2;
         this.dieTotal = dieTotal;
-        this.craps=crap;
+        this.craps = crap;
     }
 }
