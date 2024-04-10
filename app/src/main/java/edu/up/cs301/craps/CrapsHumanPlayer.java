@@ -27,7 +27,8 @@ import java.util.Random;
  * @author Rowena Archer
  * @version March 2024
  */
-public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener, SeekBar.OnSeekBarChangeListener {
+public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener,
+        SeekBar.OnSeekBarChangeListener {
 
     /* instance variables */
 
@@ -148,6 +149,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      */
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        TextView betView=myActivity.findViewById(R.id.betAmount);
+        betView.setText(""+progress);
         amountBet = progress;
     }
 
@@ -180,6 +183,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         activity.setContentView(R.layout.craps_table);
         Button shooter=(Button)activity.findViewById(R.id.shoot);
         shooter.setOnClickListener(this);
+
+        SeekBar betSelector=myActivity.findViewById(R.id.betAmountSelector);
+        betSelector.setOnSeekBarChangeListener(this);
 
         //this.testResultsTextView =
        //         (TextView) activity.findViewById(R.id.editTextTest);
@@ -238,6 +244,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      */
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
+
     }
 
     @Override

@@ -184,8 +184,14 @@ public class CrapsState extends GameState {
         //Is it the player's turn?
 
         //Does the player have enough money?
-        if (action.betAmount > action.playerMoney){
-            return false;
+        if(action.playerId==0) {
+            if (action.betAmount > player0Funds) {
+                return false;
+            }
+        }else if(action.playerId==1){
+            if (action.betAmount > player0Funds) {
+                return false;
+            }
         }
 
         //Is the bet ID a valid point in the array?

@@ -26,7 +26,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 	//instance variables
 	private GameMainActivity myActivity;
 	private int playerMoney;// player's money
-	private int amountBet;// amount player wants to bet
+	private double amountBet;// amount player wants to bet
 	private boolean isShooter;// shooter status
 	private boolean isReady; // player is ready (done placing bets)
 	private int die1;
@@ -57,7 +57,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 
 		//initialize instance variables
 		this.playerMoney = 1000;
-		this.amountBet = 0;
+		this.amountBet = 200.0;
 		this.isShooter = false;
 		this.isReady = false;
 		this.die1 = 0;
