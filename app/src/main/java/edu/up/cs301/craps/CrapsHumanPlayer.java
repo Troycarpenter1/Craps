@@ -6,12 +6,15 @@ import edu.up.cs301.GameFramework.GameMainActivity;
 import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+
+import androidx.annotation.ColorInt;
 
 import java.util.Random;
 
@@ -71,13 +74,15 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     /**
      * sets the counter value in the text view
      */
-    protected void updateDisplay(){
+    protected void updateDisplay() {
         // set the text in the appropriate widget
         //counterValueTextView.setText("" + state.getCounter());
     }
+
     protected void updateDisplay(String displayText) {
-        testResultsTextView.setText(testResultsTextView.getText()+"\n"+displayText, TextView.BufferType.NORMAL);
+        testResultsTextView.setText(testResultsTextView.getText() + "\n" + displayText, TextView.BufferType.NORMAL);
     }
+
     protected void updateDisplay(String displayText, int id) {
         testResultsTextView.setText("", TextView.BufferType.NORMAL);
     }
@@ -95,18 +100,47 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if (game == null) return;
 
 
-        CrapsState firstInstance=new CrapsState();
-
-        Random rand=new Random();
-        if(myActivity.findViewById(R.id.shoot)==button){
-            int die1=rand.nextInt(5)+1;
-            int die2=rand.nextInt(5)+1;
-            int totes=die1+die2;
-            RollAction roll= new RollAction(this,true,die1,die2,totes,(CrapsMainActivity) myActivity);
+        Random rand = new Random();
+        if (myActivity.findViewById(R.id.shoot) == button) {
+            int die1 = rand.nextInt(6) + 1;
+            int die2 = rand.nextInt(6) + 1;
+            int totes = die1 + die2;
+            RollAction roll = new RollAction(this, true, die1, die2, totes, (CrapsMainActivity) myActivity);
             //game.sendAction(roll);
-            firstInstance.ready(new Ready2CrapAction(this,true,0));
-            firstInstance.ready(new Ready2CrapAction(this,true,1));
-            firstInstance.roll(roll);
+            state.ready(new Ready2CrapAction(this, true, 0));
+            state.ready(new Ready2CrapAction(this, true, 1));
+            state.roll(roll);
+
+
+        //starting the many buttons for the bets
+        //pass line
+        } else if (myActivity.findViewById(R.id.passLine1) == button ||
+                myActivity.findViewById(R.id.passLine2) == button) {
+            //makes sure you are have a bet to place
+            if (amountBet > 0) {
+                //makes sure a bet hasn't already been placed, and if one has: removes it
+                if(state.getBet(0,1).getAmount()==0) {
+                    //sets an indicator of the bet
+                    Button passBet1 = myActivity.findViewById(R.id.passLine1);
+                    Button passBet2 = myActivity.findViewById(R.id.passLine2);
+                    passBet1.setTextColor(Color.parseColor("#FFD700"));
+                    passBet2.setTextColor(Color.parseColor("#FFD700"));
+
+                    //sends the bet action to the state
+                    PlaceBetAction pba = new PlaceBetAction(this, 0, 1,
+                            amountBet);
+                    state.placeBet(pba);
+                }else{
+                    Button passBet1 = myActivity.findViewById(R.id.passLine1);
+                    Button passBet2 = myActivity.findViewById(R.id.passLine2);
+                    passBet1.setTextColor(Color.parseColor("#FFFFFF"));
+                    passBet2.setTextColor(Color.parseColor("#FFFFFF"));
+
+                    //send the will to remove the bet to the state
+                    RemoveBetAction rba= new RemoveBetAction(this, 0, 1);
+                    state.removeBet(rba);
+                }
+            }
         }
 
 
@@ -149,8 +183,15 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      */
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        TextView betView=myActivity.findViewById(R.id.betAmount);
-        betView.setText(""+progress);
+        //update player funds
+        //todo: move this to an apropriate section
+        TextView playerMoney = myActivity.findViewById(R.id.yourMoney);
+        playerMoney.setText("$" + state.getPlayer0Funds());
+
+        //changes bet display/ amount to bet according to the seekbar
+        seekBar.setMax((int) state.getPlayer0Funds());
+        TextView betView = myActivity.findViewById(R.id.betAmount);
+        betView.setText("$" + progress);
         amountBet = progress;
     }
 
@@ -180,15 +221,19 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // remember the activity
         this.myActivity = activity;
 
+
         activity.setContentView(R.layout.craps_table);
-        Button shooter=(Button)activity.findViewById(R.id.shoot);
+        Button shooter = (Button) activity.findViewById(R.id.shoot);
         shooter.setOnClickListener(this);
 
-        SeekBar betSelector=myActivity.findViewById(R.id.betAmountSelector);
+        Button passLine = activity.findViewById(R.id.passLine1);
+        passLine.setOnClickListener(this);
+
+        SeekBar betSelector = activity.findViewById(R.id.betAmountSelector);
         betSelector.setOnSeekBarChangeListener(this);
 
         //this.testResultsTextView =
-       //         (TextView) activity.findViewById(R.id.editTextTest);
+        //         (TextView) activity.findViewById(R.id.editTextTest);
 
         //Button testButton = (Button) activity.findViewById(R.id.testButton);
         //testButton.setOnClickListener(this);

@@ -81,6 +81,10 @@ public class CrapsState extends GameState {
         return this.playerTurn;
     }
 
+    public Bet getBet(int playerId, int betId){
+        return bets[playerId][betId];
+    }
+
     public double getPlayer0Funds() {
         return this.player0Funds;
     }
@@ -211,6 +215,7 @@ public class CrapsState extends GameState {
          */
         //adjust the bet's amount
         this.bets[action.playerId][action.betID].setBetAmount(action.betAmount);
+
         if(action.playerId==0) {
             this.setPlayer0Funds(this.getPlayer0Funds() - action.betAmount);
         }else{
