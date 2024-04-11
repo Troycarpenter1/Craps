@@ -6,6 +6,7 @@ import edu.up.cs301.GameFramework.GameMainActivity;
 import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -142,15 +143,12 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         //remainder when progress is divided by the bet increment
         int r = progress % betIncrement;
-        // difference between current progress and remainder
-        int diff = progress - r;
         //set amount bet to the difference
-        amountBet = diff;
+        amountBet = progress - r;
         //update seekbar
         seekBar.setProgress(amountBet);
         //update text
         betView.setText("$" + amountBet);
-
     }
 
     /**
@@ -173,7 +171,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         } else if (checkedId == R.id.hundredChip) {
             betIncrement = 100;
         }
-
+        Log.d("TEST","" + betIncrement);
     }
 
     /**
@@ -217,6 +215,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         //Makes the radio group and its buttons all work cool
         RadioGroup chips = (RadioGroup) activity.findViewById(R.id.betSetGroup);
+        chips.setOnCheckedChangeListener(this);
         //makes the $1 button work
         RadioButton oneChip = (RadioButton) activity.findViewById(R.id.oneChip);
         oneChip.setOnCheckedChangeListener(this);
