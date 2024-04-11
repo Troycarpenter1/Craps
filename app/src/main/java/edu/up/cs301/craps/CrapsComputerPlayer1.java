@@ -83,16 +83,9 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 	//roll
 	//this part is copied directly from Rowena's code
 	public void roll() {
-		//TODO Game State should be the only one that rolls (generates random numbers and sends them)
-		// check if Im shooter, otherwise return
 
-		// randomize dice
-		Random rand = new Random();
-		die1 = (rand.nextInt(6) + 1);
-		die2 = (rand.nextInt(6) + 1);
 		//create a roll action
-		RollAction roll= new RollAction(this,this.isShooter,die1,die2,
-				die1 + die2,(CrapsMainActivity) myActivity);
+		RollAction roll= new RollAction(this,this.isShooter, (CrapsMainActivity) myActivity);
 		game.sendAction(roll);
 
 	}
