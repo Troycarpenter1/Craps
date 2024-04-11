@@ -285,7 +285,7 @@ public class CrapsState extends GameState {
      * @param action
      * @return
      */
-    public boolean roll(RollAction action){
+    public boolean roll(RollAction action) {
         if (!action.isShooter){
             return false;
         }
@@ -349,6 +349,10 @@ public class CrapsState extends GameState {
                 humanPlayer.setShooter(false);
                 this.playerTurn = 1;  //it's the computer player's turn
 
+                //how do I get the computer player
+                //TODO prompt the computer player to take turn
+                //comp1Player.takeTurn(); //tell them to take a turn
+
                 //^ computer player shooter == true
             }
             //if the computer player rolled
@@ -357,7 +361,8 @@ public class CrapsState extends GameState {
                 //human computer shooter == false
                 CrapsComputerPlayer1 comp1Player = (CrapsComputerPlayer1)player;
                 Log.d("die", "Computer player rolled");
-
+                this.playerTurn = 0; //hopefully this will tell the comp player
+                                     //to not take a turn
                 //"other" player (human) shooter == true
             }
         }
