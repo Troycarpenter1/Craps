@@ -833,33 +833,35 @@
                         android:id="@+id/betSetGroup"
                         android:layout_weight="2"
                         >
+
                         <RadioButton
                             android:id="@+id/oneChip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:backgroundTint="@color/menu_butt"
+                            android:button="@drawable/one_dolar"
                             android:fontFamily="serif"
                             android:outlineProvider="paddedBounds"
                             android:text="@string/_1"
                             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"
-                            android:layout_weight="1"
 
-                            />
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
                         <RadioButton
                             android:id="@+id/fiveChip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:backgroundTint="@color/menu_butt"
+                            android:button="@drawable/five_dolar"
                             android:fontFamily="serif"
                             android:text="@string/_5"
                             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                             android:textColor="@color/white"
-                            android:textStyle="bold"
-                            android:layout_weight="1"
 
-                            />
+                            android:textStyle="bold" />
                         <RadioButton
                             android:id="@+id/tenChip"
                             android:layout_width="wrap_content"
@@ -873,18 +875,19 @@
                             android:layout_weight="1"
 
                             />
+
                         <RadioButton
                             android:id="@+id/hundredChip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:backgroundTint="@color/menu_butt"
+                            android:button="@drawable/one_hundy"
                             android:fontFamily="serif"
                             android:text="@string/_100"
                             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                             android:textColor="@color/white"
-                            android:textStyle="bold"
-                            android:layout_weight="1"
-                            />
+                            android:textStyle="bold" />
                     </RadioGroup>
                 </LinearLayout>
 
