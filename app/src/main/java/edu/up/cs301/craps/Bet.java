@@ -19,10 +19,10 @@ package edu.up.cs301.craps;
 public class Bet {
     //instance variables
 
+    private int ID; //value that represents the type of bet in an array of bet names & payouts
+    private String name; //name of the bet
     private double amount; //the amount of money this bet has put on it
     private double payout;
-    private int ID; //value that represents the type of bet in a public static final (PSF) string array of bet names
-    private String name; //name of the bet
 
     //public static final variables
     //list of all names of all bets
@@ -33,6 +33,12 @@ public class Bet {
             "Pair of 4s", "Pair of 5s", "2 & 1", "Pair of 1s",
             "Pair of 6s", "5 & 6", "CRAPS"
     };
+    //list of all payouts of all bets
+    //todo: add all the payouts
+    public static final double[] ALL_BET_PAYOUTS = new double[]{
+            0.0,
+    };
+
 
     //default cnstr
     public Bet() {
