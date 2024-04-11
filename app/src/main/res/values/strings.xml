@@ -30,7 +30,7 @@
     <string name="_5">$5</string>
     <string name="_1">$1</string>
     <string name="current_bet">Current Bet:</string>
-    <string name="join">JOIN</string>
+    <string name="ready">READY</string>
     <string name="shoot">SHOOT</string>
 
 </resources>

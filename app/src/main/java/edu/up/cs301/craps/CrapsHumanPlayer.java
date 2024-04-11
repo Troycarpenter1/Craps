@@ -71,13 +71,15 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     /**
      * sets the counter value in the text view
      */
-    protected void updateDisplay(){
+    protected void updateDisplay() {
         // set the text in the appropriate widget
         //counterValueTextView.setText("" + state.getCounter());
     }
+
     protected void updateDisplay(String displayText) {
-        testResultsTextView.setText(testResultsTextView.getText()+"\n"+displayText, TextView.BufferType.NORMAL);
+        testResultsTextView.setText(testResultsTextView.getText() + "\n" + displayText, TextView.BufferType.NORMAL);
     }
+
     protected void updateDisplay(String displayText, int id) {
         testResultsTextView.setText("", TextView.BufferType.NORMAL);
     }
@@ -93,48 +95,27 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     public void onClick(View button) {
         // if we are not yet connected to a game, ignore
         if (game == null) return;
+        //Log.d("TEST", String.valueOf(button.getId()));
+        CrapsState firstInstance = new CrapsState();
 
-
-        CrapsState firstInstance=new CrapsState();
-
-        Random rand=new Random();
-        if(myActivity.findViewById(R.id.shoot)==button){
-            int die1=rand.nextInt(5)+1;
-            int die2=rand.nextInt(5)+1;
-            int totes=die1+die2;
-            RollAction roll= new RollAction(this,true,die1,die2,totes,(CrapsMainActivity) myActivity);
-            //game.sendAction(roll);
-            firstInstance.ready(new Ready2CrapAction(this,true,0));
-            firstInstance.ready(new Ready2CrapAction(this,true,1));
-            firstInstance.roll(roll);
-        }
-
-
-
-        /* removed for proj e but saving this stuff for later! - R
-        // Construct the action and send it to the game
-        GameAction action = null;
-
-        int anyBet = R.id.plusButton; // placeholder
-        int rollButton = R.id.plusButton; //placeholder
-        int readyButton = R.id.plusButton; //placeholder
-
-        // creating and sending action
-        // this conditional will later be expanded to include all bets
-        if (button.getId() == anyBet) {
-            action = new PlaceBetAction(this, 0, 0, 0);
-        } else if (button.getId() == rollButton) {
+        if (button.equals(myActivity.findViewById(R.id.ready))) { //checks if the button pressed is the ready button GONE WRONG
+            //Log.d("TEST", "ready");
+            Ready2CrapAction P1Ready = new Ready2CrapAction(this, true, 0);
+            //Ready2CrapAction P2Ready = new Ready2CrapAction(this, true, 1);
+            firstInstance.ready(P1Ready);
+            //firstInstance.ready(P2Ready);
+            game.sendAction(P1Ready);
+            //game.sendAction(P2Ready);
+        } else if (button.equals(myActivity.findViewById(R.id.shoot))) { //checks if the button pressed is the shoot button
+            //Log.d("TEST", "shoot");
             Random rand = new Random();
-            die1 = (rand.nextInt(6) + 1);
-            die2 = (rand.nextInt(6) + 1);
-            action = new RollAction(this, isShooter, die1, die2, die1 + die2);
-        } else if (button.getId() == readyButton) {
-            action = new Ready2CrapAction(this, true, playerNum);
+            int die1 = rand.nextInt(6) + 1;
+            int die2 = rand.nextInt(6) + 1;
+            int totes = die1 + die2;
+            RollAction roll = new RollAction(this, true, die1, die2, totes, (CrapsMainActivity) myActivity);
+            firstInstance.roll(roll);
+            game.sendAction(roll);
         }
-
-        game.sendAction(action); // send action to the game
-
-         */
     }// onClick
 
     /**
@@ -181,8 +162,12 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         this.myActivity = activity;
 
         activity.setContentView(R.layout.craps_table);
-        Button shooter=(Button)activity.findViewById(R.id.shoot);
+        //makes the shooter button work
+        Button shooter = (Button) activity.findViewById(R.id.shoot);
         shooter.setOnClickListener(this);
+        //makes the ready button work
+        Button join = (Button) activity.findViewById(R.id.ready);
+        join.setOnClickListener(this);
 
         SeekBar betSelector=myActivity.findViewById(R.id.betAmountSelector);
         betSelector.setOnSeekBarChangeListener(this);
@@ -190,15 +175,22 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         //this.testResultsTextView =
        //         (TextView) activity.findViewById(R.id.editTextTest);
 
-        //Button testButton = (Button) activity.findViewById(R.id.testButton);
-        //testButton.setOnClickListener(this);
+        //makes the $1 button work
+        Button oneChip = (Button) activity.findViewById(R.id.oneChip);
+        oneChip.setOnClickListener(this);
+        //makes the $5 button work
+        Button twoChip = (Button) activity.findViewById(R.id.fiveChip);
+        twoChip.setOnClickListener(this);
+        //makes the $10 button work
+        Button redChip = (Button) activity.findViewById(R.id.tenChip);
+        redChip.setOnClickListener(this);
+        //makes the $5 button work
+        Button blueChip = (Button) activity.findViewById(R.id.hundredChip);
+        blueChip.setOnClickListener(this);
 
-        /* Removed for proj e but saving this stuff for later! - R
-        // make this object the listener for both the '+' and '-' 'buttons
-        Button plusButton = (Button) activity.findViewById(R.id.plusButton);
-        plusButton.setOnClickListener(this);
-        Button minusButton = (Button) activity.findViewById(R.id.minusButton);
-        minusButton.setOnClickListener(this);
+        //makes the next implemented button work
+        //Button newButton = (Button) activity.findViewById(R.id.nextButton);
+        //nextButton.setOnClickListener(this);
 
         // remember the field that we update to display the counter's value
         this.testResultsTextView =
