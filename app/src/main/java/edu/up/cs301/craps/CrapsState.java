@@ -340,26 +340,30 @@ public class CrapsState extends GameState {
         }
 
 
+        //todo: get this to stay on a single image instead of change every roll
         //if it is the first roll of turn, change the on/off bar appropriately
-        if (this.isFirstRoll) {
+        if (!this.offOn) {
+            if(this.isFirstRoll) {
 
-            this.firstRoll = dieTotal;
+                this.firstRoll = dieTotal;
 
-            if (this.firstRoll == 4) {
-                onOff.setImageDrawable(action.craps.getDrawable(R.drawable.four));
-            } else if (this.firstRoll == 5) {
-                onOff.setImageDrawable(action.craps.getDrawable(R.drawable.blankdice));
-            } else if (this.firstRoll == 6) {
-                onOff.setImageDrawable(action.craps.getDrawable(R.drawable.four));
-            } else if (this.firstRoll == 8) {
-                onOff.setImageDrawable(action.craps.getDrawable(R.drawable.blankdice));
-            } else if (this.firstRoll == 9) {
-                onOff.setImageDrawable(action.craps.getDrawable(R.drawable.four));
-            } else if (this.firstRoll == 10) {
-                onOff.setImageDrawable(action.craps.getDrawable(R.drawable.blankdice));
+                if (this.firstRoll == 4) {
+                    onOff.setImageDrawable(action.craps.getDrawable(R.drawable.four));
+                } else if (this.firstRoll == 5) {
+                    onOff.setImageDrawable(action.craps.getDrawable(R.drawable.blankdice));
+                } else if (this.firstRoll == 6) {
+                    onOff.setImageDrawable(action.craps.getDrawable(R.drawable.four));
+                } else if (this.firstRoll == 8) {
+                    onOff.setImageDrawable(action.craps.getDrawable(R.drawable.blankdice));
+                } else if (this.firstRoll == 9) {
+                    onOff.setImageDrawable(action.craps.getDrawable(R.drawable.four));
+                } else if (this.firstRoll == 10) {
+                    onOff.setImageDrawable(action.craps.getDrawable(R.drawable.blankdice));
+                }
+
+                this.isFirstRoll = false;
             }
-
-            this.isFirstRoll = false;
+            this.offOn=true;
         }
 
 
