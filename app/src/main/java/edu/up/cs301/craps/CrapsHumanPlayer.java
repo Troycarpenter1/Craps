@@ -101,6 +101,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             int die1=rand.nextInt(5)+1;
             int die2=rand.nextInt(5)+1;
             int totes=die1+die2;
+            //changed this to not pass in true
             RollAction roll= new RollAction(this,true,die1,die2,totes,(CrapsMainActivity) myActivity);
             //game.sendAction(roll);
             firstInstance.ready(new Ready2CrapAction(this,true,0));

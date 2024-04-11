@@ -1,9 +1,11 @@
 package edu.up.cs301.craps;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.ImageView;
 
 import edu.up.cs301.GameFramework.infoMessage.GameState;
+import edu.up.cs301.GameFramework.players.GamePlayer;
 
 /**
  * This contains the state for the Craps game. The state consist the player and
@@ -25,7 +27,7 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
 public class CrapsState extends GameState {
 
     //the players in the game, and their current net worth
-    private int playerTurn;
+    private int playerTurn; //right now 0 is human, 1 is comp player
     private double player0Funds;
     private boolean player0Ready;
     private double player1Funds;
@@ -289,6 +291,7 @@ public class CrapsState extends GameState {
         }
 
         this.setDice(action.die1, action.die2);
+        //Log.d("die", "dieTotal: " + action.dieTotal);
 
         ImageView dice1=action.craps.findViewById(R.id.dice1);
         ImageView dice2=action.craps.findViewById(R.id.dice2);
@@ -327,6 +330,36 @@ public class CrapsState extends GameState {
         }else if(action.die2==6){
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side6dice));
 
+        }
+
+        //SYDNEY -- switch player
+        //TODO this is written assuming there is one human and one computer playing
+        if (action.dieTotal == 7){
+            Log.d("die", "7 ROLLED! SWITCH! ");
+
+            GamePlayer player = action.getPlayer();
+            //Log.d("die", "the player is: " + player);
+
+            //if the human player rolled
+            if (player instanceof CrapsHumanPlayer){
+
+                //human player shooter == false
+                CrapsHumanPlayer humanPlayer = (CrapsHumanPlayer)player;
+                Log.d("die", "Human player rolled");
+                humanPlayer.setShooter(false);
+                this.playerTurn = 1;  //it's the computer player's turn
+
+                //^ computer player shooter == true
+            }
+            //if the computer player rolled
+            else if (player instanceof CrapsComputerPlayer1){
+
+                //human computer shooter == false
+                CrapsComputerPlayer1 comp1Player = (CrapsComputerPlayer1)player;
+                Log.d("die", "Computer player rolled");
+
+                //"other" player (human) shooter == true
+            }
         }
 
         return true;
