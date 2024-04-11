@@ -214,7 +214,8 @@ public class CrapsState extends GameState {
             we could put the ID in the RemoveBetAction like we did for ReadyAction
          */
         //adjust the bet's amount
-        this.bets[action.playerId][action.betID].setBetAmount(action.betAmount);
+        this.bets[action.playerId][action.betID]=new Bet((int)action.betAmount, 1.0,
+                action.betID);
 
         if(action.playerId==0) {
             this.setPlayer0Funds(this.getPlayer0Funds() - action.betAmount);
