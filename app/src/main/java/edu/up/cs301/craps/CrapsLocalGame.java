@@ -58,7 +58,7 @@ public class CrapsLocalGame extends LocalGame {
 	@Override
 	protected boolean makeMove(GameAction action) {
 		Log.i("action", action.getClass().toString());
-		
+		//checks what action this move is
 		if (action instanceof CrapsMoveAction) {
 		
 			// cast so that we Java knows it's a CounterMoveAction
@@ -70,8 +70,21 @@ public class CrapsLocalGame extends LocalGame {
 			
 			// denote that this was a legal/successful move
 			return true;
-		}
-		else {
+		} else if (action instanceof Ready2CrapAction) {
+			//typecast
+			Ready2CrapAction ready2crap = (Ready2CrapAction) action;
+			//perform appropriate action handler method in gamestate
+			gameState.ready(ready2crap);
+			//denote legal move
+			return true;
+		}else if (action instanceof RollAction) {
+			//typecast
+			RollAction rolling = (RollAction) action;
+			//perform appropriate action handler method in gamestate
+			gameState.roll(rolling);
+			//denote legal move
+			return true;
+		} else {
 			// denote that this was an illegal move
 			return false;
 		}

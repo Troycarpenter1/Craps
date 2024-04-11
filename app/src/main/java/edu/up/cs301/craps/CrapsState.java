@@ -106,6 +106,7 @@ public class CrapsState extends GameState {
     /**
      * setDice
      * sets dice and finds sum
+     *
      * @param die1Val
      * @param die2Val
      */
@@ -180,17 +181,16 @@ public class CrapsState extends GameState {
         //Is it the player's turn?
 
         //Does the player have enough money?
-        if(action.playerId==0) {
+        if (action.playerId == 0) {
             if (action.betAmount > player0Funds) {
                 return false;
             }
-        }else if(action.playerId==1){
-            if (action.betAmount > player0Funds) {
+        } else if (action.playerId == 1) {
+            if (action.betAmount > player1Funds) {
                 return false;
             }
-        if (action.betAmount > action.playerMoney) {
-            return false;
         }
+
 
         //Is the bet ID a valid point in the array?
         //23 is how many types of bets there are
@@ -286,6 +286,7 @@ public class CrapsState extends GameState {
      * @param action
      * @return NOTE: later on we might want to calculate roll in here instead - Troy
      */
+
     public boolean roll(RollAction action) {
         //checks if it is the shooters turn
         if (!action.isShooter) {

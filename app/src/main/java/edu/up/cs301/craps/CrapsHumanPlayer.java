@@ -8,7 +8,10 @@ import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
@@ -28,7 +31,7 @@ import java.util.Random;
  * @version March 2024
  */
 public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener,
-        SeekBar.OnSeekBarChangeListener {
+        SeekBar.OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
 
     /* instance variables */
 
@@ -46,6 +49,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     private boolean isReady; // player is ready (done placing bets)
     private int die1;
     private int die2;
+
+    private int betIncrement = 1;
 
     // we'll get the bet array by going to game state
 
@@ -96,14 +101,11 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // if we are not yet connected to a game, ignore
         if (game == null) return;
         //Log.d("TEST", String.valueOf(button.getId()));
-        CrapsState firstInstance = new CrapsState();
 
         if (button.equals(myActivity.findViewById(R.id.ready))) { //checks if the button pressed is the ready button GONE WRONG
             //Log.d("TEST", "ready");
             Ready2CrapAction P1Ready = new Ready2CrapAction(this, true, 0);
             //Ready2CrapAction P2Ready = new Ready2CrapAction(this, true, 1);
-            firstInstance.ready(P1Ready);
-            //firstInstance.ready(P2Ready);
             game.sendAction(P1Ready);
             //game.sendAction(P2Ready);
         } else if (button.equals(myActivity.findViewById(R.id.shoot))) { //checks if the button pressed is the shoot button
@@ -113,7 +115,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             int die2 = rand.nextInt(6) + 1;
             int totes = die1 + die2;
             RollAction roll = new RollAction(this, true, die1, die2, totes, (CrapsMainActivity) myActivity);
-            firstInstance.roll(roll);
             game.sendAction(roll);
         }
     }// onClick
@@ -130,9 +131,49 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      */
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        TextView betView=myActivity.findViewById(R.id.betAmount);
-        betView.setText(""+progress);
-        amountBet = progress;
+        //checks if the progress was changed by the user (good) or if it was updated using this method plz return
+        if (!fromUser) {
+            return;
+        }
+        //the text view that displays how much money is bet
+        TextView betView = myActivity.findViewById(R.id.betAmount);
+        //sets the max the bar can scroll to the players total money
+        seekBar.setMax((int) state.getPlayer0Funds());
+
+        //remainder when progress is divided by the bet increment
+        int r = progress % betIncrement;
+        // difference between current progress and remainder
+        int diff = progress - r;
+        //set amount bet to the difference
+        amountBet = diff;
+        //update seekbar
+        seekBar.setProgress(amountBet);
+        //update text
+        betView.setText("$" + amountBet);
+
+    }
+
+    /**
+     * This method gets called each time a radio button thing happens
+     *
+     * @param group     the group in which the checked radio button has changed
+     * @param checkedId the unique identifier of the newly checked radio button
+     */
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        SeekBar seeker = myActivity.findViewById(R.id.betAmountSelector);
+
+        //checks which radio button in the group is being changed
+        if (checkedId == R.id.oneChip) {
+            betIncrement = 1;
+        } else if (checkedId == R.id.fiveChip) {
+            betIncrement = 5;
+        } else if (checkedId == R.id.tenChip) {
+            betIncrement = 10;
+        } else if (checkedId == R.id.hundredChip) {
+            betIncrement = 100;
+        }
+
     }
 
     /**
@@ -169,24 +210,25 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         Button join = (Button) activity.findViewById(R.id.ready);
         join.setOnClickListener(this);
 
-        SeekBar betSelector=myActivity.findViewById(R.id.betAmountSelector);
+        SeekBar betSelector = myActivity.findViewById(R.id.betAmountSelector);
         betSelector.setOnSeekBarChangeListener(this);
 
-        //this.testResultsTextView =
-       //         (TextView) activity.findViewById(R.id.editTextTest);
+        //this.testResultsTextView = (TextView) activity.findViewById(R.id.editTextTest);
 
+        //Makes the radio group and its buttons all work cool
+        RadioGroup chips = (RadioGroup) activity.findViewById(R.id.betSetGroup);
         //makes the $1 button work
-        Button oneChip = (Button) activity.findViewById(R.id.oneChip);
-        oneChip.setOnClickListener(this);
+        RadioButton oneChip = (RadioButton) activity.findViewById(R.id.oneChip);
+        oneChip.setOnCheckedChangeListener(this);
         //makes the $5 button work
-        Button twoChip = (Button) activity.findViewById(R.id.fiveChip);
-        twoChip.setOnClickListener(this);
+        RadioButton twoChip = (RadioButton) activity.findViewById(R.id.fiveChip);
+        twoChip.setOnCheckedChangeListener(this);
         //makes the $10 button work
-        Button redChip = (Button) activity.findViewById(R.id.tenChip);
-        redChip.setOnClickListener(this);
+        RadioButton redChip = (RadioButton) activity.findViewById(R.id.tenChip);
+        redChip.setOnCheckedChangeListener(this);
         //makes the $5 button work
-        Button blueChip = (Button) activity.findViewById(R.id.hundredChip);
-        blueChip.setOnClickListener(this);
+        RadioButton blueChip = (RadioButton) activity.findViewById(R.id.hundredChip);
+        blueChip.setOnCheckedChangeListener(this);
 
         //makes the next implemented button work
         //Button newButton = (Button) activity.findViewById(R.id.nextButton);
@@ -201,7 +243,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if (state != null) {
             receiveInfo(state);
         }
-         */
     }
 
     /**
@@ -243,5 +284,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     public void onStopTrackingTouch(SeekBar seekBar) {
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+    }
 }// class CrapsHumanPlayer
 
