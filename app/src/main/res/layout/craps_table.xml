@@ -832,6 +832,7 @@
                         android:orientation="horizontal"
                         android:id="@+id/betSetGroup"
                         android:layout_weight="2"
+                        android:layout_marginLeft="10dp"
                         >
 
                         <RadioButton
@@ -840,7 +841,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:backgroundTint="@color/menu_butt"
-                            android:button="@drawable/one_dolar"
+                            android:button="@drawable/custom_chip_one"
                             android:fontFamily="serif"
                             android:outlineProvider="paddedBounds"
                             android:text="@string/_1"
@@ -854,13 +855,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:backgroundTint="@color/menu_butt"
-                            android:button="@drawable/five_dolar"
+                            android:button="@drawable/custom_chip_fivedolar"
                             android:fontFamily="serif"
+
                             android:text="@string/_5"
                             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                             android:textColor="@color/white"
-
                             android:textStyle="bold" />
                         <RadioButton
                             android:id="@+id/tenChip"
@@ -869,6 +869,7 @@
                             android:backgroundTint="@color/menu_butt"
                             android:fontFamily="serif"
                             android:text="@string/_10"
+                            android:button="@drawable/custom_chip_ten"
                             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                             android:textColor="@color/white"
                             android:textStyle="bold"
@@ -882,7 +883,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:backgroundTint="@color/menu_butt"
-                            android:button="@drawable/one_hundy"
+                            android:button="@drawable/custom_chip_hundy"
                             android:fontFamily="serif"
                             android:text="@string/_100"
                             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
