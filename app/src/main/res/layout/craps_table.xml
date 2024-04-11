@@ -16,7 +16,7 @@
             android:id="@+id/gambling"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="20"
             android:background="@color/table_bkgd"
             android:orientation="horizontal">
             <!--orientation correct, sizing need work -->
@@ -643,7 +643,7 @@
             android:id="@+id/passLineLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:background="@color/table_bkgd"
             android:orientation="horizontal">
             <!--make text "pop" -->
@@ -686,7 +686,10 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:padding="5sp">
-
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -703,11 +706,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5sp"
                     android:text="$500"
-                    android:textSize="24dp"
+                    android:textSize="30dp"
                     android:fontFamily="serif"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     android:textColor="@color/white"
                     android:textStyle="bold"/>
+
+                    </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -720,11 +725,10 @@
                     android:textStyle="bold"/>
 
                 <!--2 dice images-->
-
                 <LinearLayout
                     android:id="@+id/diceDisplay"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="horizontal"
                     >
@@ -737,7 +741,7 @@
                     <ImageView
                         android:id="@+id/dice1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginRight="10sp"
                         android:layout_marginLeft="10sp"
                         android:layout_weight="3"
@@ -746,7 +750,7 @@
                     <ImageView
                         android:id="@+id/dice2"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginRight="10sp"
                         android:layout_marginLeft="10sp"
                         android:layout_weight="3"
@@ -786,94 +790,102 @@
                     android:id="@+id/incrementSelection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/oneChip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:backgroundTint="@color/menu_butt"
-                        android:fontFamily="serif"
-                        android:outlineProvider="paddedBounds"
-                        android:text="@string/_1"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/fiveChip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:backgroundTint="@color/menu_butt"
-                        android:fontFamily="serif"
-                        android:text="@string/_5"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/tenChip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:backgroundTint="@color/menu_butt"
-                        android:fontFamily="serif"
-                        android:text="@string/_10"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/hundredChip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:backgroundTint="@color/menu_butt"
-                        android:fontFamily="serif"
-                        android:text="@string/_100"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                    <!-- <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0" /> -->
-
+                    android:layout_weight="1"
+                    android:orientation="vertical">
                     <LinearLayout
                         android:id="@+id/BetTracker"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="2">
 
                         <TextView
                             android:id="@+id/currentBetID"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:fontFamily="serif"
                             android:text="@string/current_bet"
                             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                             android:textColor="@color/white"
-                            android:textSize="24dp"
-                            android:textStyle="bold" />
+                            android:textSize="30dp"
+                            android:textStyle="bold"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="20dp"/>
 
                         <TextView
                             android:id="@+id/betAmount"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:ems="10"
                             android:fontFamily="serif"
                             android:text="$500"
                             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                             android:textColor="@color/white"
-                            android:textSize="24dp"
-                            android:textStyle="bold" />
-
-
+                            android:textSize="30dp"
+                            android:textStyle="bold"
+                            android:layout_weight="1"/>
                     </LinearLayout>
+                    <!-- Added radio buttons instead of regular buttons - Rowena -->
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:id="@+id/betSetGroup"
+                        android:layout_weight="2"
+                        >
+                        <RadioButton
+                            android:id="@+id/oneChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/menu_butt"
+                            android:fontFamily="serif"
+                            android:outlineProvider="paddedBounds"
+                            android:text="@string/_1"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_weight="1"
+
+                            />
+                        <RadioButton
+                            android:id="@+id/fiveChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/menu_butt"
+                            android:fontFamily="serif"
+                            android:text="@string/_5"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_weight="1"
+
+                            />
+                        <RadioButton
+                            android:id="@+id/tenChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/menu_butt"
+                            android:fontFamily="serif"
+                            android:text="@string/_10"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_weight="1"
+
+                            />
+                        <RadioButton
+                            android:id="@+id/hundredChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/menu_butt"
+                            android:fontFamily="serif"
+                            android:text="@string/_100"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_weight="1"
+                            />
+                    </RadioGroup>
                 </LinearLayout>
 
                 <LinearLayout
@@ -889,6 +901,7 @@
                     android:id="@+id/betAmountSelector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:progress="50"
                     android:progressBackgroundTint="@color/white"
                     android:progressBackgroundTintMode="add"
