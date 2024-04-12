@@ -111,7 +111,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             //Ready2CrapAction P2Ready = new Ready2CrapAction(this, true, 1);
             game.sendAction(P1Ready);
             //game.sendAction(P2Ready);
-        } else if (myActivity.findViewById(R.id.shoot)==button) {
+        } else if (myActivity.findViewById(R.id.shoot) == button) {
             //changed this to not pass in true always
             RollAction roll = new RollAction(this, this.isShooter, (CrapsMainActivity) myActivity);
             game.sendAction(roll);
@@ -169,7 +169,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         } else if (checkedId == R.id.hundredChip) {
             betIncrement = 100;
         }
-        Log.d("TEST","" + betIncrement);
+        Log.d("TEST", "" + betIncrement);
     }
 
     /**

@@ -293,7 +293,7 @@ public class CrapsState extends GameState {
 
     public boolean roll(RollAction action) {
         //checks if it is the shooters turn
-        if (!action.isShooter){
+        if (!action.isShooter) {
             return false;
         }
         //checks if both players are ready
@@ -303,67 +303,67 @@ public class CrapsState extends GameState {
 
         //updates the values of the die
         Random rand = new Random();
-        this.setDice(rand.nextInt(6)+1, rand.nextInt(6)+1);
+        this.setDice(rand.nextInt(6) + 1, rand.nextInt(6) + 1);
         //Log.d("die", "dieTotal: " + action.dieTotal);
 
         ImageView dice1 = action.craps.findViewById(R.id.dice1);
         ImageView dice2 = action.craps.findViewById(R.id.dice2);
 
         //updates the ImageView of the first die
-        if(this.die1CurrVal==1){
+        if (this.die1CurrVal == 1) {
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side1dice));
-        }else if(this.die1CurrVal==2){
+        } else if (this.die1CurrVal == 2) {
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side2dice));
-        }else if(this.die1CurrVal==3){
+        } else if (this.die1CurrVal == 3) {
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side3dice));
-        }else if(this.die1CurrVal==4){
+        } else if (this.die1CurrVal == 4) {
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side4dice));
-        }else if(this.die1CurrVal==5){
+        } else if (this.die1CurrVal == 5) {
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side5dice));
-        }else if(this.die1CurrVal==6){
+        } else if (this.die1CurrVal == 6) {
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side6dice));
         }
         //updates the ImageView of the second die
-        if(this.die2CurrVal==1){
+        if (this.die2CurrVal == 1) {
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side1dice));
-        }else if(this.die2CurrVal==2){
+        } else if (this.die2CurrVal == 2) {
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side2dice));
-        }else if(this.die2CurrVal==3){
+        } else if (this.die2CurrVal == 3) {
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side3dice));
-        }else if(this.die2CurrVal==4){
+        } else if (this.die2CurrVal == 4) {
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side4dice));
-        }else if(this.die2CurrVal==5){
+        } else if (this.die2CurrVal == 5) {
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side5dice));
-        }else if(this.die2CurrVal==6){
+        } else if (this.die2CurrVal == 6) {
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side6dice));
         }
 
         //SYDNEY -- switch player
         //TODO this is written assuming there is one human and one computer playing
-        if (this.dieTotal == 7){
+        if (this.dieTotal == 7) {
             Log.d("die", "7 ROLLED! SWITCH! ");
 
             GamePlayer player = action.getPlayer();
             //Log.d("die", "the player is: " + player);
 
             //if the human player rolled
-            if (player instanceof CrapsHumanPlayer){
+            if (player instanceof CrapsHumanPlayer) {
 
                 //human player shooter == false
-                CrapsHumanPlayer humanPlayer = (CrapsHumanPlayer)player;
+                CrapsHumanPlayer humanPlayer = (CrapsHumanPlayer) player;
                 Log.d("die", "Human player rolled");
                 humanPlayer.setShooter(false); //SYDNEY - COMMENT THIS OUT IF YOU DON'T WANT TURN TO CHANGE ON HUMAN 7
                 this.playerTurn = 1;  //it's the computer player's turn
 
             }
             //if the computer player rolled
-            else if (player instanceof CrapsComputerPlayer1){
+            else if (player instanceof CrapsComputerPlayer1) {
 
                 //human computer shooter == false
-                CrapsComputerPlayer1 comp1Player = (CrapsComputerPlayer1)player;
+                CrapsComputerPlayer1 comp1Player = (CrapsComputerPlayer1) player;
                 Log.d("die", "Computer player rolled");
                 this.playerTurn = 0; //hopefully this will tell the comp player
-                                     //to not take a turn
+                //to not take a turn
                 //"other" player (human) shooter == true
             }
         }

@@ -17,6 +17,7 @@ public class Ready2CrapAction extends GameAction {
 
     public int playerID;
     public boolean isReady;
+
     /**
      * constructor for GameAction
      *
