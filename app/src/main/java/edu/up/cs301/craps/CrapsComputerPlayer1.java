@@ -32,6 +32,8 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 	private int die1;
 	private int die2;
 
+	CrapsState crapsState;
+
 	//TODO should I have a local version of this bet array? didn't see one in human player
 	//I'll put one here for now just for me
 
@@ -81,13 +83,11 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 	//roll
 	//this part is copied directly from Rowena's code
 	public void roll() {
-		// check if Im shooter, otherwise return
-		if (isShooter) {
-			// randomize dice
-			Random rand = new Random();
-			die1 = (rand.nextInt(6) + 1);
-			die2 = (rand.nextInt(6) + 1);
-		}
+
+		//create a roll action
+		RollAction roll= new RollAction(this,this.isShooter, (CrapsMainActivity) myActivity);
+		game.sendAction(roll);
+
 	}
 
 	//place a random set of bets on a turn, then ready up
@@ -102,17 +102,17 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 	 */
 	public void takeTurn(){
 
-		if (isShooter){
-			roll(); //roll the dice
-					//TODO where does the roll get sent?
-		}
+		roll(); //roll the dice
 
+		//Sydney commented this out for testing the changing turns
+		/*
 		//make a random amount of bets
 		Random rand = new Random();
 		int numBets = rand.nextInt(5); //make 0 to 4 bets
 		for (int i = 0; i < numBets; i++){
 			bet();
 		}
+		*/
 
 		//ready up
 		this.isReady = true;
@@ -158,6 +158,14 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 	protected void receiveInfo(GameInfo info) {
 		// Do nothing, as we ignore all state in deciding our next move. It
 		// depends totally on the timer and random numbers.
+		if (!(info instanceof CrapsState)){
+			return;
+		}
+		crapsState = (CrapsState)info;
+		//TODO uh you can't hardcode this eventually
+		if (crapsState.getPlayerTurn() == 1){
+			takeTurn();
+		}
 	}
 	
 	/**

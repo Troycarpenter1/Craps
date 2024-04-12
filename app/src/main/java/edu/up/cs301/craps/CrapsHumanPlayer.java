@@ -62,6 +62,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      */
     public CrapsHumanPlayer(String name) {
         super(name);
+        //for now, sets human player to shooter by default when initialized - syd
+        this.isShooter = true;
     }
 
     /**
@@ -103,19 +105,15 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if (game == null) return;
         //Log.d("TEST", String.valueOf(button.getId()));
 
-        if (button.equals(myActivity.findViewById(R.id.ready))) { //checks if the button pressed is the ready button GONE WRONG
+        if (button.equals(myActivity.findViewById(R.id.ready))) { //checks if the button pressed is the ready button
             //Log.d("TEST", "ready");
             Ready2CrapAction P1Ready = new Ready2CrapAction(this, true, 0);
             //Ready2CrapAction P2Ready = new Ready2CrapAction(this, true, 1);
             game.sendAction(P1Ready);
             //game.sendAction(P2Ready);
-        } else if (button.equals(myActivity.findViewById(R.id.shoot))) { //checks if the button pressed is the shoot button
-            //Log.d("TEST", "shoot");
-            Random rand = new Random();
-            int die1 = rand.nextInt(6) + 1;
-            int die2 = rand.nextInt(6) + 1;
-            int totes = die1 + die2;
-            RollAction roll = new RollAction(this, true, die1, die2, totes, (CrapsMainActivity) myActivity);
+        } else if (myActivity.findViewById(R.id.shoot)==button) {
+            //changed this to not pass in true always
+            RollAction roll = new RollAction(this, this.isShooter, (CrapsMainActivity) myActivity);
             game.sendAction(roll);
         }
     }// onClick

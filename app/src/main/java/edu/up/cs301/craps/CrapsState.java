@@ -1,9 +1,13 @@
 package edu.up.cs301.craps;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.ImageView;
 
+import java.util.Random;
+
 import edu.up.cs301.GameFramework.infoMessage.GameState;
+import edu.up.cs301.GameFramework.players.GamePlayer;
 
 /**
  * This contains the state for the Craps game. The state consist the player and
@@ -25,7 +29,7 @@ import edu.up.cs301.GameFramework.infoMessage.GameState;
 public class CrapsState extends GameState {
 
     //the players in the game, and their current net worth
-    private int playerTurn;
+    private int playerTurn; //right now 0 is human, 1 is comp player
     private double player0Funds;
     private boolean player0Ready;
     private double player1Funds;
@@ -289,7 +293,7 @@ public class CrapsState extends GameState {
 
     public boolean roll(RollAction action) {
         //checks if it is the shooters turn
-        if (!action.isShooter) {
+        if (!action.isShooter){
             return false;
         }
         //checks if both players are ready
@@ -298,39 +302,72 @@ public class CrapsState extends GameState {
         }
 
         //updates the values of the die
-        this.setDice(action.die1, action.die2);
+        Random rand = new Random();
+        this.setDice(rand.nextInt(6)+1, rand.nextInt(6)+1);
+        //Log.d("die", "dieTotal: " + action.dieTotal);
 
         ImageView dice1 = action.craps.findViewById(R.id.dice1);
         ImageView dice2 = action.craps.findViewById(R.id.dice2);
 
         //updates the ImageView of the first die
-        if (action.die1 == 1) {
+        if(this.die1CurrVal==1){
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side1dice));
-        } else if (action.die1 == 2) {
+        }else if(this.die1CurrVal==2){
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side2dice));
-        } else if (action.die1 == 3) {
+        }else if(this.die1CurrVal==3){
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side3dice));
-        } else if (action.die1 == 4) {
+        }else if(this.die1CurrVal==4){
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side4dice));
-        } else if (action.die1 == 5) {
+        }else if(this.die1CurrVal==5){
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side5dice));
-        } else if (action.die1 == 6) {
+        }else if(this.die1CurrVal==6){
             dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side6dice));
         }
         //updates the ImageView of the second die
-        if (action.die2 == 1) {
+        if(this.die2CurrVal==1){
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side1dice));
-        } else if (action.die2 == 2) {
+        }else if(this.die2CurrVal==2){
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side2dice));
-        } else if (action.die2 == 3) {
+        }else if(this.die2CurrVal==3){
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side3dice));
-        } else if (action.die2 == 4) {
+        }else if(this.die2CurrVal==4){
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side4dice));
-        } else if (action.die2 == 5) {
+        }else if(this.die2CurrVal==5){
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side5dice));
-        } else if (action.die2 == 6) {
+        }else if(this.die2CurrVal==6){
             dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side6dice));
         }
+
+        //SYDNEY -- switch player
+        //TODO this is written assuming there is one human and one computer playing
+        if (this.dieTotal == 7){
+            Log.d("die", "7 ROLLED! SWITCH! ");
+
+            GamePlayer player = action.getPlayer();
+            //Log.d("die", "the player is: " + player);
+
+            //if the human player rolled
+            if (player instanceof CrapsHumanPlayer){
+
+                //human player shooter == false
+                CrapsHumanPlayer humanPlayer = (CrapsHumanPlayer)player;
+                Log.d("die", "Human player rolled");
+                humanPlayer.setShooter(false); //SYDNEY - COMMENT THIS OUT IF YOU DON'T WANT TURN TO CHANGE ON HUMAN 7
+                this.playerTurn = 1;  //it's the computer player's turn
+
+            }
+            //if the computer player rolled
+            else if (player instanceof CrapsComputerPlayer1){
+
+                //human computer shooter == false
+                CrapsComputerPlayer1 comp1Player = (CrapsComputerPlayer1)player;
+                Log.d("die", "Computer player rolled");
+                this.playerTurn = 0; //hopefully this will tell the comp player
+                                     //to not take a turn
+                //"other" player (human) shooter == true
+            }
+        }
+
         return true;
     }
 }

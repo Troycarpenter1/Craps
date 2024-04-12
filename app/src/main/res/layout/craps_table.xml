@@ -725,6 +725,7 @@
                     android:textStyle="bold"/>
 
                 <!--2 dice images-->
+
                 <LinearLayout
                     android:id="@+id/diceDisplay"
                     android:layout_width="match_parent"
@@ -905,7 +906,6 @@
                     android:id="@+id/betAmountSelector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:progress="50"
                     android:progressBackgroundTint="@color/white"
                     android:progressBackgroundTintMode="add"
