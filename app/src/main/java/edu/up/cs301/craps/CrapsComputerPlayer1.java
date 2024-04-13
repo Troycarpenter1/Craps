@@ -158,14 +158,15 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             return;
         }
         crapsState = (CrapsState) info;
-        //TODO uh you can't hardcode this eventually
         if (crapsState.getPlayerTurn() == 1) {
-            takeTurn();
+            //have to delay BEFORE we take turn or we won't be able to see the 7 rolled
             try {
-                Thread.sleep(1000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            takeTurn();
+
         }
 
     }

@@ -292,6 +292,12 @@ public class CrapsState extends GameState {
      */
 
     public boolean roll(RollAction action) {
+
+        //purpose is to prevent one roll counting double
+        boolean playerSwitched; //local variable used to indicate if the turn has just been switched (7 was the last number rolled)
+        //if false > a new roll has been made
+        //true > we're still on the 7 from last time
+
         //checks if it is the shooters turn
         if (!action.isShooter) {
             return false;
@@ -304,15 +310,14 @@ public class CrapsState extends GameState {
         //updates the values of the die
         Random rand = new Random();
         this.setDice(rand.nextInt(6) + 1, rand.nextInt(6) + 1);
-        //Log.d("die", "dieTotal: " + action.dieTotal);
-
-
-        //updates the ImageView of the first die
+        playerSwitched = false;
+        Log.d("die", "DIETOTAL: " + this.dieTotal);
 
 
         //SYDNEY -- switch player
         //TODO this is written assuming there is one human and one computer playing
-        if (this.dieTotal == 7) {
+
+        if ((this.dieTotal == 7) && !playerSwitched) {
             Log.d("die", "7 ROLLED! SWITCH! ");
 
             GamePlayer player = action.getPlayer();
@@ -323,7 +328,7 @@ public class CrapsState extends GameState {
 
                 //human player shooter == false
                 CrapsHumanPlayer humanPlayer = (CrapsHumanPlayer) player;
-                Log.d("die", "Human player rolled");
+                Log.d("die", "Human player rolled a 7");
                 humanPlayer.setShooter(false); //SYDNEY - COMMENT THIS OUT IF YOU DON'T WANT TURN TO CHANGE ON HUMAN 7
                 this.playerTurn = 1;  //it's the computer player's turn
 
@@ -338,7 +343,16 @@ public class CrapsState extends GameState {
                 //to not take a turn
                 //"other" player (human) shooter == true
             }
+            playerSwitched = true;
+
         }
+
+        /*
+        Log.d("die", "player turn: " + this.getPlayerTurn());
+        Log.d("die", "player 0 ready? " + this.player0Ready);
+        Log.d("die", "player 1 ready? " + this.player1Ready);
+        */
+
 
         return true;
     }
