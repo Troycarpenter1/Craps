@@ -115,7 +115,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             game.sendAction(P1Ready);
         } else if (myActivity.findViewById(R.id.shoot) == button) {
             //changed this to not pass in true always
-            RollAction roll = new RollAction(this, this.isShooter);
+            RollAction roll = new RollAction(this, 0);
             game.sendAction(roll);
         }
     }// onClick

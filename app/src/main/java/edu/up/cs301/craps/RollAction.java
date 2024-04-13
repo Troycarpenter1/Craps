@@ -16,16 +16,16 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
 public class RollAction extends GameAction {
 
     public boolean isShooter;
+    public int playerId;
 
-    public CrapsMainActivity craps;
 
     /**
      * constructor for GameAction
      *
      * @param player the player who created the action
      */
-    public RollAction(GamePlayer player, boolean isShooter) {
+    public RollAction(GamePlayer player, int playerId) {
         super(player);
-        this.isShooter = isShooter;
+        this.playerId = playerId;
     }
 }

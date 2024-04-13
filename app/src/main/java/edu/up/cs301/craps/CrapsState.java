@@ -321,9 +321,11 @@ public class CrapsState extends GameState {
          */
 
         //checks if it is the shooters turn
-        if (!action.isShooter) {
+        if (action.playerId != this.playerTurn) {
             return false;
         }
+
+
         //checks if both players are ready
         if (!checkCanRoll()) {
             return false;
@@ -357,29 +359,6 @@ public class CrapsState extends GameState {
                 this.playerTurn = 0;
                 Log.d("die", "Switching to human player.");
             }
-
-            /*
-            //if the human player rolled
-            if (player instanceof CrapsHumanPlayer) {
-
-                //human player shooter == false
-                CrapsHumanPlayer humanPlayer = (CrapsHumanPlayer) player;
-                Log.d("die", "Human player rolled");
-                humanPlayer.setShooter(false); //SYDNEY - COMMENT THIS OUT IF YOU DON'T WANT TURN TO CHANGE ON HUMAN 7
-                this.playerTurn = 1;  //it's the computer player's turn
-
-            }
-            //if the computer player rolled
-            else if (player instanceof CrapsComputerPlayer1) {
-
-                //human computer shooter == false
-                CrapsComputerPlayer1 comp1Player = (CrapsComputerPlayer1) player;
-                Log.d("die", "Computer player rolled");
-                this.playerTurn = 0; //hopefully this will tell the comp player
-                //to not take a turn
-                //"other" player (human) shooter == true
-            }
-            */
 
             playerSwitched = true;
 
