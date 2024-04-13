@@ -36,32 +36,55 @@ public class Bet {
     //list of all payouts of all bets
     //todo: add all the payouts
     public static final double[] ALL_BET_PAYOUTS = new double[]{
-            0.0,
+            /* No Bet: */        0.0,
+            /* Pass Line Bet: */ 1.0,
+            /* Dont Pass Bet: */ 1.0,
+            /* Come Bet: */      1.0,
+            /* Field Bet: */     1.0,
+            /* 4: */             (9.0/5.0),
+            /* 5: */             (7.0/5.0),
+            /* 6: */             (7.0/6.0),
+            /* 8: */             (7.0/6.0),
+            /* 9: */             (7.0/5.0),
+            /* 10: */            (9.0/5.0)
+            /* C: */
+            /* E: */
+            /* 7 (4 to 1): */
+            /* Pair of 2s: */
+            /* Pair of 3s: */
+            /* Pair of 4s: */
+            /* Pair of 5s: */
+            /* 2 & 1: */
+            /* Pair of 1s: */
+            /* Pair of 6s: */
+            /* 5 & 6: */
+            /* Craps: */
+
     };
 
 
     //default cnstr
     public Bet() {
-        this.amount = 0;
-        this.payout = 1.0;
         this.ID = 0;
         this.name = ALL_BET_NAMES[0];
+        this.payout = ALL_BET_PAYOUTS[0];
+        this.amount = 0;
     }
 
     //betID cnstr
     public Bet(int newAmount, double newPayout, int newID) {
-        this.amount = newAmount;
-        this.payout = newPayout;
         this.ID = newID;
         this.name = ALL_BET_NAMES[newID];
+        this.payout = ALL_BET_PAYOUTS[newID];
+        this.amount = newAmount;
     }
 
     //copy cnstr
     public Bet(Bet copyBet) {
-        this.amount = copyBet.amount;
-        this.payout = copyBet.payout;
         this.ID = copyBet.ID;
         this.name = ALL_BET_NAMES[copyBet.ID];
+        this.payout = ALL_BET_PAYOUTS[copyBet.ID];
+        this.amount = copyBet.amount;
     }
 
     //simple getter methods
@@ -87,12 +110,39 @@ public class Bet {
     }
 
     /**
-     * big bad method that checks if bet is won overall
-     * NOT YET HAS ALL BET TYPES CODED NOR ARE THE HELPER METHODS DONE
+     * big bad method that pays the player the moneyzz (if the bet is won overall)
+     * Note: See "to-do" in the checkThisBetWon() method
      *
      * @param die1      dice 1
      * @param die2      dice 2
      * @param diceTotal the sum of the dice
+     * @param firstRoll the first roll the shooter made
+     * @return the value that will be paid out to the player if the player wins the bet (otherwise it is 0)
+     */
+    public double payoutBet(int die1, int die2, int diceTotal, int firstRoll) {
+        if (checkThisBetWon(die1, die2, diceTotal, firstRoll)) { //checks if the bet is won
+            // double used in considering special cases where the player should be paid more or less
+            double specialPay = 1.0;
+
+            if (this.name.equals("FIELD") && (diceTotal == 2 || diceTotal == 12)) { // checks double pay out on field bets
+                specialPay = 2.0;
+            }
+
+            return this.amount * (this.payout * specialPay);
+        } else { //takes your money if you lose haha
+            return 0.0;
+        }
+    }
+
+    /**
+     * big bad method that checks if bet is won overall
+     * TODO: NOT YET HAS ALL BET TYPES CODED NOR ARE THE HELPER METHODS DONE
+     * <p>
+     *
+     * @param die1      dice 1
+     * @param die2      dice 2
+     * @param diceTotal the sum of the dice
+     * @param firstRoll the first roll the shooter made
      * @return boolean true if bet is won otherwise false (check comment on first line of method for more info)
      */
     public boolean checkThisBetWon(int die1, int die2, int diceTotal, int firstRoll) {
