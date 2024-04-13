@@ -27,6 +27,5 @@ public class Ready2CrapAction extends GameAction {
         super(player);
         this.isReady = isReady;
         this.playerID = playerID;
-
     }
 }

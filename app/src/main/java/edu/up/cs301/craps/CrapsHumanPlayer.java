@@ -107,10 +107,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         if (button.equals(myActivity.findViewById(R.id.ready))) { //checks if the button pressed is the ready button
             //Log.d("TEST", "ready");
-            Ready2CrapAction P1Ready = new Ready2CrapAction(this, true, 0);
-            //Ready2CrapAction P2Ready = new Ready2CrapAction(this, true, 1);
+            this.isReady = state.isPlayer0Ready();
+            Ready2CrapAction P1Ready = new Ready2CrapAction(this, !this.isReady, 0);
             game.sendAction(P1Ready);
-            //game.sendAction(P2Ready);
         } else if (myActivity.findViewById(R.id.shoot) == button) {
             //changed this to not pass in true always
             RollAction roll = new RollAction(this, this.isShooter, (CrapsMainActivity) myActivity);

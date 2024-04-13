@@ -105,6 +105,18 @@ public class CrapsState extends GameState {
         return this.dieTotal;
     }
 
+    public boolean isPlayer0Ready() {
+        return player0Ready;
+    }
+
+    public boolean isPlayer1Ready() {
+        return player1Ready;
+    }
+
+    public boolean isOffOn() {
+        return offOn;
+    }
+
     //setters
 
     /**
@@ -278,7 +290,6 @@ public class CrapsState extends GameState {
         } else if (action.playerID == 1) {
             this.player1Ready = action.isReady;
         }
-
         return true;
     }
 
@@ -352,7 +363,7 @@ public class CrapsState extends GameState {
                 //human player shooter == false
                 CrapsHumanPlayer humanPlayer = (CrapsHumanPlayer) player;
                 Log.d("die", "Human player rolled");
-                humanPlayer.setShooter(false); //SYDNEY - COMMENT THIS OUT IF YOU DON'T WANT TURN TO CHANGE ON HUMAN 7
+                //humanPlayer.setShooter(false); //SYDNEY - COMMENT THIS OUT IF YOU DON'T WANT TURN TO CHANGE ON HUMAN 7
                 this.playerTurn = 1;  //it's the computer player's turn
 
             }
