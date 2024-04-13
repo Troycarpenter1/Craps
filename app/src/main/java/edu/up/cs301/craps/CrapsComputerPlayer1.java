@@ -1,5 +1,7 @@
 package edu.up.cs301.craps;
 
+import android.util.Log;
+
 import java.util.Random;
 
 import edu.up.cs301.GameFramework.GameMainActivity;
@@ -83,7 +85,8 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     public void roll() {
 
         //create a roll action
-        RollAction roll = new RollAction(this, this.isShooter, (CrapsMainActivity) myActivity);
+        Log.d("die", "Computer player shooter? " + this.isShooter);
+        RollAction roll = new RollAction(this, this.isShooter);
         game.sendAction(roll);
 
     }
@@ -158,10 +161,27 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             return;
         }
         crapsState = (CrapsState) info;
-        //TODO uh you can't hardcode this eventually
         if (crapsState.getPlayerTurn() == 1) {
+            //have to delay BEFORE we take turn or we won't be able to see the 7 rolled
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             takeTurn();
+
         }
+
+        //TODO we'll have to rethink this isShooter variable in the future, but right
+        //now I'm putting this here just to ensure it's accurate.
+
+        if (crapsState.getPlayerTurn() == 1){
+            this.isShooter = true;
+        }
+        else {
+            this.isShooter = false;
+        }
+
     }
 
     /**

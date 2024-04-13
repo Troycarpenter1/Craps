@@ -11,11 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+
+import androidx.core.content.ContextCompat;
 
 import java.util.Random;
 
@@ -112,7 +115,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             game.sendAction(P1Ready);
         } else if (myActivity.findViewById(R.id.shoot) == button) {
             //changed this to not pass in true always
-            RollAction roll = new RollAction(this, this.isShooter, (CrapsMainActivity) myActivity);
+            RollAction roll = new RollAction(this, this.isShooter);
             game.sendAction(roll);
         }
     }// onClick
@@ -183,6 +186,55 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         // update our state; then update the display
         this.state = (CrapsState) info;
+
+        //change the drawable
+        ImageView dice1 = myActivity.findViewById(R.id.dice1);
+        ImageView dice2 = myActivity.findViewById(R.id.dice2);
+
+        if (state.getDie1CurrVal() == 1) {
+            dice1.setImageDrawable(myActivity.getDrawable(R.drawable.side1dice));
+        } else if (state.getDie1CurrVal() == 2) {
+            dice1.setImageDrawable(myActivity.getDrawable(R.drawable.side2dice));
+        } else if (state.getDie1CurrVal() == 3) {
+            dice1.setImageDrawable(myActivity.getDrawable(R.drawable.side3dice));
+        } else if (state.getDie1CurrVal() == 4) {
+            dice1.setImageDrawable(myActivity.getDrawable(R.drawable.side4dice));
+        } else if (state.getDie1CurrVal() == 5) {
+            dice1.setImageDrawable(myActivity.getDrawable(R.drawable.side5dice));
+        } else if (state.getDie1CurrVal() == 6) {
+            dice1.setImageDrawable(myActivity.getDrawable(R.drawable.side6dice));
+        }
+        //updates the ImageView of the second die
+        if (state.getDie2CurrVal() == 1) {
+            dice2.setImageDrawable(myActivity.getDrawable(R.drawable.side1dice));
+        } else if (state.getDie2CurrVal() == 2) {
+            dice2.setImageDrawable(myActivity.getDrawable(R.drawable.side2dice));
+        } else if (state.getDie2CurrVal() == 3) {
+            dice2.setImageDrawable(myActivity.getDrawable(R.drawable.side3dice));
+        } else if (state.getDie2CurrVal() == 4) {
+            dice2.setImageDrawable(myActivity.getDrawable(R.drawable.side4dice));
+        } else if (state.getDie2CurrVal() == 5) {
+            dice2.setImageDrawable(myActivity.getDrawable(R.drawable.side5dice));
+        } else if (state.getDie2CurrVal() == 6) {
+            dice2.setImageDrawable(myActivity.getDrawable(R.drawable.side6dice));
+        }
+
+
+        //TODO gotta fully cite my source here, 4/13/24
+        //https://stackoverflow.com/questions/5271387/how-can-i-get-color-int-from-color-resource
+        //change join color based on roll
+        Button shoot = myActivity.findViewById(R.id.shoot);
+        //if the player was just switched, make the text color red
+        if (state.playerSwitched){
+            shoot.setTextColor(ContextCompat.getColor(this.myActivity, R.color.red));
+        }
+        //else black
+        else {
+            shoot.setTextColor(ContextCompat.getColor(this.myActivity, R.color.black));
+        }
+
+
+
         updateDisplay();
     }
 
@@ -284,5 +336,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
     }
+
+
+
+
 }// class CrapsHumanPlayer
 
