@@ -220,9 +220,15 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         }
 
 
-        //TODO gotta fully cite my source here, 4/13/24
-        //https://stackoverflow.com/questions/5271387/how-can-i-get-color-int-from-color-resource
-        //change join color based on roll
+        /*
+         * External Citation
+         * Date:  13 April 2023
+         * Problem: Wanted to get color from resources as an int
+         * Resource: https://stackoverflow.com/questions/5271387/how-can-i-get-color-int-from-color-resource
+         * Solution: Used ContextCompat
+         */
+
+        //change shoot color based on roll
         Button shoot = myActivity.findViewById(R.id.shoot);
         //if the player was just switched, make the text color red
         if (state.playerSwitched){
@@ -233,7 +239,15 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             shoot.setTextColor(ContextCompat.getColor(this.myActivity, R.color.black));
         }
 
-
+        Button ready = myActivity.findViewById(R.id.ready);
+        //changes ready to red when human ready
+        if (state.isPlayer0Ready()){
+            ready.setTextColor(ContextCompat.getColor(this.myActivity, R.color.red));
+        }
+        //else black
+        else {
+            ready.setTextColor(ContextCompat.getColor(this.myActivity, R.color.black));
+        }
 
         updateDisplay();
     }

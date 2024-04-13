@@ -335,6 +335,9 @@ public class CrapsState extends GameState {
         playerSwitched = false;
         Log.d("die", "DIETOTAL: " + this.dieTotal);
 
+        player0Ready = false; //reset player 0's ready after roll
+                              //if it weren't reset, then there's no time to bet
+
 
         //SYDNEY -- switch player
         //TODO this is written assuming there is one human and one computer playing
