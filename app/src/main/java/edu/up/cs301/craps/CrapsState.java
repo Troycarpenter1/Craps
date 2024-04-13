@@ -43,6 +43,11 @@ public class CrapsState extends GameState {
     private int dieTotal;
     private boolean offOn;
 
+    //purpose is to prevent one roll counting double
+    boolean playerSwitched; //local variable used to indicate if the turn has just been switched (7 was the last number rolled)
+    //if false > a new roll has been made
+    //true > we're still on the 7 from last time
+
     //ctor
     public CrapsState() {
         this.playerTurn = 0;
@@ -52,6 +57,7 @@ public class CrapsState extends GameState {
         this.player1Ready = true;
         this.setDice(0, 0);
         this.offOn = false;
+        this.playerSwitched = false;
         // iterates through a master 2d array and makes all bets for each player
         for (int p = 0; p < bets.length; p++) { // iterates through number of players
             for (int b = 0; b < bets[p].length; b++) { // iterates through all bet IDs
@@ -72,6 +78,7 @@ public class CrapsState extends GameState {
         this.player0Ready = crap.player0Ready;
         this.player1Ready = crap.player1Ready;
         this.offOn = crap.offOn;
+        this.playerSwitched = crap.playerSwitched;
         //uses the copy constructor of the bet class
         for (int x = 0; x < bets.length; x++) {
             for (int y = 0; y < bets[x].length; y++) {
@@ -104,6 +111,8 @@ public class CrapsState extends GameState {
     public int getDieTotal() {
         return this.dieTotal;
     }
+
+    public boolean getPlayerSwitched() {return this.playerSwitched;}
 
     //setters
 
@@ -293,10 +302,12 @@ public class CrapsState extends GameState {
 
     public boolean roll(RollAction action) {
 
+        /*
         //purpose is to prevent one roll counting double
         boolean playerSwitched; //local variable used to indicate if the turn has just been switched (7 was the last number rolled)
         //if false > a new roll has been made
         //true > we're still on the 7 from last time
+         */
 
         //checks if it is the shooters turn
         if (!action.isShooter) {
@@ -317,12 +328,23 @@ public class CrapsState extends GameState {
         //SYDNEY -- switch player
         //TODO this is written assuming there is one human and one computer playing
 
+        //TODO playerswitched isn't working
         if ((this.dieTotal == 7) && !playerSwitched) {
             Log.d("die", "7 ROLLED! SWITCH! ");
 
             GamePlayer player = action.getPlayer();
             //Log.d("die", "the player is: " + player);
 
+            if (this.playerTurn == 0){
+                this.playerTurn = 1;
+                Log.d("die", "Switching to computer player.");
+            }
+            else{
+                this.playerTurn = 0;
+                Log.d("die", "Switching to human player.");
+            }
+
+            /*
             //if the human player rolled
             if (player instanceof CrapsHumanPlayer) {
 
@@ -343,6 +365,8 @@ public class CrapsState extends GameState {
                 //to not take a turn
                 //"other" player (human) shooter == true
             }
+            */
+
             playerSwitched = true;
 
         }

@@ -18,6 +18,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.Random;
 
 /**
@@ -186,7 +188,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // update our state; then update the display
         this.state = (CrapsState) info;
 
-
+        //change the drawable
         ImageView dice1 = myActivity.findViewById(R.id.dice1);
         ImageView dice2 = myActivity.findViewById(R.id.dice2);
 
@@ -217,6 +219,18 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         } else if (state.getDie2CurrVal() == 6) {
             dice2.setImageDrawable(myActivity.getDrawable(R.drawable.side6dice));
         }
+
+        //change join color based on roll
+        Button shoot = myActivity.findViewById(R.id.shoot);
+        //if the player was just switched, make the text color red
+        if (state.playerSwitched){
+            shoot.setTextColor(ContextCompat.getColor(this.myActivity, R.color.red));
+        }
+        //else black
+        else {
+            shoot.setTextColor(ContextCompat.getColor(this.myActivity, R.color.black));
+        }
+
 
 
         updateDisplay();
