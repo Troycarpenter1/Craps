@@ -220,6 +220,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             dice2.setImageDrawable(myActivity.getDrawable(R.drawable.side6dice));
         }
 
+
+        //TODO gotta fully cite my source here, 4/13/24
+        //https://stackoverflow.com/questions/5271387/how-can-i-get-color-int-from-color-resource
         //change join color based on roll
         Button shoot = myActivity.findViewById(R.id.shoot);
         //if the player was just switched, make the text color red
