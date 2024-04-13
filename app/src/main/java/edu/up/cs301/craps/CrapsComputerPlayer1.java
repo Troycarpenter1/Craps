@@ -83,7 +83,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     public void roll() {
 
         //create a roll action
-        RollAction roll = new RollAction(this, this.isShooter, (CrapsMainActivity) myActivity);
+        RollAction roll = new RollAction(this, true);
         game.sendAction(roll);
 
     }
@@ -161,7 +161,13 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         //TODO uh you can't hardcode this eventually
         if (crapsState.getPlayerTurn() == 1) {
             takeTurn();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
+
     }
 
     /**

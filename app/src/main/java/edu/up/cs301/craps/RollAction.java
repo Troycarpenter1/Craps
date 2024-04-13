@@ -24,9 +24,8 @@ public class RollAction extends GameAction {
      *
      * @param player the player who created the action
      */
-    public RollAction(GamePlayer player, boolean isShooter, CrapsMainActivity crap) {
+    public RollAction(GamePlayer player, boolean isShooter) {
         super(player);
         this.isShooter = isShooter;
-        this.craps = crap;
     }
 }

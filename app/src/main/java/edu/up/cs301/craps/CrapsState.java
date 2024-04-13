@@ -306,37 +306,9 @@ public class CrapsState extends GameState {
         this.setDice(rand.nextInt(6) + 1, rand.nextInt(6) + 1);
         //Log.d("die", "dieTotal: " + action.dieTotal);
 
-        ImageView dice1 = action.craps.findViewById(R.id.dice1);
-        ImageView dice2 = action.craps.findViewById(R.id.dice2);
 
         //updates the ImageView of the first die
-        if (this.die1CurrVal == 1) {
-            dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side1dice));
-        } else if (this.die1CurrVal == 2) {
-            dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side2dice));
-        } else if (this.die1CurrVal == 3) {
-            dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side3dice));
-        } else if (this.die1CurrVal == 4) {
-            dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side4dice));
-        } else if (this.die1CurrVal == 5) {
-            dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side5dice));
-        } else if (this.die1CurrVal == 6) {
-            dice1.setImageDrawable(action.craps.getDrawable(R.drawable.side6dice));
-        }
-        //updates the ImageView of the second die
-        if (this.die2CurrVal == 1) {
-            dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side1dice));
-        } else if (this.die2CurrVal == 2) {
-            dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side2dice));
-        } else if (this.die2CurrVal == 3) {
-            dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side3dice));
-        } else if (this.die2CurrVal == 4) {
-            dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side4dice));
-        } else if (this.die2CurrVal == 5) {
-            dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side5dice));
-        } else if (this.die2CurrVal == 6) {
-            dice2.setImageDrawable(action.craps.getDrawable(R.drawable.side6dice));
-        }
+
 
         //SYDNEY -- switch player
         //TODO this is written assuming there is one human and one computer playing
