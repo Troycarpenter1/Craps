@@ -230,8 +230,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         //change shoot color based on roll
         Button shoot = myActivity.findViewById(R.id.shoot);
-        //if the player was just switched, make the text color red
-        if (state.playerSwitched){
+        //if it's your turn then the shooter button is red
+        if (state.getPlayerTurn() == 0){
             shoot.setTextColor(ContextCompat.getColor(this.myActivity, R.color.red));
         }
         //else black
