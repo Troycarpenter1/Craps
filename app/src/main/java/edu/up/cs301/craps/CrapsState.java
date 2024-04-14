@@ -92,6 +92,10 @@ public class CrapsState extends GameState {
         return this.playerTurn;
     }
 
+    public Bet getBet(int playerId, int betId){
+        return bets[playerId][betId];
+    }
+
     public double getPlayer0Funds() {
         return this.player0Funds;
     }
@@ -235,6 +239,10 @@ public class CrapsState extends GameState {
         //adjust the bet's amount
         this.bets[action.playerId][action.betID].setBetAmount(action.betAmount);
         if (action.playerId == 0) {
+        /*this.bets[action.playerId][action.betID]=new Bet((int)action.betAmount, 1.0,
+                action.betID);
+
+        if(action.playerId==0) { */
             this.setPlayer0Funds(this.getPlayer0Funds() - action.betAmount);
         } else {
             this.setPlayer1Funds(this.getPlayer1Funds() - action.betAmount);
@@ -339,7 +347,6 @@ public class CrapsState extends GameState {
 
         player0Ready = false; //reset player 0's ready after roll
                               //if it weren't reset, then there's no time to bet
-
 
         //SYDNEY -- switch player
         //TODO this is written assuming there is one human and one computer playing
