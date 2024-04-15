@@ -78,6 +78,19 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         Ready2CrapAction ready = new Ready2CrapAction(this, true, 1);
         game.sendAction(ready);
     }
+    /** unready
+     *  random helper method to make computer player unready
+     *  since computer player has no special stuff for
+     *  unreadying like the human player does
+     *  THIS SHOULD ONLY BE CALLED AFTER THE COMPUTER ROLLS
+     */
+    public void unready(){
+        //unready myself
+        isReady = false;
+        //create a ready action but make it FALSE I HOPE THIS WORKS
+        Ready2CrapAction unready = new Ready2CrapAction(this, false, 1);
+        game.sendAction(unready);
+    }
 
 
     //place a random set of bets on a turn, then ready up
@@ -91,10 +104,11 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     public void takeTurn() {
         // place a bet + ready up before rolling
         placeBet();
-        ready();
+        ready(); //ready so that we don't keep placing bets
 
         // roll the dice
         roll();
+        unready();
 
 		/* Sydney commented this out for testing the changing turns
 		 *
@@ -175,6 +189,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         }
         crapsState = (CrapsState) info;
 
+
         // if my turn take my turn
         if (crapsState.getPlayerTurn() == 1) {
             //have to delay BEFORE we take turn or we won't be able to see the 7 rolled
@@ -187,7 +202,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             takeTurn();
 
         }
-        // else just place a bet and ready up
+        // if not my turn, just place a bet and ready up
         else{
             placeBet();
             ready();

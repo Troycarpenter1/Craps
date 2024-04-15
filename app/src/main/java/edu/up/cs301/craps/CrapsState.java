@@ -343,7 +343,9 @@ public class CrapsState extends GameState {
         playerSwitched = false;
         Log.d("die", "DIETOTAL: " + this.dieTotal);
 
-        player0Ready = false; //reset player 0's ready after roll
+        //reset player 0 and 1s' ready statuses after roll
+        player0Ready = false;
+        player1Ready = false;// - Row
                               //if it weren't reset, then there's no time to bet
 
         //SYDNEY -- switch player
