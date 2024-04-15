@@ -55,7 +55,7 @@ public class CrapsState extends GameState {
         this.player0Funds = 1000.00;
         this.player1Funds = 1000.00;
         this.player0Ready = false;
-        this.player1Ready = true;
+        this.player1Ready = false; //TODO: please refer here if there are issues w human betting - R
         this.setDice(0, 0);
         this.offOn = false;
         this.playerSwitched = false;
@@ -210,6 +210,7 @@ public class CrapsState extends GameState {
      * placeBet
      * checks to see if bet is valid
      * changes the bet in the GameState bet array
+     * if sender is ready, they can't bet
      *
      * @param action
      * @return
@@ -222,10 +223,18 @@ public class CrapsState extends GameState {
             if (action.betAmount > player0Funds) {
                 return false;
             }
+            if (player0Ready){
+                return false;
+            }
         } else if (action.playerId == 1) {
             if (action.betAmount > player1Funds) {
                 return false;
             }
+            if (player1Ready){
+                return false;
+            }
+
+
         }
 
         //Is the bet ID a valid point in the array?
@@ -244,10 +253,7 @@ public class CrapsState extends GameState {
             we could put the ID in the RemoveBetAction like we did for ReadyAction
          */
         //adjust the bet's amount
-
-        //add the amount of the bet to the bet's current total
-        this.bets[action.playerId][action.betID].setBetAmount(action.betAmount + bets[action.playerId][action.betID].getAmount());
-        Log.d("die", "placeBet action");
+        this.bets[action.playerId][action.betID].setBetAmount(action.betAmount);
         if (action.playerId == 0) {
             Log.d("die", "changing human player funds");
             this.setPlayer0Funds(this.getPlayer0Funds() - action.betAmount);
@@ -369,6 +375,8 @@ public class CrapsState extends GameState {
         playerSwitched = false;
         //reset player 0's ready after roll if it weren't reset, then there's no time to bet
         player0Ready = false;
+
+        player1Ready = false;// - Row
 
         //SYDNEY -- switch player
         // WES -- added first die 2 or 3
