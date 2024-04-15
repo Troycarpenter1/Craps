@@ -85,23 +85,24 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     /**
      * sets the counter value in the text view
      */
-    protected void updateDisplay(){
+    protected void updateDisplay() {
         // set the text in the appropriate widget
         //counterValueTextView.setText("" + state.getCounter());
     }
 
     protected void updateDisplay(String displayText) {
-        testResultsTextView.setText(testResultsTextView.getText()+"\n"+displayText, TextView.BufferType.NORMAL);
+        testResultsTextView.setText(testResultsTextView.getText() + "\n" + displayText, TextView.BufferType.NORMAL);
     }
 
     protected void updateDisplay(String displayText, int id) {
         testResultsTextView.setText("", TextView.BufferType.NORMAL);
     }
 
-    public void bet(View button, int id){
-        Button but = (Button)button;
-        if(amountBet>0){
-            if(state.getBet(0,id).getAmount()==0.0){
+    public void bet(View button, int id) {
+        Button but = (Button) button;
+
+        if (amountBet > 0) {
+            if (state.getBet(0, id).getAmount() == 0.0) {
                 but.setTextColor(Color.parseColor("#FFA500"));
                 //sends the bet action to the state
                 PlaceBetAction pba = new PlaceBetAction(this, 0, id,
@@ -109,11 +110,24 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
                 state.placeBet(pba);
 
 
-            }else{
-                //todo: change the color back to the real one
-                but.setTextColor(Color.parseColor("#FFFFFF"));
+            } else {
+                if (but.equals(myActivity.findViewById(R.id.come))) {
+                    but.setTextColor(Color.parseColor("#D61818"));
+                } else if (
+                        but.equals(myActivity.findViewById(R.id.field)) ||
+                        but.equals(myActivity.findViewById(R.id.place4)) ||
+                        but.equals(myActivity.findViewById(R.id.place5)) ||
+                        but.equals(myActivity.findViewById(R.id.place6)) ||
+                        but.equals(myActivity.findViewById(R.id.place8)) ||
+                        but.equals(myActivity.findViewById(R.id.place9)) ||
+                        but.equals(myActivity.findViewById(R.id.place10))
+                ) {
+                    but.setTextColor(Color.parseColor("#FFD700"));
+                } else {
+                    but.setTextColor(Color.parseColor("#FFFFFF"));
+                }
                 //send the will to remove the bet to the state
-                RemoveBetAction rba= new RemoveBetAction(this, 0, id);
+                RemoveBetAction rba = new RemoveBetAction(this, 0, id);
                 state.removeBet(rba);
             }
         }
@@ -142,115 +156,119 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             game.sendAction(roll);
         }
 
-        //starting the many buttons for the bets
 
+        //CHECK BET BUTTONS
         //todo: pass and don't pass remove bet not right
         if (myActivity.findViewById(R.id.passLine1) == button ||
                 myActivity.findViewById(R.id.passLine2) == button) {//pass line
 
-            this.bet(myActivity.findViewById(R.id.passLine1),1);
-            this.bet(myActivity.findViewById(R.id.passLine2),1);
+            this.bet(myActivity.findViewById(R.id.passLine1), 1);
+            this.bet(myActivity.findViewById(R.id.passLine2), 1);
 
         }//pass line
 
-        if(myActivity.findViewById(R.id.donPass1)==button ||
-                myActivity.findViewById(R.id.dont_pass)==button){//don't pass line
+        if (myActivity.findViewById(R.id.donPass1) == button ||
+                myActivity.findViewById(R.id.dont_pass) == button) {//don't pass line
 
-            this.bet(myActivity.findViewById(R.id.donPass1),2);
-            this.bet(myActivity.findViewById(R.id.dont_pass),2);
+            this.bet(myActivity.findViewById(R.id.donPass1), 2);
+            this.bet(myActivity.findViewById(R.id.dont_pass), 2);
         }//don't pass line
 
-        if(myActivity.findViewById(R.id.come)==button){//come
-            this.bet(button,3);
+        if (myActivity.findViewById(R.id.come) == button) {//come
+            this.bet(button, 3);
         }//come
 
-        if(myActivity.findViewById(R.id.field)==button){//field
-            this.bet(button,4);
+        if (myActivity.findViewById(R.id.field) == button) {//field
+            this.bet(button, 4);
         }//field
 
-        if(myActivity.findViewById(R.id.place4)==button){//place4
-            this.bet(button,5);
+        if (myActivity.findViewById(R.id.place4) == button) {//place4
+            this.bet(button, 5);
         }//place4
 
-        if(myActivity.findViewById(R.id.place5)==button){//place5
-            this.bet(button,6);
+        if (myActivity.findViewById(R.id.place5) == button) {//place5
+            this.bet(button, 6);
         }//place5
 
-        if(myActivity.findViewById(R.id.place6)==button){//place6
-            this.bet(button,7);
+        if (myActivity.findViewById(R.id.place6) == button) {//place6
+            this.bet(button, 7);
         }//place6
 
-        if(myActivity.findViewById(R.id.place8)==button){//place8
-            this.bet(button,8);
+        if (myActivity.findViewById(R.id.place8) == button) {//place8
+            this.bet(button, 8);
         }//place8
 
-        if(myActivity.findViewById(R.id.place9)==button){//place9
-            this.bet(button,9);
+        if (myActivity.findViewById(R.id.place9) == button) {//place9
+            this.bet(button, 9);
         }//place9
 
-        if(myActivity.findViewById(R.id.place10)==button){//place10
-            this.bet(button,10);
+        if (myActivity.findViewById(R.id.place10) == button) {//place10
+            this.bet(button, 10);
         }//place10
 
-        if(myActivity.findViewById(R.id.cButton1)==button ||
-                myActivity.findViewById(R.id.cButton2)==button ||
-                myActivity.findViewById(R.id.cButton3)==button ||
-                myActivity.findViewById(R.id.cButton4)==button ||
-                myActivity.findViewById(R.id.cButton5)==button ||
-                myActivity.findViewById(R.id.cButton6)==button ||
-                myActivity.findViewById(R.id.cButton7)==button){//C
-            this.bet(button,11);
+        if (myActivity.findViewById(R.id.cButton1) == button ||
+                myActivity.findViewById(R.id.cButton2) == button ||
+                myActivity.findViewById(R.id.cButton3) == button ||
+                myActivity.findViewById(R.id.cButton4) == button ||
+                myActivity.findViewById(R.id.cButton5) == button ||
+                myActivity.findViewById(R.id.cButton6) == button ||
+                myActivity.findViewById(R.id.cButton7) == button) {//C
+            this.bet(button, 11);
         }//C
 
-        if(myActivity.findViewById(R.id.eButton1)==button ||
-                myActivity.findViewById(R.id.eButton2)==button ||
-                myActivity.findViewById(R.id.eButton3)==button ||
-                myActivity.findViewById(R.id.eButton4)==button ||
-                myActivity.findViewById(R.id.eButton5)==button ||
-                myActivity.findViewById(R.id.eButton6)==button ||
-                myActivity.findViewById(R.id.eButton7)==button){//E
-            this.bet(button,12);
+        if (myActivity.findViewById(R.id.eButton1) == button ||
+                myActivity.findViewById(R.id.eButton2) == button ||
+                myActivity.findViewById(R.id.eButton3) == button ||
+                myActivity.findViewById(R.id.eButton4) == button ||
+                myActivity.findViewById(R.id.eButton5) == button ||
+                myActivity.findViewById(R.id.eButton6) == button ||
+                myActivity.findViewById(R.id.eButton7) == button) {//E
+            this.bet(button, 12);
         }//E
 
-        if(myActivity.findViewById(R.id.sevensBet)==button){//bet 7
-            this.bet(button,13);
+        if (myActivity.findViewById(R.id.sevensBet) == button) {//bet 7
+            this.bet(button, 13);
         }//bet 7
 
-        if(myActivity.findViewById(R.id.pair2s)==button){//bet pair 2s
-            this.bet(button,14);
+        if (myActivity.findViewById(R.id.pair2s) == button) {//bet pair 2s
+            this.bet(button, 14);
         }//bet pair 2s
 
-        if(myActivity.findViewById(R.id.pair3s)==button){//bet pair 3s
-            this.bet(button,15);
+        if (myActivity.findViewById(R.id.pair3s) == button) {//bet pair 3s
+            this.bet(button, 15);
         }//bet pair 3s
 
-        if(myActivity.findViewById(R.id.pair4s)==button){//bet pair 4s
-            this.bet(button,16);
+        if (myActivity.findViewById(R.id.pair4s) == button) {//bet pair 4s
+            this.bet(button, 16);
         }//bet pair 4s
 
-        if(myActivity.findViewById(R.id.pair5s)==button){//bet pair 5s
-            this.bet(button,17);
+        if (myActivity.findViewById(R.id.pair5s) == button) {//bet pair 5s
+            this.bet(button, 17);
         }//bet pair 5s
 
-        if(myActivity.findViewById(R.id.twoAndOne)==button){//bet 21
-            this.bet(button,18);
+        if (myActivity.findViewById(R.id.twoAndOne) == button) {//bet 21
+            this.bet(button, 18);
         }//bet 21
 
-        if(myActivity.findViewById(R.id.pair1s)==button){//snake eyes
-            this.bet(button,19);
+        if (myActivity.findViewById(R.id.pair1s) == button) {//snake eyes
+            this.bet(button, 19);
         }//snake eyes
 
-        if(myActivity.findViewById(R.id.pair6s)==button){//bet pair 6s
-            this.bet(button,20);
+        if (myActivity.findViewById(R.id.pair6s) == button) {//bet pair 6s
+            this.bet(button, 20);
         }//bet pair 6s
 
-        if(myActivity.findViewById(R.id.fiveAndSix)==button){//bet 56
-            this.bet(button,21);
+        if (myActivity.findViewById(R.id.fiveAndSix) == button) {//bet 56
+            this.bet(button, 21);
         }//bet 56
 
-        if(myActivity.findViewById(R.id.craps)==button) {//crap
+        if (myActivity.findViewById(R.id.craps) == button) {//crap
             this.bet(button, 22);
         }
+        //update player funds
+        //todo: move this to an apropriate section
+        TextView playerMoney = myActivity.findViewById(R.id.yourMoney);
+        playerMoney.setText("$" + state.getPlayer0Funds());
 
     }// onClick
 
@@ -283,12 +301,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         seekBar.setProgress(amountBet);
         //update text
         betView.setText("$" + amountBet);
-
-        //update player funds
-        //todo: move this to an apropriate section
-        TextView playerMoney = myActivity.findViewById(R.id.yourMoney);
-        playerMoney.setText("$" + state.getPlayer0Funds());
-
 
     }
 
@@ -373,7 +385,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         //change shoot color based on roll
         Button shoot = myActivity.findViewById(R.id.shoot);
         //if it's your turn then the shooter button is red
-        if (state.getPlayerTurn() == 0){
+        if (state.getPlayerTurn() == 0) {
             shoot.setTextColor(ContextCompat.getColor(this.myActivity, R.color.red));
         }
         //else black
@@ -383,7 +395,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         Button ready = myActivity.findViewById(R.id.ready);
         //changes ready to red when human ready
-        if (state.isPlayer0Ready()){
+        if (state.isPlayer0Ready()) {
             ready.setTextColor(ContextCompat.getColor(this.myActivity, R.color.red));
         }
         //else black
@@ -421,91 +433,91 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         passLine2.setOnClickListener(this);
 
         //don't pass line
-        Button dontPass=activity.findViewById(R.id.donPass1);
+        Button dontPass = activity.findViewById(R.id.donPass1);
         dontPass.setOnClickListener(this);
-        Button dontPass1=activity.findViewById(R.id.dont_pass);
+        Button dontPass1 = activity.findViewById(R.id.dont_pass);
         dontPass1.setOnClickListener(this);
 
-        Button come=activity.findViewById(R.id.come);
+        Button come = activity.findViewById(R.id.come);
         come.setOnClickListener(this);
 
-        Button field=activity.findViewById(R.id.field);
+        Button field = activity.findViewById(R.id.field);
         field.setOnClickListener(this);
 
-        Button place4=activity.findViewById(R.id.place4);
+        Button place4 = activity.findViewById(R.id.place4);
         place4.setOnClickListener(this);
 
-        Button place5=activity.findViewById(R.id.place5);
+        Button place5 = activity.findViewById(R.id.place5);
         place5.setOnClickListener(this);
 
-        Button place6=activity.findViewById(R.id.place6);
+        Button place6 = activity.findViewById(R.id.place6);
         place6.setOnClickListener(this);
 
-        Button place8=activity.findViewById(R.id.place8);
+        Button place8 = activity.findViewById(R.id.place8);
         place8.setOnClickListener(this);
 
-        Button place9=activity.findViewById(R.id.place9);
+        Button place9 = activity.findViewById(R.id.place9);
         place9.setOnClickListener(this);
 
-        Button place10=activity.findViewById(R.id.place10);
+        Button place10 = activity.findViewById(R.id.place10);
         place10.setOnClickListener(this);
 
         //c bet listeners
-        Button c1=activity.findViewById(R.id.cButton1);
+        Button c1 = activity.findViewById(R.id.cButton1);
         c1.setOnClickListener(this);
-        Button c2=activity.findViewById(R.id.cButton2);
+        Button c2 = activity.findViewById(R.id.cButton2);
         c2.setOnClickListener(this);
-        Button c3=activity.findViewById(R.id.cButton3);
+        Button c3 = activity.findViewById(R.id.cButton3);
         c3.setOnClickListener(this);
-        Button c4=activity.findViewById(R.id.cButton4);
+        Button c4 = activity.findViewById(R.id.cButton4);
         c4.setOnClickListener(this);
-        Button c5=activity.findViewById(R.id.cButton5);
+        Button c5 = activity.findViewById(R.id.cButton5);
         c5.setOnClickListener(this);
-        Button c6=activity.findViewById(R.id.cButton6);
+        Button c6 = activity.findViewById(R.id.cButton6);
         c6.setOnClickListener(this);
-        Button c7=activity.findViewById(R.id.cButton7);
+        Button c7 = activity.findViewById(R.id.cButton7);
         c7.setOnClickListener(this);
 
         //e bet listeners
-        Button e1=activity.findViewById(R.id.eButton1);
+        Button e1 = activity.findViewById(R.id.eButton1);
         e1.setOnClickListener(this);
-        Button e2=activity.findViewById(R.id.eButton2);
+        Button e2 = activity.findViewById(R.id.eButton2);
         e2.setOnClickListener(this);
-        Button e3=activity.findViewById(R.id.eButton3);
+        Button e3 = activity.findViewById(R.id.eButton3);
         e3.setOnClickListener(this);
-        Button e4=activity.findViewById(R.id.eButton4);
+        Button e4 = activity.findViewById(R.id.eButton4);
         e4.setOnClickListener(this);
-        Button e5=activity.findViewById(R.id.eButton5);
+        Button e5 = activity.findViewById(R.id.eButton5);
         e5.setOnClickListener(this);
-        Button e6=activity.findViewById(R.id.eButton6);
+        Button e6 = activity.findViewById(R.id.eButton6);
         e6.setOnClickListener(this);
-        Button e7=activity.findViewById(R.id.eButton7);
+        Button e7 = activity.findViewById(R.id.eButton7);
         e7.setOnClickListener(this);
 
-        Button seven=activity.findViewById(R.id.sevensBet);
+        Button seven = activity.findViewById(R.id.sevensBet);
         seven.setOnClickListener(this);
 
         //pair bet listeners
-        Button pair2=activity.findViewById(R.id.pair2s);
+        Button pair2 = activity.findViewById(R.id.pair2s);
         pair2.setOnClickListener(this);
-        Button pair3=activity.findViewById(R.id.pair3s);
+        Button pair3 = activity.findViewById(R.id.pair3s);
         pair3.setOnClickListener(this);
-        Button pair4=activity.findViewById(R.id.pair4s);
+        Button pair4 = activity.findViewById(R.id.pair4s);
         pair4.setOnClickListener(this);
-        Button pair5=activity.findViewById(R.id.pair5s);
+        Button pair5 = activity.findViewById(R.id.pair5s);
         pair5.setOnClickListener(this);
-        Button pair6=activity.findViewById(R.id.pair6s);
+        Button pair6 = activity.findViewById(R.id.pair6s);
         pair6.setOnClickListener(this);
-        Button pair1=activity.findViewById(R.id.pair1s);
+        Button pair1 = activity.findViewById(R.id.pair1s);
         pair1.setOnClickListener(this);
 
-        Button twenty1=activity.findViewById(R.id.twoAndOne);
+        Button twenty1 = activity.findViewById(R.id.twoAndOne);
         twenty1.setOnClickListener(this);
 
-        Button fifty6=activity.findViewById(R.id.fiveAndSix);
+        Button fifty6 = activity.findViewById(R.id.fiveAndSix);
         fifty6.setOnClickListener(this);
 
-        Button crap=activity.findViewById(R.id.craps);
+        Button crap = activity.findViewById(R.id.craps);
         crap.setOnClickListener(this);
 
 
@@ -513,7 +525,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         betSelector.setOnSeekBarChangeListener(this);
 
         //this.testResultsTextView =
-       //         (TextView) activity.findViewById(R.id.editTextTest);
+        //         (TextView) activity.findViewById(R.id.editTextTest);
 
         //Makes the radio group and its buttons all work cool
         RadioGroup chips = (RadioGroup) activity.findViewById(R.id.betSetGroup);
@@ -589,8 +601,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
     }
-
-
 
 
 }// class CrapsHumanPlayer

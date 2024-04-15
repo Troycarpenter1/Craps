@@ -269,14 +269,12 @@ public class CrapsState extends GameState {
             return false;
         }
 
-        /*
-           TODO: need to figure out how to get the ID of the player
-            we could put the ID in the RemoveBetAction like we did for ReadyAction
-         */
-
+        //add bet amount back to human's funds
         if (action.playerId == 0) {
             this.setPlayer0Funds(this.getPlayer0Funds() +
                     bets[action.playerId][action.betID].getAmount());
+
+        //add bet amount back to computer player's funds
         } else {
             this.setPlayer1Funds(this.getPlayer1Funds() +
                     bets[action.playerId][action.betID].getAmount());
