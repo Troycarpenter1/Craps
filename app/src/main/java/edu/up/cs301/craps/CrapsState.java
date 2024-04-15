@@ -160,6 +160,12 @@ public class CrapsState extends GameState {
      */
     public void changeTurn() {
         this.playerTurn = 1 - this.playerTurn;
+
+        //when computer player is shooter
+        //change ready to false (allows comp to bet)
+        if (playerTurn == 1){
+            this.player1Ready = false;
+        }
     }
 
     public void setPlayer0Funds(double player0Funds) {
@@ -221,21 +227,24 @@ public class CrapsState extends GameState {
         //Does the player have enough money to bet? if not return
         if (action.playerId == 0) {
             if (action.betAmount > player0Funds) {
+                System.out.println("bet FAILED: not enough money");
                 return false;
             }
             if (player0Ready){
+                System.out.println("bet FAILED: player0 is ready.");
                 return false;
             }
         } else if (action.playerId == 1) {
             if (action.betAmount > player1Funds) {
+                System.out.println("bet FAILED: computer doesn't have enough money to bet.");
                 return false;
             }
             if (player1Ready){
+                System.out.println("bet FAILED: player1 is ready.");
                 return false;
             }
-
-
         }
+
 
         //Is the bet ID a valid point in the array?
         //23 is how many types of bets there are
@@ -327,6 +336,13 @@ public class CrapsState extends GameState {
         } else if (action.playerID == 1) {
             this.player1Ready = action.isReady;
         }
+
+        //TODO remove at some point
+        //ready the computer player whenever player0 readies
+        if (this.player0Ready == true){
+            this.player1Ready = true;
+        }
+
         return true;
     }
 
@@ -340,16 +356,10 @@ public class CrapsState extends GameState {
      */
 
     public boolean roll(RollAction action) {
-        /*
-        boolean playerSwitched;
-        purpose is to prevent one roll counting double
-        global variable used to indicate if the turn has just been switched (7 was the last number rolled)
-        if false > a new roll has been made
-        if true > we're still on the 7 from last time
-         */
-
         //checks if both players are ready
+
         if (!checkCanRoll()) {
+            System.out.println("check can roll FAILED");
             return false;
         }
         //checks if it is the shooters turn
@@ -375,8 +385,7 @@ public class CrapsState extends GameState {
         playerSwitched = false;
         //reset player 0's ready after roll if it weren't reset, then there's no time to bet
         player0Ready = false;
-
-        //player1Ready = false;// - Row
+        player1Ready = false; // -Row
 
         //SYDNEY -- switch player
         // WES -- added first die 2 or 3

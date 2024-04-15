@@ -77,19 +77,6 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         Ready2CrapAction ready = new Ready2CrapAction(this, true, 1);
         game.sendAction(ready);
     }
-    /** unready
-     *  random helper method to make computer player unready
-     *  since computer player has no special stuff for
-     *  unreadying like the human player does
-     *  THIS SHOULD ONLY BE CALLED AFTER THE COMPUTER ROLLS
-     */
-    public void unready(){
-        //unready myself
-        isReady = false;
-        //create a ready action but make it FALSE I HOPE THIS WORKS
-        Ready2CrapAction unready = new Ready2CrapAction(this, false, 1);
-        game.sendAction(unready);
-    }
 
 
     //place a random set of bets on a turn, then ready up
@@ -102,12 +89,11 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
      */
     public void takeTurn() {
         // roll the dice
-         roll();
-        //unready();
+        placeBet();
+        ready();
 
-        // place a bet + ready up after rolling
-        //placeBet();
-        //ready(); //ready so that we don't keep placing bets
+        roll();
+        //state should unready both players after roll
 
 		/* Sydney commented this out for testing the changing turns
 		 *
@@ -136,6 +122,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 
         // if I'm already ready, do not bet again
         if (isReady){
+            System.out.println("placeBet returned, computer is already ready");
             return;
         }
 
@@ -150,9 +137,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         // bet on the pass line every time
         PlaceBetAction pba = new PlaceBetAction(this, playerNum, 1, amountBet);
         this.game.sendAction(pba);
-
         System.out.println("placed a computer bet");
-
 
         // Old code
         /*
@@ -188,8 +173,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         }
         crapsState = (CrapsState) info;
 
-
-        // if my turn take my turn
+        // if is shooter take my turn
         if (crapsState.getPlayerTurn() == 1) {
             //have to delay BEFORE we take turn or we won't be able to see the 7 rolled
 
@@ -199,12 +183,10 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
                 throw new RuntimeException(e);
             }
             takeTurn();
-
         }
-        // if not my turn, just place a bet and ready up
-        else{
-            //placeBet();
-            //ready();
+        else {
+            //ready(); //< this slows down the whole program
+
         }
 
         //TODO we'll have to rethink this isShooter variable in the future, but right
@@ -216,7 +198,6 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         else {
             this.isShooter = false;
         }
-
     }
 
     /**
