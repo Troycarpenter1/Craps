@@ -202,6 +202,7 @@ public class CrapsState extends GameState {
      * placeBet
      * checks to see if bet is valid
      * changes the bet in the GameState bet array
+     * if sender is ready, they can't bet
      *
      * @param action
      * @return
@@ -214,10 +215,18 @@ public class CrapsState extends GameState {
             if (action.betAmount > player0Funds) {
                 return false;
             }
+            if (player0Ready){
+                return false;
+            }
         } else if (action.playerId == 1) {
             if (action.betAmount > player1Funds) {
                 return false;
             }
+            if (player1Ready){
+                return false;
+            }
+
+
         }
 
 

@@ -102,13 +102,13 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
      * places a random number (between 0-5) of random bets
      */
     public void takeTurn() {
-        // place a bet + ready up before rolling
-        placeBet();
-        ready(); //ready so that we don't keep placing bets
-
         // roll the dice
         roll();
         unready();
+
+        // place a bet + ready up after rolling
+        placeBet();
+        ready(); //ready so that we don't keep placing bets
 
 		/* Sydney commented this out for testing the changing turns
 		 *
@@ -142,7 +142,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 
         // if I somehow have less than $100 to spend, then bet all the money I have left
         if (playerMoney < 100){
-            amountBet = playerMoney;
+            this.amountBet = playerMoney;
         }else{
             // Set my amount to bet to $100
             this.amountBet = 100.0;
