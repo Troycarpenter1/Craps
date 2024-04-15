@@ -228,20 +228,20 @@ public class CrapsState extends GameState {
         //Does the player have enough money to bet? if not return
         if (action.playerId == 0) {
             if (action.betAmount > player0Funds) {
-                System.out.println("bet FAILED: not enough money");
+                //System.out.println("bet FAILED: not enough money");
                 return false;
             }
             if (player0Ready){
-                System.out.println("bet FAILED: player0 is ready.");
+                //System.out.println("bet FAILED: player0 is ready.");
                 return false;
             }
         } else if (action.playerId == 1) {
             if (action.betAmount > player1Funds) {
-                System.out.println("bet FAILED: computer doesn't have enough money to bet.");
+                //System.out.println("bet FAILED: computer doesn't have enough money to bet.");
                 return false;
             }
             if (player1Ready){
-                System.out.println("bet FAILED: player1 is ready.");
+                //System.out.println("bet FAILED: player1 is ready.");
                 return false;
             }
         }
@@ -272,6 +272,7 @@ public class CrapsState extends GameState {
             this.setPlayer1Funds(this.getPlayer1Funds() - action.betAmount);
             this.player1Ready = true; //TEST will only ready computer player if bet is successful
             System.out.print("computer player placed a bet.");
+            System.out.print("computer player funds: " + this.player1Funds);
         }
 
         //note that we will eventually initialize all bets in the array to have
@@ -362,7 +363,7 @@ public class CrapsState extends GameState {
         //checks if both players are ready
 
         if (!checkCanRoll()) {
-            System.out.println("check can roll FAILED");
+            //System.out.println("check can roll FAILED");
             return false;
         }
         //checks if it is the shooters turn

@@ -118,6 +118,8 @@ public class CrapsLocalGame extends LocalGame {
 	/**
 	 * Check if the game is over. It is over, return a string that tells
 	 * who the winner(s), if any, are. If the game is not over, return null;
+	 *
+	 * win lose condition
 	 * 
 	 * @return
 	 * 		a message that tells who has won the game, or null if the

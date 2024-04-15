@@ -9,9 +9,10 @@ import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 import edu.up.cs301.GameFramework.utilities.Tickable;
 
 /**
- * A computer-version of a counter-player.  Since this is such a simple game,
- * it just sends "+" and "-" commands with equal probability, at an average
- * rate of one per second.
+ * Simple Computer Player, at this point should always be in player 1 spot (not player 0).
+ * Doesn't place any bets when the human is the shooter.
+ * Will bet about every roll when it is the shooter, $100 on the pass line each time, until
+ * it runs out of money.
  *
  * @author Steven R. Vegdahl
  * @author Andrew M. Nuxoll
@@ -137,7 +138,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         // bet on the pass line every time
         PlaceBetAction pba = new PlaceBetAction(this, playerNum, 1, amountBet);
         this.game.sendAction(pba);
-        System.out.println("placed a computer bet");
+        System.out.println("computer trying to bet");
 
         // Old code
         /*
@@ -183,10 +184,6 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
                 throw new RuntimeException(e);
             }
             takeTurn();
-        }
-        else {
-            //ready(); //< this slows down the whole program
-
         }
 
         //TODO we'll have to rethink this isShooter variable in the future, but right
