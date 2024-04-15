@@ -220,7 +220,6 @@ public class CrapsState extends GameState {
             }
         }
 
-
         //Is the bet ID a valid point in the array?
         //23 is how many types of bets there are
         if (action.betID > 22 || action.betID < 0) {
@@ -243,6 +242,7 @@ public class CrapsState extends GameState {
                 action.betID);
 
         if(action.playerId==0) { */
+            //adjust the player's funds, remove the bet amount
             this.setPlayer0Funds(this.getPlayer0Funds() - action.betAmount);
         } else {
             this.setPlayer1Funds(this.getPlayer1Funds() - action.betAmount);
@@ -250,6 +250,8 @@ public class CrapsState extends GameState {
 
         //note that we will eventually initialize all bets in the array to have
         //the correct IDs and names before the game is started.
+
+        Log.d("die", "PLACED BET bet ID: " + action.betID + ", betAmount: " + action.betAmount);
 
         return true;
     }
@@ -282,6 +284,10 @@ public class CrapsState extends GameState {
 
         //adjust the bet's amount
         this.bets[action.playerId][action.betID].setBetAmount(0); //'removes' the bet (set to 0)
+
+        Log.d("die", "REMOVED BET bet ID: " + action.betID);
+        Bet thisBet = this.bets[action.playerId][action.betID];
+        Log.d("die", "amount of REMOVED bet: " + thisBet.getAmount());
 
         return true;
     }

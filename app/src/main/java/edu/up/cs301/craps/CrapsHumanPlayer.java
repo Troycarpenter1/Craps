@@ -101,16 +101,18 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     public void bet(View button, int id) {
         Button but = (Button) button;
 
-        if (amountBet > 0) {
+        Log.d("die", "amountBet: " + amountBet);
+        if (amountBet > 0.0) {
             if (state.getBet(0, id).getAmount() == 0.0) {
                 but.setTextColor(Color.parseColor("#FFA500"));
                 //sends the bet action to the state
                 PlaceBetAction pba = new PlaceBetAction(this, 0, id,
                         amountBet);
-                state.placeBet(pba);
-
+                game.sendAction(pba);
+                Log.d("die", "trying to place bet");
 
             } else {
+                //change the color for removing the bet
                 if (but.equals(myActivity.findViewById(R.id.come))) {
                     but.setTextColor(Color.parseColor("#D61818"));
                 } else if (
@@ -126,8 +128,10 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
                 } else {
                     but.setTextColor(Color.parseColor("#FFFFFF"));
                 }
-                //send the will to remove the bet to the state
+
+                //send remove bet action
                 RemoveBetAction rba = new RemoveBetAction(this, 0, id);
+                Log.d("die", "trying to remove bet");
                 state.removeBet(rba);
             }
         }
@@ -265,6 +269,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if (myActivity.findViewById(R.id.craps) == button) {//crap
             this.bet(button, 22);
         }
+
         //update player funds
         //todo: move this to an apropriate section
         TextView playerMoney = myActivity.findViewById(R.id.yourMoney);
