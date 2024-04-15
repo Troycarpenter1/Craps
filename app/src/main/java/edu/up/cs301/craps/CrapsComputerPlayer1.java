@@ -102,12 +102,12 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
      */
     public void takeTurn() {
         // roll the dice
-        roll();
-        unready();
+//        roll();
+//        unready();
 
         // place a bet + ready up after rolling
-        placeBet();
-        ready(); //ready so that we don't keep placing bets
+//        placeBet();
+//        ready(); //ready so that we don't keep placing bets
 
 		/* Sydney commented this out for testing the changing turns
 		 *

@@ -98,6 +98,12 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         testResultsTextView.setText("", TextView.BufferType.NORMAL);
     }
 
+
+    /**
+     *
+     * @param button
+     * @param id
+     */
     public void bet(View button, int id) {
         Button but = (Button) button;
         int prevAmountBet;
@@ -150,126 +156,74 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     public void onClick(View button) {
         // if we are not yet connected to a game, ignore
         if (game == null) return;
-        //Log.d("TEST", String.valueOf(button.getId()));
-
+        //checks all of the buttons that could be pressed
         if (button.equals(myActivity.findViewById(R.id.ready))) { //checks if the button pressed is the ready button
-            //Log.d("TEST", "ready");
             this.isReady = state.isPlayer0Ready();
             Ready2CrapAction P1Ready = new Ready2CrapAction(this, !this.isReady, 0);
             game.sendAction(P1Ready);
-        } else if (myActivity.findViewById(R.id.shoot) == button) {
+        } else if (myActivity.findViewById(R.id.shoot) == button) { // checks shoot button
             //changed this to not pass in true always
             RollAction roll = new RollAction(this, 0);
             game.sendAction(roll);
-        }
-
-
-        //CHECK BET BUTTONS
-        //todo: pass and don't pass remove bet not right
-        if (myActivity.findViewById(R.id.passLine1) == button ||
-                myActivity.findViewById(R.id.passLine2) == button) {//pass line
-
+        } else if (myActivity.findViewById(R.id.passLine1) == button) {    //pass line 1
             this.bet(myActivity.findViewById(R.id.passLine1), 1);
+        } else if (myActivity.findViewById(R.id.passLine2) == button) {    //pass line 1
             this.bet(myActivity.findViewById(R.id.passLine2), 1);
-
-        }//pass line
-
-        if (myActivity.findViewById(R.id.donPass1) == button ||
-                myActivity.findViewById(R.id.dont_pass) == button) {//don't pass line
-
+        } else if (myActivity.findViewById(R.id.donPass1) == button) {    //don't pass line 1
             this.bet(myActivity.findViewById(R.id.donPass1), 2);
+        } else if (myActivity.findViewById(R.id.dont_pass) == button) {   //don't pass line 2
             this.bet(myActivity.findViewById(R.id.dont_pass), 2);
-        }//don't pass line
-
-        if (myActivity.findViewById(R.id.come) == button) {//come
+        } else if (myActivity.findViewById(R.id.come) == button) {      //come
             this.bet(button, 3);
-        }//come
-
-        if (myActivity.findViewById(R.id.field) == button) {//field
+        } else if (myActivity.findViewById(R.id.field) == button) {     //field
             this.bet(button, 4);
-        }//field
-
-        if (myActivity.findViewById(R.id.place4) == button) {//place4
+        } else if (myActivity.findViewById(R.id.place4) == button) {    //place4
             this.bet(button, 5);
-        }//place4
-
-        if (myActivity.findViewById(R.id.place5) == button) {//place5
+        } else if (myActivity.findViewById(R.id.place5) == button) {    //place5
             this.bet(button, 6);
-        }//place5
-
-        if (myActivity.findViewById(R.id.place6) == button) {//place6
+        } else if (myActivity.findViewById(R.id.place6) == button) {    //place6
             this.bet(button, 7);
-        }//place6
-
-        if (myActivity.findViewById(R.id.place8) == button) {//place8
+        } else if (myActivity.findViewById(R.id.place8) == button) {    //place8
             this.bet(button, 8);
-        }//place8
-
-        if (myActivity.findViewById(R.id.place9) == button) {//place9
+        } else if (myActivity.findViewById(R.id.place9) == button) {    //place9
             this.bet(button, 9);
-        }//place9
-
-        if (myActivity.findViewById(R.id.place10) == button) {//place10
+        }else if (myActivity.findViewById(R.id.place10) == button) {    //place10
             this.bet(button, 10);
-        }//place10
-
-        if (myActivity.findViewById(R.id.cButton1) == button ||
+        } else if (myActivity.findViewById(R.id.cButton1) == button ||
                 myActivity.findViewById(R.id.cButton2) == button ||
                 myActivity.findViewById(R.id.cButton3) == button ||
                 myActivity.findViewById(R.id.cButton4) == button ||
                 myActivity.findViewById(R.id.cButton5) == button ||
                 myActivity.findViewById(R.id.cButton6) == button ||
-                myActivity.findViewById(R.id.cButton7) == button) {//C
+                myActivity.findViewById(R.id.cButton7) == button) {     // ALL C Buttons
             this.bet(button, 11);
-        }//C
-
-        if (myActivity.findViewById(R.id.eButton1) == button ||
+        } else if (myActivity.findViewById(R.id.eButton1) == button ||
                 myActivity.findViewById(R.id.eButton2) == button ||
                 myActivity.findViewById(R.id.eButton3) == button ||
                 myActivity.findViewById(R.id.eButton4) == button ||
                 myActivity.findViewById(R.id.eButton5) == button ||
                 myActivity.findViewById(R.id.eButton6) == button ||
-                myActivity.findViewById(R.id.eButton7) == button) {//E
+                myActivity.findViewById(R.id.eButton7) == button) {     // ALL E Buttons
             this.bet(button, 12);
-        }//E
-
-        if (myActivity.findViewById(R.id.sevensBet) == button) {//bet 7
+        } else if (myActivity.findViewById(R.id.sevensBet) == button) { //bet 7
             this.bet(button, 13);
-        }//bet 7
-
-        if (myActivity.findViewById(R.id.pair2s) == button) {//bet pair 2s
+        } else if (myActivity.findViewById(R.id.pair2s) == button) {    //bet pair 2s
             this.bet(button, 14);
-        }//bet pair 2s
-
-        if (myActivity.findViewById(R.id.pair3s) == button) {//bet pair 3s
+        } else if (myActivity.findViewById(R.id.pair3s) == button) {    //bet pair 3s
             this.bet(button, 15);
-        }//bet pair 3s
-
-        if (myActivity.findViewById(R.id.pair4s) == button) {//bet pair 4s
+        } else if (myActivity.findViewById(R.id.pair4s) == button) {    //bet pair 4s
             this.bet(button, 16);
-        }//bet pair 4s
-
-        if (myActivity.findViewById(R.id.pair5s) == button) {//bet pair 5s
+        } else if (myActivity.findViewById(R.id.pair5s) == button) {    //bet pair 5s
             this.bet(button, 17);
-        }//bet pair 5s
-
-        if (myActivity.findViewById(R.id.twoAndOne) == button) {//bet 21
+        } else if (myActivity.findViewById(R.id.twoAndOne) == button) { //bet 21
             this.bet(button, 18);
-        }//bet 21
-
-        if (myActivity.findViewById(R.id.pair1s) == button) {//snake eyes
+        } else if (myActivity.findViewById(R.id.pair1s) == button) {    //snake eyes
             this.bet(button, 19);
-        }//snake eyes
-
-        if (myActivity.findViewById(R.id.pair6s) == button) {//bet pair 6s
+        } else if (myActivity.findViewById(R.id.pair6s) == button) {    //bet pair 6s
             this.bet(button, 20);
-        }//bet pair 6s
-
-        if (myActivity.findViewById(R.id.fiveAndSix) == button) {//bet 56
+        } else if (myActivity.findViewById(R.id.fiveAndSix) == button) {//bet 56
             this.bet(button, 21);
-        }//bet 56
-
-        if (myActivity.findViewById(R.id.craps) == button) {//crap
+        } else if (myActivity.findViewById(R.id.craps) == button) {     //crap
             this.bet(button, 22);
         }
 
