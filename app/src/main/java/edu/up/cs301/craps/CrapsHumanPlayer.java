@@ -291,10 +291,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         //changes bet display/ amount to bet according to the seekbar
         seekBar.setMax((int) state.getPlayer0Funds());
-        TextView betView = myActivity.findViewById(R.id.betAmount);
         betView.setText("$" + progress);
         amountBet = progress;
-
 
     }
 
@@ -319,16 +317,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             betIncrement = 100;
         }
         Log.d("TEST", "" + betIncrement);
-        //update player funds
-        //todo: move this to an apropriate section
-        TextView playerMoney = myActivity.findViewById(R.id.yourMoney);
-        playerMoney.setText("$" + state.getPlayer0Funds());
 
-        //changes bet display/ amount to bet according to the seekbar
-        seekBar.setMax((int) state.getPlayer0Funds());
-        TextView betView = myActivity.findViewById(R.id.betAmount);
-        betView.setText("$" + progress);
-        amountBet = progress;
     }
 
     /**
