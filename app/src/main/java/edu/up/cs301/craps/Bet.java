@@ -181,14 +181,14 @@ public class Bet {
             case "CRAPS":
                 return this.checkCrapsBet(diceTotal);
             case "COME":
-                return this.checkComeBetWon(diceTotal,firstRoll);
+                return this.checkComeBet(diceTotal,firstRoll);
             case "PASS":
-                //TODO: this is only part of the functionality of a pass line bet
-                if(diceTotal == 7) {
-                    return false;
-                } else {
-                    return true;
-                }
+                return this.checkPassBet(diceTotal, firstRoll);
+            case "DON'T PASS":
+                return false;
+            case "CRAP":
+                return false;
+
         }
         return false; //returns false if none of the previous cases are met
     }
@@ -263,22 +263,39 @@ public class Bet {
     /**
      * Come bet is won if any of the following are rolled: (after first roll)
      * 4, 5, 6, 8, 9, 10
-     * if the first roll is one of the values that can be a come bet then it needs to check if the dice total is the first roll
-     *
+     * if the first roll is one of the values that can be a come bet
+     * then it needs to check if the dice total is the first roll
      *
      * @param dieSum the sum of the dice total roll
      * @return true if a Come bet is won otherwise false
      */
-    public boolean checkComeBetWon(int dieSum, int firstRoll) {
+    public boolean checkComeBet(int dieSum, int firstRoll) {
         //the values that CAN win a Come bet
         int[] winningVals = new int[]{
                 4, 5, 6, 8, 9, 10
         };
-        //checks if the dice total will win
+        //checks if the dice total CAN win
         for (int num : winningVals) {
             if (dieSum == num) {
+                //checks if the die sum of this roll matches the first roll
                 return (dieSum == firstRoll);
             }
+        }
+        return false;
+    }
+
+    /**
+     * checkPassBet
+     * works based on rules of craps for winning a pass line bet
+     * @param dieSum
+     * @param firstRoll
+     * @return true if bet won false if bet lost
+     */
+    public boolean checkPassBet(int dieSum, int firstRoll) {
+        if (firstRoll == 7 || firstRoll == 11) {
+            return true;
+        } else if (dieSum == firstRoll) {
+            return true;
         }
         return false;
     }

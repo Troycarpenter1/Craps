@@ -348,6 +348,12 @@ public class CrapsState extends GameState {
         //updates the values of the die
         Random rand = new Random();
         this.setDice(rand.nextInt(6) + 1, rand.nextInt(6) + 1);
+        //this.setDice(1, 1); //always rolls a crap (for testing purposes)
+
+        //checks if this is the first time rolling
+        if (this.firstDieShot == 0) {
+            this.firstDieShot = this.dieTotal;
+        }
 
         /*
             if playerSwitched is true (will only happen if last roll was a 7)
@@ -361,8 +367,8 @@ public class CrapsState extends GameState {
          */
         playerSwitched = false;
 
-        Log.d("die", "DIETOTAL: " + this.dieTotal);
-
+        Log.d("die", "DIE TOTAL: " + this.dieTotal);
+        Log.d("die", "FIRST ROLL : " + this.firstDieShot);
 
         /*
             reset player 0's ready after roll
@@ -371,9 +377,10 @@ public class CrapsState extends GameState {
         player0Ready = false;
 
         //SYDNEY -- switch player
+        // WES -- added first die 2 or 3
         //TODO this is written assuming there is one human and one computer playing
-
-        if ((this.dieTotal == 7) && !playerSwitched) {
+        //checks if the shooter wins or loses
+        if ((this.dieTotal == 7 || this.firstDieShot == 2 || this.firstDieShot == 3) && !playerSwitched) {
             Log.d("die", "7 ROLLED! SWITCH! ");
 
             GamePlayer player = action.getPlayer();
