@@ -209,7 +209,7 @@ public class CrapsState extends GameState {
     public boolean placeBet(PlaceBetAction action) {
         //Is it the player's turn?
 
-        //Does the player have enough money?
+        //Does the player have enough money to bet? if not return
         if (action.playerId == 0) {
             if (action.betAmount > player0Funds) {
                 return false;
@@ -236,21 +236,20 @@ public class CrapsState extends GameState {
             we could put the ID in the RemoveBetAction like we did for ReadyAction
          */
         //adjust the bet's amount
-        this.bets[action.playerId][action.betID].setBetAmount(action.betAmount);
-        if (action.playerId == 0) {
-        /*this.bets[action.playerId][action.betID]=new Bet((int)action.betAmount, 1.0,
-                action.betID);
 
-        if(action.playerId==0) { */
-            //adjust the player's funds, remove the bet amount
+        //add the amount of the bet to the bet's current total
+        this.bets[action.playerId][action.betID].setBetAmount(action.betAmount + bets[action.playerId][action.betID].getAmount());
+        Log.d("die", "placeBet action");
+        if (action.playerId == 0) {
+            Log.d("die", "changing human player funds");
             this.setPlayer0Funds(this.getPlayer0Funds() - action.betAmount);
+
         } else {
             this.setPlayer1Funds(this.getPlayer1Funds() - action.betAmount);
         }
 
         //note that we will eventually initialize all bets in the array to have
         //the correct IDs and names before the game is started.
-
         Log.d("die", "PLACED BET bet ID: " + action.betID + ", betAmount: " + action.betAmount);
 
         return true;
@@ -273,6 +272,8 @@ public class CrapsState extends GameState {
 
         //add bet amount back to human's funds
         if (action.playerId == 0) {
+            Log.d("die", "added $" + bets[action.playerId][action.betID].getAmount() +
+                    "to player's account.");
             this.setPlayer0Funds(this.getPlayer0Funds() +
                     bets[action.playerId][action.betID].getAmount());
 
@@ -288,6 +289,7 @@ public class CrapsState extends GameState {
         Log.d("die", "REMOVED BET bet ID: " + action.betID);
         Bet thisBet = this.bets[action.playerId][action.betID];
         Log.d("die", "amount of REMOVED bet: " + thisBet.getAmount());
+
 
         return true;
     }
