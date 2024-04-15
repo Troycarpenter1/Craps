@@ -55,7 +55,7 @@ public class CrapsState extends GameState {
         this.player0Funds = 1000.00;
         this.player1Funds = 1000.00;
         this.player0Ready = false;
-        this.player1Ready = false; //TODO: please refer here if there are issues w human betting - R
+        this.player1Ready = true; //TODO: please refer here if there are issues w human betting - R
         this.setDice(0, 0);
         this.offOn = false;
         this.playerSwitched = false;
@@ -376,7 +376,7 @@ public class CrapsState extends GameState {
         //reset player 0's ready after roll if it weren't reset, then there's no time to bet
         player0Ready = false;
 
-        player1Ready = false;// - Row
+        //player1Ready = false;// - Row
 
         //SYDNEY -- switch player
         // WES -- added first die 2 or 3
