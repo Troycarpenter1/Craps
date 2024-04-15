@@ -324,10 +324,10 @@ public abstract class LocalGame implements Game, Tickable {
         //TODO: commented out to not end game immediately.
 
         // determine whether there is a winner; if so, finish up the game
-//        String overMsg = checkIfGameOver();
-//        if (overMsg != null) {
-//            finishUpGame(overMsg);
-//        }
+        String overMsg = checkIfGameOver();
+        if (overMsg != "That's all folks") {
+            finishUpGame(overMsg);
+        }
     }
 
     /**
