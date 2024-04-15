@@ -90,7 +90,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     public void takeTurn() {
         // roll the dice
         placeBet();
-        ready();
+        //ready();
 
         roll();
         //state should unready both players after roll

@@ -138,6 +138,7 @@ public class CrapsState extends GameState {
         return offOn;
     }
 
+
     //setters
 
     /**
@@ -269,6 +270,8 @@ public class CrapsState extends GameState {
 
         } else {
             this.setPlayer1Funds(this.getPlayer1Funds() - action.betAmount);
+            this.player1Ready = true; //TEST will only ready computer player if bet is successful
+            System.out.print("computer player placed a bet.");
         }
 
         //note that we will eventually initialize all bets in the array to have
