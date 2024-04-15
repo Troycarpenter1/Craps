@@ -54,7 +54,7 @@ public class CrapsState extends GameState {
         this.player0Funds = 1000.00;
         this.player1Funds = 1000.00;
         this.player0Ready = false;
-        this.player1Ready = true;
+        this.player1Ready = false; //TODO: please refer here if there are issues w human betting - R
         this.setDice(0, 0);
         this.offOn = false;
         this.playerSwitched = false;

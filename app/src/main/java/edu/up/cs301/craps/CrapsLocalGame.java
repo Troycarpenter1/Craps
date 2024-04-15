@@ -84,7 +84,27 @@ public class CrapsLocalGame extends LocalGame {
 			gameState.roll(rolling);
 			//denote legal move
 			return true;
-		} else {
+		}
+
+		// START OF ROWENA EDITS
+		else if (action instanceof PlaceBetAction){
+			//typecast
+			PlaceBetAction placeBet = (PlaceBetAction) action;
+			//perform appropriate action handler method in gamestate
+			gameState.placeBet(placeBet);
+			//denote legal move
+			return true;
+		}else if (action instanceof RemoveBetAction){
+			//typecast
+			RemoveBetAction removeBet = (RemoveBetAction) action;
+			//perform appropriate action handler method in gamestate
+			gameState.removeBet(removeBet);
+			//denote legal move
+			return true;
+		}
+		// END OF ROWENA EDITS
+
+		else {
 			// denote that this was an illegal move
 			return false;
 		}

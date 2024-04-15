@@ -2,7 +2,7 @@ package edu.up.cs301.craps;
 
 import android.util.Log;
 
-import java.util.Random;
+//import java.util.Random;
 
 import edu.up.cs301.GameFramework.GameMainActivity;
 import edu.up.cs301.GameFramework.players.GameComputerPlayer;
@@ -26,23 +26,13 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 
     //instance variables
     private GameMainActivity myActivity;
-    private int playerMoney;// player's money
-    private double amountBet;// amount player wants to bet
-    private boolean isShooter;// shooter status
-    private boolean isReady; // player is ready (done placing bets)
+    private double playerMoney;// my money
+    private double amountBet;// amount I wants to bet
+    private boolean isShooter;// my shooter status
+    private boolean isReady; // my ready status
     private int die1;
     private int die2;
-
     CrapsState crapsState;
-
-    //TODO should I have a local version of this bet array? didn't see one in human player
-    //I'll put one here for now just for me
-
-    int numTypes = 23; //TODO this should be a static variable in the Bet class
-    //TODO so delete this later
-    //represents how many types of bets there are
-    //private Bet [] bets = new Bet[numTypes];
-
 
     /**
      * Constructor for objects of class CounterComputerPlayer1
@@ -64,35 +54,33 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         this.isReady = false;
         this.die1 = 0;
         this.die2 = 0;
-
-        //initializes the bet array
-        //TODO delete/edit if we don't end up using the local array
-        //commented out until we merge
-		/*
-		int num_bets = 23;
-		for (int i = 0; i < num_bets; i++){
-			bets[i] = new Bet(0, 1, i);
-			//somehow set the name to the name in the public static array
-			//TODO add a way to set name in the bet? or is there something
-			//TODO that automatically in bet??
-
-		}
-		*/
     }
 
-    //roll
-    //this part is copied directly from Rowena's code
+    /** roll
+     *  roll the dice on the game-board
+     */
     public void roll() {
 
-        //create a roll action
+        //create a roll action then send it
         Log.d("die", "Computer player shooter? " + this.isShooter);
         RollAction roll = new RollAction(this, 1);
         game.sendAction(roll);
 
     }
 
-    //place a random set of bets on a turn, then ready up
+    /** ready
+     *  tells the game I'm (comp player) is ready
+     */
+    public void ready(){
+        //make myself ready
+        isReady = true;
+        //create a ready action then send it
+        Ready2CrapAction ready = new Ready2CrapAction(this, true, 1);
+        game.sendAction(ready);
+    }
 
+
+    //place a random set of bets on a turn, then ready up
     /**
      * takeTurn
      * called when it's time to take bets (shooter has rolled, or everyone
@@ -101,22 +89,22 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
      * places a random number (between 0-5) of random bets
      */
     public void takeTurn() {
+        // place a bet + ready up before rolling
+        placeBet();
+        ready();
 
-        roll(); //roll the dice
+        // roll the dice
+        roll();
 
-        //Sydney commented this out for testing the changing turns
-		/*
-		//make a random amount of bets
-		Random rand = new Random();
-		int numBets = rand.nextInt(5); //make 0 to 4 bets
-		for (int i = 0; i < numBets; i++){
-			bet();
-		}
-		*/
-
-        //ready up
-        this.isReady = true;
-
+		/* Sydney commented this out for testing the changing turns
+		 *
+         * //make a random amount of bets
+		 * Random rand = new Random();
+		 * int numBets = rand.nextInt(5); //make 0 to 4 bets
+		 * for (int i = 0; i < numBets; i++){
+		 *	bet();
+		 *}
+		 */
     }
 
     /**
@@ -124,28 +112,53 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
      * places a bet of a semi-random amount on a random spot
      * adds the bet to the local bet array
      */
-    public void bet() {
-        Random rand = new Random();
+    public void placeBet() {
+        /*
+         * Computer Betting
+         * Rowena's Version
+         */
 
-        //TODO this won't compile until merged, commented out
+        // look at how much money I have according to my copy of the game state
+        playerMoney = crapsState.getPlayer1Funds();
 
-		/*
+        // if I'm already ready, do not bet again
+        if (isReady){
+            return;
+        }
 
-		//choose random bet amount
-		//the random bet is between 1/6 and 1/2 of player's total money
-		int cap = (2*this.playerMoney)/6;
-		this.amountBet =  rand.nextInt(cap) + this.playerMoney/6;
+        // if I somehow have less than $100 to spend, then bet all the money I have left
+        if (playerMoney < 100){
+            amountBet = playerMoney;
+        }else{
+            // Set my amount to bet to $100
+            this.amountBet = 100.0;
+        }
 
-		//random bet Type, adjust for more sophisticated AI
-		//have to confirm with Troy, assuming
-		//betID = spot in strings array
-		int betID = rand.nextInt(numTypes);
+        // bet on the pass line every time
+        PlaceBetAction pba = new PlaceBetAction(this, playerNum, 1, amountBet);
+        this.game.sendAction(pba);
 
-		//create a new bet and add to the local bet array
-		this.bets[betID] = new Bet(this.amountBet, 1, betID);
+        System.out.println("placed a computer bet");
 
-		 */
 
+        // Old code
+        /*
+         * //Random rand = new Random();
+
+         * //not necessary for dumb AI
+         * //choose random bet amount
+         * //the random bet is between 1/6 and 1/2 of player's total money
+         * int cap = (2*this.playerMoney)/6;
+         * this.amountBet =  rand.nextInt(cap) + this.playerMoney/6;
+         *
+         * //random bet Type, adjust for more sophisticated AI
+         * //have to confirm with Troy, assuming
+         * //betID = spot in strings array
+         * int betID = rand.nextInt(numTypes);
+
+         * //create a new bet and add to the local bet array
+         * this.bets[betID] = new Bet(this.amountBet, 1, betID);
+        */
     }
 
     /**
@@ -161,6 +174,8 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             return;
         }
         crapsState = (CrapsState) info;
+
+        // if my turn take my turn
         if (crapsState.getPlayerTurn() == 1) {
             //have to delay BEFORE we take turn or we won't be able to see the 7 rolled
 
@@ -171,6 +186,11 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             }
             takeTurn();
 
+        }
+        // else just place a bet and ready up
+        else{
+            placeBet();
+            ready();
         }
 
         //TODO we'll have to rethink this isShooter variable in the future, but right
