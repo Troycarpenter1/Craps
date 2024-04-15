@@ -147,6 +147,43 @@ public class Bet {
         if the bet is won based on the rules
          */
         switch (this.name) {
+            case "NO BET":
+                return false;
+            case "PASS":
+                if (firstRoll == 7 || firstRoll == 11 || firstRoll == diceTotal) {
+                    return true;
+                }
+                return false;
+            case "DON'T PASS":
+                if (firstRoll == 2 || firstRoll == 3 || diceTotal == 7) {
+                    return true;
+                }
+                return false;
+            case "COME":
+                //the values that CAN win a Come bet
+                int[] comeWinningVals = new int[]{
+                        4, 5, 6, 8, 9, 10
+                };
+                //checks if the dice total CAN win
+                for (int num : comeWinningVals) {
+                    if (diceTotal == num) {
+                        //checks if the die sum of this roll matches the first roll
+                        return (diceTotal == firstRoll);
+                    }
+                }
+                return false;
+            case "FIELD":
+                //the values that will win a field bet
+                int[] fieldWinningVals = new int[]{
+                        2, 3, 4, 9, 10, 11, 12
+                };
+                //checks if the dice total will win
+                for (int num : fieldWinningVals) {
+                    if (diceTotal == num) {
+                        return true;
+                    }
+                }
+                return false;
             case "4":
                 return this.checkDiceSum(diceTotal, 4);
             case "5":
@@ -159,9 +196,8 @@ public class Bet {
                 return this.checkDiceSum(diceTotal, 9);
             case "10":
                 return this.checkDiceSum(diceTotal, 10);
-            case "E":
-            case "5 & 6":
-                return this.checkDiceSum(diceTotal, 11);
+            case "7 (4 to 1)":
+                return this.checkDiceSum(diceTotal, 7);
             case "2 & 1":
                 return this.checkDiceSum(diceTotal, 3);
             case "Pair of 1s":
@@ -176,31 +212,35 @@ public class Bet {
                 return this.checkPairOfN(die1, die2, 5);
             case "Pair of 6s":
                 return this.checkPairOfN(die1, die2, 6);
-            case "FIELD":
-                return this.checkFieldBet(diceTotal);
+            case "E":
+            case "5 & 6":
+                return this.checkDiceSum(diceTotal, 11);
+            case "C":
             case "CRAPS":
-                return this.checkCrapsBet(diceTotal);
-            case "COME":
-                return this.checkComeBet(diceTotal,firstRoll);
-            case "PASS":
-                return this.checkPassBet(diceTotal, firstRoll);
-            case "DON'T PASS":
+                //the values that will win a Craps bet
+                int[] crapsWinningVals = new int[]{
+                        2, 3, 12
+                };
+                //checks if the dice total will win
+                for (int num : crapsWinningVals) {
+                    if (diceTotal == num) {
+                        return true;
+                    }
+                }
                 return false;
-            case "CRAP":
-                return false;
-
         }
         return false; //returns false if none of the previous cases are met
     }
 
 
-    /**
+    /*
      * a bunch of said helper methods for the checkThisBetWon method
      */
 
     /**
-     * checks if the dice are pairs of given int n
+     * checkPairOfN
      *
+     * checks if the dice are pairs of given int n
      * @param die1 int dice 1
      * @param die2 int dice 2
      * @param n    int desired pair of dice
@@ -213,94 +253,22 @@ public class Bet {
         return false;
     }
 
-    //checks if the sum of the die are equal to the winning value
+    /**
+     * checkDiceSum
+     *
+     * checks if the sum of the die are equal to the winning value
+     * @param dieSum
+     * @param winningVal
+     * @return
+     */
     public boolean checkDiceSum(int dieSum, int winningVal) {
         return (dieSum == winningVal);
     }
 
     /**
-     * Field bet is won if any of the following are rolled:
-     * 2 3 4 9 10 11 12
-     *
-     * @param dieSum the sum of the dice total roll
-     * @return true if field bet is won otherwise false
+     * toString method
+     * @return
      */
-    public boolean checkFieldBet(int dieSum) {
-        //the values that will win a field bet
-        int[] winningVals = new int[]{
-                2, 3, 4, 9, 10, 11, 12
-        };
-        //checks if the dice total will win
-        for (int num : winningVals) {
-            if (dieSum == num) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Craps bet is won if any of the following are rolled:
-     * 2 3 12
-     *
-     * @param dieSum the sum of the dice total roll
-     * @return dieSum if a craps bet is won otherwise -1
-     */
-    public boolean checkCrapsBet(int dieSum) {
-        //the values that will win a Craps bet
-        int[] winningVals = new int[]{
-                2, 3, 12
-        };
-        //checks if the dice total will win
-        for (int num : winningVals) {
-            if (dieSum == num) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Come bet is won if any of the following are rolled: (after first roll)
-     * 4, 5, 6, 8, 9, 10
-     * if the first roll is one of the values that can be a come bet
-     * then it needs to check if the dice total is the first roll
-     *
-     * @param dieSum the sum of the dice total roll
-     * @return true if a Come bet is won otherwise false
-     */
-    public boolean checkComeBet(int dieSum, int firstRoll) {
-        //the values that CAN win a Come bet
-        int[] winningVals = new int[]{
-                4, 5, 6, 8, 9, 10
-        };
-        //checks if the dice total CAN win
-        for (int num : winningVals) {
-            if (dieSum == num) {
-                //checks if the die sum of this roll matches the first roll
-                return (dieSum == firstRoll);
-            }
-        }
-        return false;
-    }
-
-    /**
-     * checkPassBet
-     * works based on rules of craps for winning a pass line bet
-     * @param dieSum
-     * @param firstRoll
-     * @return true if bet won false if bet lost
-     */
-    public boolean checkPassBet(int dieSum, int firstRoll) {
-        if (firstRoll == 7 || firstRoll == 11) {
-            return true;
-        } else if (dieSum == firstRoll) {
-            return true;
-        }
-        return false;
-    }
-
-    //toString method
     @Override
     public String toString() {
         return this.name + " Bet ID of: " + this.ID + " with $" + this.amount + " and Pays out: " + this.payout;
