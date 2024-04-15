@@ -326,22 +326,20 @@ public class CrapsState extends GameState {
      */
 
     public boolean roll(RollAction action) {
-
         /*
-        //purpose is to prevent one roll counting double
-        boolean playerSwitched; //local variable used to indicate if the turn has just been switched (7 was the last number rolled)
-        //if false > a new roll has been made
-        //true > we're still on the 7 from last time
+        boolean playerSwitched;
+        purpose is to prevent one roll counting double
+        global variable used to indicate if the turn has just been switched (7 was the last number rolled)
+        if false > a new roll has been made
+        if true > we're still on the 7 from last time
          */
-
-        //checks if it is the shooters turn
-        if (action.playerId != this.playerTurn) {
-            return false;
-        }
-
 
         //checks if both players are ready
         if (!checkCanRoll()) {
+            return false;
+        }
+        //checks if it is the shooters turn
+        if (action.playerId != this.playerTurn) {
             return false;
         }
 
@@ -350,30 +348,18 @@ public class CrapsState extends GameState {
         this.setDice(rand.nextInt(6) + 1, rand.nextInt(6) + 1);
         //this.setDice(1, 1); //always rolls a crap (for testing purposes)
 
-        //checks if this is the first time rolling
-        if (this.firstDieShot == 0) {
+        //checks if this is the first round and updates the first roll
+        //or if the shooter just lost (player switched)
+        if (this.firstDieShot == 0 || playerSwitched) {
             this.firstDieShot = this.dieTotal;
         }
-
-        /*
-            if playerSwitched is true (will only happen if last roll was a 7)
-            then this roll is the first roll of the round (shooter)
-         */
-        if (playerSwitched == true){
-            firstDieShot = this.dieTotal;
-        }
-        /*
-        change playerSwitched to false after roll
-         */
-        playerSwitched = false;
 
         Log.d("die", "DIE TOTAL: " + this.dieTotal);
         Log.d("die", "FIRST ROLL : " + this.firstDieShot);
 
-        /*
-            reset player 0's ready after roll
-            if it weren't reset, then there's no time to bet
-         */
+        //change playerSwitched to false after roll
+        playerSwitched = false;
+        //reset player 0's ready after roll if it weren't reset, then there's no time to bet
         player0Ready = false;
 
         //SYDNEY -- switch player
@@ -381,31 +367,12 @@ public class CrapsState extends GameState {
         //TODO this is written assuming there is one human and one computer playing
         //checks if the shooter wins or loses
         if ((this.dieTotal == 7 || this.firstDieShot == 2 || this.firstDieShot == 3) && !playerSwitched) {
-            Log.d("die", "7 ROLLED! SWITCH! ");
-
-            GamePlayer player = action.getPlayer();
-            //Log.d("die", "the player is: " + player);
-
-            if (this.playerTurn == 0){
-                this.playerTurn = 1;
-                Log.d("die", "Switching to computer player.");
-            }
-            else{
-                this.playerTurn = 0;
-                Log.d("die", "Switching to human player.");
-            }
-
-            //set playerSwitched to true since 7 was just rolled
+            Log.d("die", "SWITCH SHOOTER!");
+            this.changeTurn();
+            Log.d("die", "Switching to player: " + this.playerTurn);
+            //set playerSwitched to true since the shooter lost
             playerSwitched = true;
-
         }
-
-        /*
-        Log.d("die", "player turn: " + this.getPlayerTurn());
-        Log.d("die", "player 0 ready? " + this.player0Ready);
-        Log.d("die", "player 1 ready? " + this.player1Ready);
-        */
-
 
         return true;
     }
