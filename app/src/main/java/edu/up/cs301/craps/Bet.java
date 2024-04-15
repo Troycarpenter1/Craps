@@ -41,25 +41,24 @@ public class Bet {
             /* Dont Pass Bet: */ 1.0,
             /* Come Bet: */      1.0,
             /* Field Bet: */     1.0,
-            /* 4: */             (9.0/5.0),
-            /* 5: */             (7.0/5.0),
-            /* 6: */             (7.0/6.0),
-            /* 8: */             (7.0/6.0),
-            /* 9: */             (7.0/5.0),
-            /* 10: */            (9.0/5.0)
-            /* C: */
-            /* E: */
-            /* 7 (4 to 1): */
-            /* Pair of 2s: */
-            /* Pair of 3s: */
-            /* Pair of 4s: */
-            /* Pair of 5s: */
-            /* 2 & 1: */
-            /* Pair of 1s: */
-            /* Pair of 6s: */
-            /* 5 & 6: */
-            /* Craps: */
-
+            /* 4: */             9.0/5.0,
+            /* 5: */             7.0/5.0,
+            /* 6: */             7.0/6.0,
+            /* 8: */             7.0/6.0,
+            /* 9: */             7.0/5.0,
+            /* 10: */            9.0/5.0,
+            /* C: */             15.0,
+            /* E: */             15.0,
+            /* 7 (4 to 1): */    4.0,
+            /* Pair of 2s: */    30.0,
+            /* Pair of 3s: */    30.0,
+            /* Pair of 4s: */    30.0,
+            /* Pair of 5s: */    30.0,
+            /* 2 & 1: */         15.0,
+            /* Pair of 1s: */    30.0,
+            /* Pair of 6s: */    30.0,
+            /* 5 & 6: */         15.0,
+            /* Craps: */         15.0
     };
 
 
@@ -121,14 +120,10 @@ public class Bet {
      */
     public double payoutBet(int die1, int die2, int diceTotal, int firstRoll) {
         if (checkThisBetWon(die1, die2, diceTotal, firstRoll)) { //checks if the bet is won
-            // double used in considering special cases where the player should be paid more or less
-            double specialPay = 1.0;
-
             if (this.name.equals("FIELD") && (diceTotal == 2 || diceTotal == 12)) { // checks double pay out on field bets
-                specialPay = 2.0;
+                return this.amount * (this.payout * 2);
             }
-
-            return this.amount * (this.payout * specialPay);
+            return this.amount * this.payout;
         } else { //takes your money if you lose haha
             return 0.0;
         }
@@ -186,12 +181,14 @@ public class Bet {
             case "CRAPS":
                 return this.checkCrapsBet(diceTotal);
             case "COME":
-                // this code needs to be in a player class somewhere later to change
-                // the bet amount to 0 and add the old bet amount to the new place bet
-                // if (this.checkComeBetVal(diceTotal) >= 0) {
-                //   this.name = "" + this.checkComeBet(diceTotal); //wrong as of this version
-                //  }
-                return this.checkComeBetWon(diceTotal);
+                return this.checkComeBetWon(diceTotal,firstRoll);
+            case "PASS":
+                //TODO: this is only part of the functionality of a pass line bet
+                if(diceTotal == 7) {
+                    return false;
+                } else {
+                    return true;
+                }
         }
         return false; //returns false if none of the previous cases are met
     }
@@ -266,43 +263,24 @@ public class Bet {
     /**
      * Come bet is won if any of the following are rolled: (after first roll)
      * 4, 5, 6, 8, 9, 10
+     * if the first roll is one of the values that can be a come bet then it needs to check if the dice total is the first roll
+     *
      *
      * @param dieSum the sum of the dice total roll
      * @return true if a Come bet is won otherwise false
      */
-    public boolean checkComeBetWon(int dieSum) {
-        //the values that will win a Come bet
+    public boolean checkComeBetWon(int dieSum, int firstRoll) {
+        //the values that CAN win a Come bet
         int[] winningVals = new int[]{
                 4, 5, 6, 8, 9, 10
         };
         //checks if the dice total will win
         for (int num : winningVals) {
             if (dieSum == num) {
-                return true;
+                return (dieSum == firstRoll);
             }
         }
         return false;
-    }
-
-    /**
-     * Come bet is won if any of the following are rolled: (after first roll)
-     * 4, 5, 6, 8, 9, 10
-     *
-     * @param dieSum the sum of the dice total roll
-     * @return dieSum if a craps bet is won otherwise -1
-     */
-    public int checkComeBetVal(int dieSum) {
-        //the values that will win a Come bet
-        int[] winningVals = new int[]{
-                4, 5, 6, 8, 9, 10
-        };
-        //checks if the dice total will win
-        for (int num : winningVals) {
-            if (dieSum == num) {
-                return dieSum;
-            }
-        }
-        return -1;
     }
 
     //toString method

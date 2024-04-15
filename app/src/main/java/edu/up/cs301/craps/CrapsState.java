@@ -41,6 +41,7 @@ public class CrapsState extends GameState {
     private int die1CurrVal;
     private int die2CurrVal;
     private int dieTotal;
+    private int firstDieShot; //the total of the first roll the shooter rolls
     private boolean offOn;
 
     //purpose is to prevent one roll counting double
@@ -58,6 +59,8 @@ public class CrapsState extends GameState {
         this.setDice(0, 0);
         this.offOn = false;
         this.playerSwitched = false;
+        this.firstDieShot = 0;
+
         // iterates through a master 2d array and makes all bets for each player
         for (int p = 0; p < bets.length; p++) { // iterates through number of players
             for (int b = 0; b < bets[p].length; b++) { // iterates through all bet IDs
@@ -79,6 +82,7 @@ public class CrapsState extends GameState {
         this.player1Ready = crap.player1Ready;
         this.offOn = crap.offOn;
         this.playerSwitched = crap.playerSwitched;
+        this.firstDieShot = crap.firstDieShot;
         //uses the copy constructor of the bet class
         for (int x = 0; x < bets.length; x++) {
             for (int y = 0; y < bets[x].length; y++) {
@@ -114,6 +118,10 @@ public class CrapsState extends GameState {
 
     public int getDieTotal() {
         return this.dieTotal;
+    }
+
+    public int getFirstDieShot() {
+        return this.firstDieShot;
     }
 
     public boolean getPlayerSwitched() {return this.playerSwitched;}
@@ -340,16 +348,31 @@ public class CrapsState extends GameState {
         //updates the values of the die
         Random rand = new Random();
         this.setDice(rand.nextInt(6) + 1, rand.nextInt(6) + 1);
+
+        /*
+            if playerSwitched is true (will only happen if last roll was a 7)
+            then this roll is the first roll of the round (shooter)
+         */
+        if (playerSwitched == true){
+            firstDieShot = this.dieTotal;
+        }
+        /*
+        change playerSwitched to false after roll
+         */
         playerSwitched = false;
+
         Log.d("die", "DIETOTAL: " + this.dieTotal);
 
-        player0Ready = false; //reset player 0's ready after roll
-                              //if it weren't reset, then there's no time to bet
+
+        /*
+            reset player 0's ready after roll
+            if it weren't reset, then there's no time to bet
+         */
+        player0Ready = false;
 
         //SYDNEY -- switch player
         //TODO this is written assuming there is one human and one computer playing
 
-        //TODO playerswitched isn't working
         if ((this.dieTotal == 7) && !playerSwitched) {
             Log.d("die", "7 ROLLED! SWITCH! ");
 
@@ -365,6 +388,7 @@ public class CrapsState extends GameState {
                 Log.d("die", "Switching to human player.");
             }
 
+            //set playerSwitched to true since 7 was just rolled
             playerSwitched = true;
 
         }
