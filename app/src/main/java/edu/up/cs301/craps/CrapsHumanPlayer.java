@@ -100,35 +100,42 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
     public void bet(View button, int id) {
         Button but = (Button) button;
+        int prevAmountBet;
 
-        if (amountBet > 0) {
-            if (state.getBet(0, id).getAmount() == 0.0) {
+        Log.d("die", "amountBet: " + amountBet);
+
+        if (amountBet > 0.0) {
+          //  if (state.getBet(0, id).getAmount() == 0.0) {
                 but.setTextColor(Color.parseColor("#FFA500"));
                 //sends the bet action to the state
                 PlaceBetAction pba = new PlaceBetAction(this, 0, id,
                         amountBet);
-                state.placeBet(pba);
+                game.sendAction(pba);
+                Log.d("die", "trying to place bet");
 
+           // }
+        }
+        else {
+            //send remove bet action
+            RemoveBetAction rba = new RemoveBetAction(this, 0, id);
+            Log.d("die", "trying to remove bet");
+            state.removeBet(rba);
 
+            //change the color for removing the bet
+            if (but.equals(myActivity.findViewById(R.id.come))) {
+                but.setTextColor(Color.parseColor("#D61818"));
+            } else if (
+                    but.equals(myActivity.findViewById(R.id.field)) ||
+                            but.equals(myActivity.findViewById(R.id.place4)) ||
+                            but.equals(myActivity.findViewById(R.id.place5)) ||
+                            but.equals(myActivity.findViewById(R.id.place6)) ||
+                            but.equals(myActivity.findViewById(R.id.place8)) ||
+                            but.equals(myActivity.findViewById(R.id.place9)) ||
+                            but.equals(myActivity.findViewById(R.id.place10))
+            ) {
+                but.setTextColor(Color.parseColor("#FFD700"));
             } else {
-                if (but.equals(myActivity.findViewById(R.id.come))) {
-                    but.setTextColor(Color.parseColor("#D61818"));
-                } else if (
-                        but.equals(myActivity.findViewById(R.id.field)) ||
-                        but.equals(myActivity.findViewById(R.id.place4)) ||
-                        but.equals(myActivity.findViewById(R.id.place5)) ||
-                        but.equals(myActivity.findViewById(R.id.place6)) ||
-                        but.equals(myActivity.findViewById(R.id.place8)) ||
-                        but.equals(myActivity.findViewById(R.id.place9)) ||
-                        but.equals(myActivity.findViewById(R.id.place10))
-                ) {
-                    but.setTextColor(Color.parseColor("#FFD700"));
-                } else {
-                    but.setTextColor(Color.parseColor("#FFFFFF"));
-                }
-                //send the will to remove the bet to the state
-                RemoveBetAction rba = new RemoveBetAction(this, 0, id);
-                state.removeBet(rba);
+                but.setTextColor(Color.parseColor("#FFFFFF"));
             }
         }
     }
@@ -265,6 +272,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if (myActivity.findViewById(R.id.craps) == button) {//crap
             this.bet(button, 22);
         }
+
         //update player funds
         //todo: move this to an apropriate section
         TextView playerMoney = myActivity.findViewById(R.id.yourMoney);
@@ -402,6 +410,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         else {
             ready.setTextColor(ContextCompat.getColor(this.myActivity, R.color.black));
         }
+
+        TextView myMoney = myActivity.findViewById(R.id.yourMoney);
+        myMoney.setText("$" + state.getPlayer0Funds());
 
         updateDisplay();
     }
@@ -583,6 +594,10 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
     public void setShooter(boolean newShooter) {
         isShooter = newShooter;
+    }
+
+    public void setAmountBet(int amountBet){
+        this.amountBet = amountBet;
     }
 
     /**

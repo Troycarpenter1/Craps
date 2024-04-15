@@ -84,6 +84,20 @@ public class CrapsLocalGame extends LocalGame {
 			gameState.roll(rolling);
 			//denote legal move
 			return true;
+		}else if (action instanceof PlaceBetAction) {
+			//typecast
+			PlaceBetAction placebet = (PlaceBetAction) action;
+			//perform appropriate action handler method in gamestate
+			gameState.placeBet(placebet);
+			//denote legal move
+			return true;
+		}else if (action instanceof RemoveBetAction) {
+			//typecast
+			RemoveBetAction removebet = (RemoveBetAction) action;
+			//perform appropriate action handler method in gamestate
+			gameState.removeBet(removebet);
+			//denote legal move
+			return true;
 		} else {
 			// denote that this was an illegal move
 			return false;
