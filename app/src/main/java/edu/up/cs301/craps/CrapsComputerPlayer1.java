@@ -118,6 +118,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 		 *	bet();
 		 *}
 		 */
+        Log.d("computer", "Computer Money: $" + this.playerMoney);
     }
 
     /**
