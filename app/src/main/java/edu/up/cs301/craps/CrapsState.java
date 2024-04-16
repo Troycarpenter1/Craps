@@ -84,9 +84,9 @@ public class CrapsState extends GameState {
         this.playerSwitched = crap.playerSwitched;
         this.firstDieShot = crap.firstDieShot;
         //uses the copy constructor of the bet class
-        for (int x = 0; x < bets.length; x++) {
-            for (int y = 0; y < bets[x].length; y++) {
-                this.bets[x][y] = new Bet(crap.bets[x][y]);
+        for (int p = 0; p < bets.length; p++) {
+            for (int b = 0; b < bets[p].length; b++) {
+                this.bets[p][b] = new Bet(crap.bets[p][b]);
             }
         }
     }
@@ -96,7 +96,7 @@ public class CrapsState extends GameState {
         return this.playerTurn;
     }
 
-    public Bet getBet(int playerId, int betId){
+    public Bet getBet(int playerId, int betId) {
         return bets[playerId][betId];
     }
 
@@ -124,7 +124,9 @@ public class CrapsState extends GameState {
         return this.firstDieShot;
     }
 
-    public boolean getPlayerSwitched() {return this.playerSwitched;}
+    public boolean getPlayerSwitched() {
+        return this.playerSwitched;
+    }
 
     public boolean isPlayer0Ready() {
         return player0Ready;
@@ -223,18 +225,16 @@ public class CrapsState extends GameState {
             if (action.betAmount > player0Funds) {
                 return false;
             }
-            if (player0Ready){
+            if (player0Ready) {
                 return false;
             }
         } else if (action.playerId == 1) {
             if (action.betAmount > player1Funds) {
                 return false;
             }
-            if (player1Ready){
+            if (player1Ready) {
                 return false;
             }
-
-
         }
 
         //Is the bet ID a valid point in the array?
@@ -252,8 +252,9 @@ public class CrapsState extends GameState {
            TODO: need to figure out how to get the ID of the player
             we could put the ID in the RemoveBetAction like we did for ReadyAction
          */
-        //adjust the bet's amount
-        this.bets[action.playerId][action.betID].setBetAmount(action.betAmount);
+        //adds the bet's new amount to it's current amount
+        this.bets[action.playerId][action.betID] = new Bet(this.bets[action.playerId][action.betID].getAmount() + action.betAmount, action.betID);
+
         if (action.playerId == 0) {
             Log.d("die", "changing human player funds");
             this.setPlayer0Funds(this.getPlayer0Funds() - action.betAmount);
@@ -291,14 +292,14 @@ public class CrapsState extends GameState {
             this.setPlayer0Funds(this.getPlayer0Funds() +
                     bets[action.playerId][action.betID].getAmount());
 
-        //add bet amount back to computer player's funds
+            //add bet amount back to computer player's funds
         } else {
             this.setPlayer1Funds(this.getPlayer1Funds() +
                     bets[action.playerId][action.betID].getAmount());
         }
 
         //adjust the bet's amount
-        this.bets[action.playerId][action.betID].setBetAmount(0); //'removes' the bet (set to 0)
+        this.bets[action.playerId][action.betID].setBetAmount(0.0); //'removes' the bet (set to 0)
 
         Log.d("die", "REMOVED BET bet ID: " + action.betID);
         Bet thisBet = this.bets[action.playerId][action.betID];
@@ -361,11 +362,42 @@ public class CrapsState extends GameState {
         Random rand = new Random();
         this.setDice(rand.nextInt(6) + 1, rand.nextInt(6) + 1);
         //this.setDice(1, 1); //always rolls a crap (for testing purposes)
+        //this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
+        //this.setDice(5, 6); //always rolls an 11 (for testing purposes)
 
         //checks if this is the first round and updates the first roll
         //or if the shooter just lost (player switched)
         if (this.firstDieShot == 0 || playerSwitched) {
             this.firstDieShot = this.dieTotal;
+        }
+
+        // iterates through a master 2d array and pays all bets to each player
+        for (int p = 0; p < bets.length; p++) { // iterates through number of players
+            for (int b = 0; b < bets[p].length; b++) { // iterates through all bet IDs
+                if (p == 0) { //updates human player money
+                    this.setPlayer0Funds(
+                            this.player0Funds + this.bets[p][b].payoutBet(this.die1CurrVal,
+                                    this.die2CurrVal, this.dieTotal, this.firstDieShot)
+                    );
+                    //only prints out the bets that player has actually made
+                    if (this.bets[p][b].getID() != 0) {
+                        Log.d("funds", "human money: " + this.player0Funds);
+                        Log.d("funds", "bet: " + this.bets[p][b].toString());
+                        this.bets[p][b].setBetAmount(0.0); //resets the bet amount
+                    }
+                } else { //update computer money
+                    this.setPlayer1Funds(
+                            this.player1Funds + this.bets[p][b].payoutBet(this.die1CurrVal,
+                                    this.die2CurrVal, this.dieTotal, this.firstDieShot)
+                    );
+                    //only prints out the bets that computer has actually made
+                    if (this.bets[p][b].getID() != 0) {
+                        Log.d("funds", "computer money: " + this.player1Funds);
+                        Log.d("funds", "bet: " + this.bets[p][b].toString());
+                        this.bets[p][b].setBetAmount(0.0); //resets the bet amount
+                    }
+                }
+            }
         }
 
         Log.d("die", "DIE TOTAL: " + this.dieTotal);
