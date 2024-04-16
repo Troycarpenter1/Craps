@@ -35,12 +35,13 @@ public class Bet {
     };
     //list of all payouts of all bets
     //todo: add all the payouts
+
     public static final double[] ALL_BET_PAYOUTS = new double[]{
             /* No Bet: */        0.0,
-            /* Pass Line Bet: */ 1.0,
-            /* Dont Pass Bet: */ 1.0,
-            /* Come Bet: */      1.0,
-            /* Field Bet: */     1.0,
+            /* Pass Line Bet: */ 1.2,
+            /* Dont Pass Bet: */ 1.2,
+            /* Come Bet: */      1.2,
+            /* Field Bet: */     1.2,
             /* 4: */             9.0/5.0,
             /* 5: */             7.0/5.0,
             /* 6: */             7.0/6.0,
@@ -71,7 +72,7 @@ public class Bet {
     }
 
     //betID cnstr
-    public Bet(int newAmount, double newPayout, int newID) {
+    public Bet(double newAmount, int newID) {
         this.ID = newID;
         this.name = ALL_BET_NAMES[newID];
         this.payout = ALL_BET_PAYOUTS[newID];
@@ -124,6 +125,7 @@ public class Bet {
                 return this.amount * (this.payout * 2);
             }
             return this.amount * this.payout;
+
         } else { //takes your money if you lose haha
             return 0.0;
         }
