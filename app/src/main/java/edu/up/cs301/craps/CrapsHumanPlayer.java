@@ -120,6 +120,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
             // }
         } else {
+            //todo: give player the money back properly
             //send remove bet action
             RemoveBetAction rba = new RemoveBetAction(this, 0, id);
             Log.d("die", "trying to remove bet");

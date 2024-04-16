@@ -361,9 +361,9 @@ public class CrapsState extends GameState {
         //updates the values of the die
         Random rand = new Random();
         this.setDice(rand.nextInt(6) + 1, rand.nextInt(6) + 1);
-        this.setDice(1, 1); //always rolls a crap (for testing purposes)
-        this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
-        this.setDice(5, 6); //always rolls an 11 (for testing purposes)
+        //this.setDice(1, 1); //always rolls a crap (for testing purposes)
+        //this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
+        //this.setDice(5, 6); //always rolls an 11 (for testing purposes)
 
         //checks if this is the first round and updates the first roll
         //or if the shooter just lost (player switched)
@@ -374,7 +374,7 @@ public class CrapsState extends GameState {
         // iterates through a master 2d array and pays all bets to each player
         for (int p = 0; p < bets.length; p++) { // iterates through number of players
             for (int b = 0; b < bets[p].length; b++) { // iterates through all bet IDs
-                if (p == 0) {
+                if (p == 0) { //updates human player money
                     this.setPlayer0Funds(
                             this.player0Funds + this.bets[p][b].payoutBet(this.die1CurrVal,
                                     this.die2CurrVal, this.dieTotal, this.firstDieShot)
@@ -384,9 +384,17 @@ public class CrapsState extends GameState {
                         Log.d("funds", "human money: " + this.player0Funds);
                         Log.d("funds", "bet: " + this.bets[p][b].toString());
                         this.bets[p][b].setBetAmount(0.0); //resets the bet amount
-                        if (this.bets[p][b].getName() == "10") {
-
-                        }
+                    }
+                } else { //update computer money
+                    this.setPlayer1Funds(
+                            this.player1Funds + this.bets[p][b].payoutBet(this.die1CurrVal,
+                                    this.die2CurrVal, this.dieTotal, this.firstDieShot)
+                    );
+                    //only prints out the bets that computer has actually made
+                    if (this.bets[p][b].getID() != 0) {
+                        Log.d("funds", "computer money: " + this.player1Funds);
+                        Log.d("funds", "bet: " + this.bets[p][b].toString());
+                        this.bets[p][b].setBetAmount(0.0); //resets the bet amount
                     }
                 }
             }
