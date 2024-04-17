@@ -68,6 +68,8 @@ public class CrapsState extends GameState {
                 //this.bets[p][b] = new Bet(0, 1.0, b);
             }
         }
+
+
     }
 
     //copy constructor, currently is deep since no objects are used as variables atm
@@ -261,6 +263,7 @@ public class CrapsState extends GameState {
 
         } else {
             this.setPlayer1Funds(this.getPlayer1Funds() - action.betAmount);
+            System.out.println("COMPUTER BET");
         }
 
         //note that we will eventually initialize all bets in the array to have

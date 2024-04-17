@@ -50,6 +50,27 @@ public class CrapsLocalGame extends LocalGame {
 		}
 		this.gameState = (CrapsState)state;
 		super.state = state;
+
+	}
+
+
+	/**
+	 * starts the game
+	 * prints to log a list of players and their IDs (LocalGame)
+	 *
+	 * @param players
+	 * 			the list of players who are playing in the game
+	 */
+	@Override
+	public void start(GamePlayer[] players){
+		super.start(players);
+
+		//for each player, print out the ID
+		for (GamePlayer player : this.getPlayers()){
+			System.out.println("Name: "+ player.toString() + ", Id: " + this.getPlayerIdx(player) + "\n");
+		}
+
+
 	}
 
 	/**
