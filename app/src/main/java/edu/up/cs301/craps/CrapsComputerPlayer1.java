@@ -32,7 +32,10 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     private boolean isReady; // my ready status
     private int die1;
     private int die2;
+    public boolean isHuman;
     CrapsState crapsState;
+
+    private int playerId;
 
     /**
      * Constructor for objects of class CounterComputerPlayer1
@@ -211,4 +214,17 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         // send the move-action to the game
         game.sendAction(new CrapsMoveAction(this, move));
     }
+
+
+    public boolean getIsShooter() {
+        return isShooter;
+    }
+
+    public boolean getIsHuman(){return this.isHuman;}
+
+    public void setPlayerId(int playerId){this.playerId = playerId;}
+
 }
+
+
+

@@ -57,6 +57,10 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     private int die1;
     private int die2;
 
+    private int playerId;
+
+    private boolean isHuman;
+
     private int betIncrement = 1;
 
     // we'll get the bet array by going to game state
@@ -153,6 +157,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      * @param button the button that was clicked
      */
     public void onClick(View button) {
+
+        System.out.println("MY ID IS: " + this.playerId);
+
         Button but = (Button) button;
         // if we are not yet connected to a game, ignore
         if (game == null) return;
@@ -630,6 +637,10 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         return isShooter;
     }
 
+    public int getPlayerId(){return this.playerId;}
+
+    public boolean getIsHuman(){return this.isHuman;}
+
     public boolean getIsReady() {
         return isReady;
     }
@@ -645,6 +656,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     public void setAmountBet(int amountBet) {
         this.amountBet = amountBet;
     }
+
+    public void setPlayerId(int playerId){this.playerId = playerId;}
+
 
     /**
      * Unused methods (here to satisfy implementing OnSeekbarChangedListener)

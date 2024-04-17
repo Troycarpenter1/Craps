@@ -68,6 +68,21 @@ public class CrapsLocalGame extends LocalGame {
 		//for each player, print out the ID
 		for (GamePlayer player : this.getPlayers()){
 			System.out.println("Name: "+ player.toString() + ", Id: " + this.getPlayerIdx(player) + "\n");
+
+			//if this player is a human, set that player's ID its ID stored in localGame
+			if (player instanceof CrapsHumanPlayer){
+				CrapsHumanPlayer human = (CrapsHumanPlayer) player;
+				human.setPlayerId(this.getPlayerIdx(player));
+
+			}
+			//if this player is a human, set that player's ID its ID stored in localGame
+			//TODO gotta make sure this works for compplayer2, I think it will
+			else if ((player instanceof CrapsComputerPlayer1) || (player instanceof CrapsComputerPlayer2)){
+				CrapsComputerPlayer1 human = (CrapsComputerPlayer1) player;
+				human.setPlayerId(this.getPlayerIdx(player));
+
+			}
+
 		}
 
 
