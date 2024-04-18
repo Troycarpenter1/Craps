@@ -290,22 +290,22 @@ public class CrapsState extends GameState {
             Log.d("die", "added $" + bets[action.playerId][action.betID].getAmount() +
                     "to player's account.");
             this.setPlayer0Funds((int) (this.getPlayer0Funds() +
-                                bets[action.playerId][action.betID].getAmount()));
+                    bets[action.playerId][action.betID].getAmount()));
 
             //add bet amount back to computer player's funds
         } else {
             this.setPlayer1Funds((int) (this.getPlayer1Funds() +
-                                bets[action.playerId][action.betID].getAmount()));
+                    bets[action.playerId][action.betID].getAmount()));
         }
 
         //adjust the bet's amount
-        this.bets[action.playerId][action.betID].setBetAmount(0.0); //'removes' the bet (set to 0)
+        this.bets[action.playerId][action.betID] = new Bet(); //'removes' the bet (set to 0)
 
         Log.d("die", "REMOVED BET bet ID: " + action.betID);
         Bet thisBet = this.bets[action.playerId][action.betID];
         Log.d("die", "amount of REMOVED bet: " + thisBet.getAmount());
 
-
+        Log.d("kanye", "Kanye" + this.toString());
         return true;
     }
 

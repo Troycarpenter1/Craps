@@ -81,18 +81,11 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     public View getTopView() {
         return myActivity.findViewById(R.id.top_test_gui_layout);
     }
-    //samba
 
-    /**
-     * sets the counter value in the text view
-     */
-    protected void updateDisplay() {
-        // set the text in the appropriate widget
-        //counterValueTextView.setText("" + state.getCounter());
-    }
 
     protected void updateDisplay(String displayText) {
-        testResultsTextView.setText(testResultsTextView.getText() + "\n" + displayText, TextView.BufferType.NORMAL);
+        testResultsTextView.setText(testResultsTextView.getText() + "\n" + displayText,
+                TextView.BufferType.NORMAL);
     }
 
     protected void updateDisplay(String displayText, int id) {
@@ -116,15 +109,19 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             PlaceBetAction pba = new PlaceBetAction(this, 0, id,
                     amountBet);
             game.sendAction(pba);
+
             Log.d("die", "trying to place bet");
 
             // }
         } else {
-            //todo: give player the money back properly
+            //update player funds
+            TextView playerMoney = myActivity.findViewById(R.id.yourMoney);
             //send remove bet action
             RemoveBetAction rba = new RemoveBetAction(this, 0, id);
             Log.d("die", "trying to remove bet");
-            state.removeBet(rba);
+            game.sendAction(rba);
+
+            playerMoney.setText("$" + state.getPlayer0Funds());
 
             //change the color for removing the bet
             if (but.equals(myActivity.findViewById(R.id.come))) {
@@ -157,7 +154,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // if we are not yet connected to a game, ignore
         if (game == null) return;
         //checks all of the buttons that could be pressed
-        if (but.equals(myActivity.findViewById(R.id.ready))) { //checks if the button pressed is the ready button
+        //checks if the button pressed is the ready button
+        if (but.equals(myActivity.findViewById(R.id.ready))) {
             this.isReady = state.isPlayer0Ready();
             Ready2CrapAction P1Ready = new Ready2CrapAction(this, !this.isReady, 0);
             game.sendAction(P1Ready);
@@ -319,10 +317,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             this.bet(button, 22);
         }
 
-        //update player funds
-        //todo: move this to an apropriate section
-        TextView playerMoney = myActivity.findViewById(R.id.yourMoney);
-        playerMoney.setText("$" + state.getPlayer0Funds());
+
 
     }// onClick
 
@@ -395,6 +390,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // update our state; then update the display
         this.state = (CrapsState) info;
 
+
+
         //change the drawable
         ImageView dice1 = myActivity.findViewById(R.id.dice1);
         ImageView dice2 = myActivity.findViewById(R.id.dice2);
@@ -459,8 +456,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         TextView myMoney = myActivity.findViewById(R.id.yourMoney);
         myMoney.setText("$" + state.getPlayer0Funds());
-
-        updateDisplay();
     }
 
     /**
@@ -611,6 +606,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // if we have a game state, "simulate" that we have just received
         // the state from the game so that the GUI values are updated
         if (state != null) {
+
             receiveInfo(state);
         }
     }
