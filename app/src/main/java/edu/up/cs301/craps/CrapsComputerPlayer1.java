@@ -97,7 +97,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         //ready();
 
         roll();
-        //state should unready both players after roll
+        //state will unready both players after roll
 
 		/* Sydney commented this out for testing the changing turns
 		 *
@@ -140,7 +140,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         }
 
         // bet on the pass line every time
-        PlaceBetAction pba = new PlaceBetAction(this, this.playerId, 1, amountBet);
+        PlaceBetAction pba = new PlaceBetAction(this, this.playerId, 1, amountBet, false);
         this.game.sendAction(pba);
         System.out.println("computer trying to bet");
 
@@ -179,7 +179,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         crapsState = (CrapsState) info;
 
         // if is shooter take my turn
-        if (crapsState.getPlayerTurn() == 1) {
+        if (crapsState.getPlayerTurn() == this.playerId) {
             //have to delay BEFORE we take turn or we won't be able to see the 7 rolled
 
             try {

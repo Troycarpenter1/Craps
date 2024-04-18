@@ -55,7 +55,7 @@ public class CrapsState extends GameState {
         this.player0Funds = 1000.00;
         this.player1Funds = 1000.00;
         this.player0Ready = false;
-        this.player1Ready = true; //TODO: please refer here if there are issues w human betting - R
+        this.player1Ready = false; //TODO: please refer here if there are issues w human betting - R
         this.setDice(0, 0);
         this.offOn = false;
         this.playerSwitched = false;
@@ -266,6 +266,17 @@ public class CrapsState extends GameState {
             System.out.println("PLAYER 1 BET");
         }
 
+        //if the player is a computer, automatically ready them after they bet
+        if (!action.isHuman){
+            if (action.playerId == 0){
+                player0Ready = true;
+            }
+            else{
+                player1Ready = true;
+            }
+
+        }
+
         //note that we will eventually initialize all bets in the array to have
         //the correct IDs and names before the game is started.
         Log.d("die", "PLACED BET bet ID: " + action.betID + ", betAmount: " + action.betAmount);
@@ -324,12 +335,16 @@ public class CrapsState extends GameState {
         //what conditions should a person ready under...
         //might have to time that later
 
+        System.out.println("Received ready action from player " + action.playerID);
+
         //note this is only for 2 players right now :)
         //if ready then changes appropriate player to ready
         if (action.playerID == 0) {
             this.player0Ready = action.isReady;
+            System.out.println("Player 0 ready:" + this.player0Ready);
         } else if (action.playerID == 1) {
             this.player1Ready = action.isReady;
+            System.out.println("Player 1 ready:" + this.player1Ready);
         }
         return true;
     }
@@ -344,13 +359,6 @@ public class CrapsState extends GameState {
      */
 
     public boolean roll(RollAction action) {
-        /*
-        boolean playerSwitched;
-        purpose is to prevent one roll counting double
-        global variable used to indicate if the turn has just been switched (7 was the last number rolled)
-        if false > a new roll has been made
-        if true > we're still on the 7 from last time
-         */
 
         //checks if both players are ready
         if (!checkCanRoll()) {
@@ -408,11 +416,10 @@ public class CrapsState extends GameState {
 
         //change playerSwitched to false after roll
         playerSwitched = false;
-        //reset player 0's ready after roll if it weren't reset, then there's no time to bet
 
+        //reset both player's ready after roll
         player0Ready = false;
-
-        //player1Ready = false;// - Row
+        player1Ready = false;
 
         //SYDNEY -- switch player
         // WES -- added first die 2 or 3

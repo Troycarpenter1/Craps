@@ -118,7 +118,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             but.setTextColor(Color.parseColor("#FFA500"));
             //sends the bet action to the state
             PlaceBetAction pba = new PlaceBetAction(this, this.playerId, id,
-                    amountBet);
+                    amountBet, true);
             game.sendAction(pba);
             Log.d("die", "trying to place bet");
 
