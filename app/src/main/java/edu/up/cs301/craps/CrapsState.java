@@ -258,12 +258,12 @@ public class CrapsState extends GameState {
         this.bets[action.playerId][action.betID] = new Bet(this.bets[action.playerId][action.betID].getAmount() + action.betAmount, action.betID);
 
         if (action.playerId == 0) {
-            Log.d("die", "changing human player funds");
+            Log.d("die", "changing player 0 funds");
             this.setPlayer0Funds(this.getPlayer0Funds() - action.betAmount);
 
         } else {
             this.setPlayer1Funds(this.getPlayer1Funds() - action.betAmount);
-            System.out.println("COMPUTER BET");
+            System.out.println("PLAYER 1 BET");
         }
 
         //note that we will eventually initialize all bets in the array to have
@@ -409,6 +409,7 @@ public class CrapsState extends GameState {
         //change playerSwitched to false after roll
         playerSwitched = false;
         //reset player 0's ready after roll if it weren't reset, then there's no time to bet
+
         player0Ready = false;
 
         //player1Ready = false;// - Row

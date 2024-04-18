@@ -73,7 +73,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     public CrapsHumanPlayer(String name) {
         super(name);
         //for now, sets human player to shooter by default when initialized - syd
-        this.isShooter = true;
+        //this.isShooter = true;
 
     }
 
@@ -117,7 +117,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             //  if (state.getBet(0, id).getAmount() == 0.0) {
             but.setTextColor(Color.parseColor("#FFA500"));
             //sends the bet action to the state
-            PlaceBetAction pba = new PlaceBetAction(this, 0, id,
+            PlaceBetAction pba = new PlaceBetAction(this, this.playerId, id,
                     amountBet);
             game.sendAction(pba);
             Log.d("die", "trying to place bet");
@@ -126,7 +126,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         } else {
             //todo: give player the money back properly
             //send remove bet action
-            RemoveBetAction rba = new RemoveBetAction(this, 0, id);
+            RemoveBetAction rba = new RemoveBetAction(this, this.playerId, id);
             Log.d("die", "trying to remove bet");
             state.removeBet(rba);
 
@@ -158,15 +158,13 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      */
     public void onClick(View button) {
 
-        System.out.println("MY ID IS: " + this.playerId);
-
         Button but = (Button) button;
         // if we are not yet connected to a game, ignore
         if (game == null) return;
         //checks all of the buttons that could be pressed
         if (but.equals(myActivity.findViewById(R.id.ready))) { //checks if the button pressed is the ready button
             this.isReady = state.isPlayer0Ready();
-            Ready2CrapAction P1Ready = new Ready2CrapAction(this, !this.isReady, 0);
+            Ready2CrapAction P1Ready = new Ready2CrapAction(this, !this.isReady, this.playerId);
             game.sendAction(P1Ready);
         } else if (myActivity.findViewById(R.id.shoot) == button) { // checks shoot button
 
@@ -261,7 +259,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             crap.setTextColor(Color.parseColor("#FFFFFF"));  //white
 
             //create and send the roll action
-            RollAction roll = new RollAction(this, 0);
+            RollAction roll = new RollAction(this, this.playerId);
             game.sendAction(roll);
 
         } else if (myActivity.findViewById(R.id.passLine1) == button) {    //pass line 1
@@ -444,6 +442,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
          */
 
         //change shoot color based on roll
+        //this doesn't work when player turn is based on order
         Button shoot = myActivity.findViewById(R.id.shoot);
         //if it's your turn then the shooter button is red
         if (state.getPlayerTurn() == 0) {

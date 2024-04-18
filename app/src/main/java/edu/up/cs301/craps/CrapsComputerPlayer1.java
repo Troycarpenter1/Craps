@@ -66,7 +66,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 
         //create a roll action then send it
         Log.d("die", "Computer player shooter? " + this.isShooter);
-        RollAction roll = new RollAction(this, 1);
+        RollAction roll = new RollAction(this, this.playerId);
         game.sendAction(roll);
 
     }
@@ -78,7 +78,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         //make myself ready
         isReady = true;
         //create a ready action then send it
-        Ready2CrapAction ready = new Ready2CrapAction(this, true, 1);
+        Ready2CrapAction ready = new Ready2CrapAction(this, true, this.playerId);
         game.sendAction(ready);
     }
 
@@ -140,7 +140,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         }
 
         // bet on the pass line every time
-        PlaceBetAction pba = new PlaceBetAction(this, playerNum, 1, amountBet);
+        PlaceBetAction pba = new PlaceBetAction(this, this.playerId, 1, amountBet);
         this.game.sendAction(pba);
         System.out.println("computer trying to bet");
 
