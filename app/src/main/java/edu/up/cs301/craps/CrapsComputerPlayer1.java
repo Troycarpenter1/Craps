@@ -77,20 +77,6 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         Ready2CrapAction ready = new Ready2CrapAction(this, true, 1);
         game.sendAction(ready);
     }
-    /** unready
-     *  random helper method to make computer player unready
-     *  since computer player has no special stuff for
-     *  unreadying like the human player does
-     *  THIS SHOULD ONLY BE CALLED AFTER THE COMPUTER ROLLS
-     */
-    public void unready(){
-        //unready myself
-        isReady = false;
-        //create a ready action but make it FALSE
-        Ready2CrapAction unready = new Ready2CrapAction(this, false, 1);
-        game.sendAction(unready);
-    }
-
 
     //place a random set of bets on a turn, then ready up
     /**
