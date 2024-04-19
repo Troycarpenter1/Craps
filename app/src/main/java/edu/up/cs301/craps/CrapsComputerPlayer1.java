@@ -57,6 +57,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         this.isReady = false;
         this.die1 = 0;
         this.die2 = 0;
+        this.isHuman = false;
     }
 
     /** roll
@@ -186,6 +187,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 
         // if is shooter take my turn
         if (crapsState.getPlayerTurn() == this.playerId) {
+            System.out.println("IT is the computer's turn!!!");
             //have to delay BEFORE we take turn or we won't be able to see the 7 rolled
 
             try {
@@ -196,15 +198,20 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             takeTurn();
         }
 
+
+        }
+
         //TODO we'll have to rethink this isShooter variable in the future, but right
         //now I'm putting this here just to ensure it's accurate.
-
+        /*
         if (crapsState.getPlayerTurn() == 1){
             this.isShooter = true;
         }
         else {
             this.isShooter = false;
         }
+
+         */
     }
 
     /**

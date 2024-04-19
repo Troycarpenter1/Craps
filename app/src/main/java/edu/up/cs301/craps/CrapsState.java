@@ -257,6 +257,7 @@ public class CrapsState extends GameState {
         //adds the bet's new amount to it's current amount
         this.bets[action.playerId][action.betID] = new Bet(this.bets[action.playerId][action.betID].getAmount() + action.betAmount, action.betID);
 
+
         if (action.playerId == 0) {
             Log.d("die", "changing player 0 funds");
             this.setPlayer0Funds(this.getPlayer0Funds() - action.betAmount);
@@ -274,6 +275,7 @@ public class CrapsState extends GameState {
             else{
                 player1Ready = true;
             }
+            System.out.println("Computer is ready");
 
         }
 
