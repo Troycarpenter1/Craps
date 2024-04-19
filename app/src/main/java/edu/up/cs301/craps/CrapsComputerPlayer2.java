@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Random;
 
 
 /**
@@ -27,10 +28,6 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
 	/*
 	 * instance variables
 	 */
-	
-	// the most recent game state, as given to us by the CounterLocalGame
-	private CrapsState currentGameState = null;
-	
 	// If this player is running the GUI, the activity (null if the player is
 	// not running a GUI).
 	private Activity activityForGui = null;
@@ -42,6 +39,16 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
 	// If this player is running the GUI, the handler for the GUI thread (otherwise
 	// null)
 	private Handler guiHandler = null;
+
+	//instance variables
+	private double playerMoney;// my money
+	private double amountBet;// amount I want to bet
+	private boolean isShooter;// my shooter status
+	private boolean isReady; // my ready status
+	private int die1;
+	private int die2;
+	CrapsState crapsState;
+
 	
 	/**
 	 * constructor
@@ -51,33 +58,123 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
 	 */
 	public CrapsComputerPlayer2(String name) {
 		super(name);
+
+		// start the timer, ticking 20 times per second
+		getTimer().setInterval(50);
+		getTimer().start();
+
+		//initialize instance variables
+		this.playerMoney = 1000;
+		this.amountBet = 200.0;
+		this.isShooter = false;
+		this.isReady = false;
+		this.die1 = 0;
+		this.die2 = 0;
 	}
-	
-    /**
-     * callback method--game's state has changed
-     * 
-     * @param info
-     * 		the information (presumably containing the game's state)
-     */
+
+
+
+
+	/**
+	 * callback method--game's state has changed
+	 *
+	 * @param info the information (presumably containing the game's state)
+	 */
 	@Override
 	protected void receiveInfo(GameInfo info) {
-		// perform superclass behavior
-		super.receiveInfo(info);
-		
-		Log.i("computer player", "receiving");
-		
-		// if there is no game, ignore
-		if (game == null) {
+		// Do nothing, as we ignore all state in deciding our next move. It
+		// depends totally on the timer and random numbers.
+		if (!(info instanceof CrapsState)) {
 			return;
 		}
-		else if (info instanceof CrapsState) {
-			// if we indeed have a counter-state, update the GUI
-			currentGameState = (CrapsState)info;
-			//updateDisplay();
+		crapsState = (CrapsState) info;
+
+
+		// if my turn take my turn
+		if (crapsState.getPlayerTurn() == 1) {
+			//have to delay BEFORE we take turn or we won't be able to see the 7 rolled
+
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+			takeTurn();
+
 		}
+
+		//TODO we'll have to rethink this isShooter variable in the future, but right
+		//now I'm putting this here just to ensure it's accurate.
+
+		if (crapsState.getPlayerTurn() == 1){
+			this.isShooter = true;
+		}
+		else {
+			this.isShooter = false;
+		}
+
 	}
-	
-	
+
+	/**
+	 * bet
+	 * places a bet of a semi-random amount on a random spot
+	 * adds the bet to the local bet array
+	 */
+	@Override
+	public void placeBet() {
+		/*
+		 * Computer Betting
+		 * Rowena's Version
+		 */
+
+		// look at how much money I have according to my copy of the game state
+		playerMoney = crapsState.getPlayer1Funds();
+
+		// if I'm already ready, do not bet again
+		if (isReady){
+			return;
+		}
+
+		// if I somehow have less than $100 to spend, then bet all the money I have left
+		if (playerMoney < 100){
+			this.amountBet = playerMoney;
+		}else{
+			// Set my amount to bet to $100
+			this.amountBet = 100.0;
+		}
+
+		// make a random bet
+		Random rand = new Random();
+		int betNum = rand.nextInt(23) + 1;
+		PlaceBetAction pba = new PlaceBetAction(this, playerNum, betNum, amountBet);
+		this.game.sendAction(pba);
+
+		System.out.println("placed a computer bet");
+
+
+		// Old code
+		/*
+		 * //Random rand = new Random();
+
+		 * //not necessary for dumb AI
+		 * //choose random bet amount
+		 * //the random bet is between 1/6 and 1/2 of player's total money
+		 * int cap = (2*this.playerMoney)/6;
+		 * this.amountBet =  rand.nextInt(cap) + this.playerMoney/6;
+		 *
+		 * //random bet Type, adjust for more sophisticated AI
+		 * //have to confirm with Troy, assuming
+		 * //betID = spot in strings array
+		 * int betID = rand.nextInt(numTypes);
+
+		 * //create a new bet and add to the local bet array
+		 * this.bets[betID] = new Bet(this.amountBet, 1, betID);
+		 */
+	}
+
+
+	/** Old Code */
+
 	/** 
 	 * sets the counter value in the text view
 	 *  */
@@ -106,39 +203,39 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
 		return true;
 	}
 	
-	/**
-	 * callback method--our player has been chosen/rechosen to be the GUI,
-	 * called from the GUI thread.
-	 * 
-	 * @param a
-	 * 		the activity under which we are running
-	 */
-	@Override
-	public void setAsGui(GameMainActivity a) {
-		
-		// remember who our activity is
-		this.activityForGui = a;
-		
-		// remember the handler for the GUI thread
-		this.guiHandler = new Handler();
-		
-		// Load the layout resource for the our GUI's configuration
-		activityForGui.setContentView(R.layout.counter_human_player);
-
-		// remember who our text view is, for updating the counter value
-		this.counterValueTextView =
-				(TextView) activityForGui.findViewById(R.id.counterValueTextView);
-		
-		// disable the buttons, since they will have no effect anyway
-		Button plusButton = (Button)activityForGui.findViewById(R.id.plusButton);
-		plusButton.setEnabled(false);
-		Button minusButton = (Button)activityForGui.findViewById(R.id.minusButton);
-		minusButton.setEnabled(false);
-		
-		// if the state is non=null, update the display
-		if (currentGameState != null) {
-			//updateDisplay();
-		}
-	}
+//	/**
+//	 * callback method--our player has been chosen/rechosen to be the GUI,
+//	 * called from the GUI thread.
+//	 *
+//	 * @param a
+//	 * 		the activity under which we are running
+//	 */
+//	@Override
+//	public void setAsGui(GameMainActivity a) {
+//
+//		// remember who our activity is
+//		this.activityForGui = a;
+//
+//		// remember the handler for the GUI thread
+//		this.guiHandler = new Handler();
+//
+//		// Load the layout resource for the our GUI's configuration
+//		activityForGui.setContentView(R.layout.counter_human_player);
+//
+//		// remember who our text view is, for updating the counter value
+//		this.counterValueTextView =
+//				(TextView) activityForGui.findViewById(R.id.counterValueTextView);
+//
+//		// disable the buttons, since they will have no effect anyway
+//		Button plusButton = (Button)activityForGui.findViewById(R.id.plusButton);
+//		plusButton.setEnabled(false);
+//		Button minusButton = (Button)activityForGui.findViewById(R.id.minusButton);
+//		minusButton.setEnabled(false);
+//
+//		// if the state is non=null, update the display
+//		if (crapsState != null) {
+//			//updateDisplay();
+//		}
+//	}
 
 }

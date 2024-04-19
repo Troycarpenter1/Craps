@@ -26,7 +26,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     //instance variables
     private GameMainActivity myActivity;
     private double playerMoney;// my money
-    private double amountBet;// amount I wants to bet
+    private double amountBet;// amount I want to bet
     private boolean isShooter;// my shooter status
     private boolean isReady; // my ready status
     private int die1;
@@ -86,7 +86,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     public void unready(){
         //unready myself
         isReady = false;
-        //create a ready action but make it FALSE I HOPE THIS WORKS
+        //create a ready action but make it FALSE
         Ready2CrapAction unready = new Ready2CrapAction(this, false, 1);
         game.sendAction(unready);
     }
