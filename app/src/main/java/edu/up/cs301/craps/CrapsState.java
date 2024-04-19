@@ -268,6 +268,7 @@ public class CrapsState extends GameState {
         }
 
         //if the player is a computer, automatically ready them after they bet
+        /*
         if (!action.isHuman){
             if (action.playerId == 0){
                 player0Ready = true;
@@ -277,7 +278,9 @@ public class CrapsState extends GameState {
             }
             System.out.println("Computer is ready");
 
+
         }
+        */
 
         //note that we will eventually initialize all bets in the array to have
         //the correct IDs and names before the game is started.
