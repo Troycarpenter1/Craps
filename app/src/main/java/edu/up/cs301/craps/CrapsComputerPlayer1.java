@@ -123,7 +123,13 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
          */
 
         // look at how much money I have according to my copy of the game state
-        playerMoney = crapsState.getPlayer1Funds();
+        if (this.playerId == 0){
+            playerMoney = crapsState.getPlayer0Funds();
+        }
+        else {
+            playerMoney = crapsState.getPlayer1Funds();
+        }
+
 
         // if I'm already ready, do not bet again
         if (isReady){
