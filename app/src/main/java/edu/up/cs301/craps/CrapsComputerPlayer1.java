@@ -66,7 +66,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     public void roll() {
 
         //create a roll action then send it
-        Log.d("die", "Computer player shooter? " + this.isShooter);
+        //Log.d("die", "Computer player shooter? " + this.isShooter);
         RollAction roll = new RollAction(this, this.playerId);
         game.sendAction(roll);
 

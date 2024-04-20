@@ -150,6 +150,7 @@ public class CrapsState extends GameState {
      */
     public void changeTurn() {
         this.playerTurn = 1 - this.playerTurn;
+        Log.d("die", "Player turn just switched to:" + this.playerTurn);
     }
 
     public void setPlayerFunds(int playerId, double playerFunds) {
@@ -219,9 +220,9 @@ public class CrapsState extends GameState {
         //adds the bet's new amount to it's current amount
         this.bets[action.playerId][action.betID] = new Bet(this.bets[action.playerId][action.betID].getAmount() + action.betAmount, action.betID);
 
-        //set player funds
-        Log.d("die", "changing player" + action.playerId + " funds");
+        //set player fundsSyste
         this.setPlayerFunds(action.playerId, this.funds[action.playerId] - action.betAmount);
+        Log.d("die", "player " + action.playerId + "funds changed to " + this.funds[action.playerId]);
 
 
         //TODO automatically ready the computer after they bet
