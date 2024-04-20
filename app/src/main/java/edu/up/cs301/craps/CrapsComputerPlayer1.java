@@ -76,8 +76,6 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
      *  tells the game I'm (comp player) is ready
      */
     public void ready(){
-        //make myself ready
-        isReady = true;
         //create a ready action then send it
         Ready2CrapAction ready = new Ready2CrapAction(this, true, this.playerId);
         game.sendAction(ready);
@@ -95,11 +93,6 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     public void takeTurn() {
         // roll the dice
         placeBet();
-        if (isReady = false) {
-            ready();
-            isReady = true;
-        }
-
         roll();
         //state will unready both players after roll
 
@@ -134,7 +127,6 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             playerMoney = crapsState.getPlayer1Funds();
         }
 
-
         // if I'm already ready, do not bet again
         if (isReady){
             System.out.println("placeBet returned, computer is already ready");
@@ -153,25 +145,6 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         PlaceBetAction pba = new PlaceBetAction(this, this.playerId, 1, amountBet, false);
         this.game.sendAction(pba);
         System.out.println("computer trying to bet");
-
-        // Old code
-        /*
-         * //Random rand = new Random();
-
-         * //not necessary for dumb AI
-         * //choose random bet amount
-         * //the random bet is between 1/6 and 1/2 of player's total money
-         * int cap = (2*this.playerMoney)/6;
-         * this.amountBet =  rand.nextInt(cap) + this.playerMoney/6;
-         *
-         * //random bet Type, adjust for more sophisticated AI
-         * //have to confirm with Troy, assuming
-         * //betID = spot in strings array
-         * int betID = rand.nextInt(numTypes);
-
-         * //create a new bet and add to the local bet array
-         * this.bets[betID] = new Bet(this.amountBet, 1, betID);
-        */
     }
 
     /**
@@ -198,13 +171,25 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            takeTurn();
+            placeBet();
+            ready();
+            roll();
         }
         else {
-            if (isReady == false){
-                ready();
-                isReady = true;
+            boolean check;
+            if (this.playerId == 0){
+                check = (crapsState.isPlayer0Ready() == false);
             }
+            else {
+                check = (crapsState.isPlayer1Ready() == false);
+            }
+            //if I'm not ready, then send a ready action
+            if (check){
+                ready();
+                System.out.println("COMPUTER: readying.");
+            }
+            System.out.println("COMPUTER: already ready.");
+
 
         }
 

@@ -239,6 +239,8 @@ public class CrapsState extends GameState {
             }
         }
 
+        System.out.println("The bet sender is not ready. Proceeding");
+
         //Is the bet ID a valid point in the array?
         //23 is how many types of bets there are
         if (action.betID > 22 || action.betID < 0) {
@@ -331,7 +333,7 @@ public class CrapsState extends GameState {
     /**
      * ready
      * <p>
-     * if player is ready, set player to ready :)
+     * set player's ready to what is sent in the action
      *
      * @param action
      * @return
@@ -346,11 +348,13 @@ public class CrapsState extends GameState {
         //if ready then changes appropriate player to ready
         if (action.playerID == 0) {
             this.player0Ready = action.isReady;
-            System.out.println("Player 0 ready:" + this.player0Ready);
         } else if (action.playerID == 1) {
             this.player1Ready = action.isReady;
-            System.out.println("Player 1 ready:" + this.player1Ready);
         }
+
+        System.out.println("STATE: Player 0 ready:" + this.player0Ready);
+        System.out.println("STATE: Player 1 ready:" + this.player1Ready);
+
         return true;
     }
 
@@ -437,6 +441,8 @@ public class CrapsState extends GameState {
             //set playerSwitched to true since the shooter lost
             playerSwitched = true;
         }
+
+        System.out.println("STATE: after roll, player turn: " + this.getPlayerTurn());
 
         return true;
     }
