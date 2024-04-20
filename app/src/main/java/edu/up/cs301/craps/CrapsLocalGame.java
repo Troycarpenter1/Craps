@@ -78,9 +78,8 @@ public class CrapsLocalGame extends LocalGame {
 			//if this player is a human, set that player's ID its ID stored in localGame
 			//TODO gotta make sure this works for compplayer2, I think it will
 			else if ((player instanceof CrapsComputerPlayer1) || (player instanceof CrapsComputerPlayer2)){
-				CrapsComputerPlayer1 human = (CrapsComputerPlayer1) player;
-				human.setPlayerId(this.getPlayerIdx(player));
-
+				CrapsComputerPlayer1 comp = (CrapsComputerPlayer1) player;
+				comp.setPlayerId(this.getPlayerIdx(player));
 			}
 
 		}

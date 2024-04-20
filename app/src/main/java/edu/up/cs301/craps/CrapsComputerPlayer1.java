@@ -122,12 +122,6 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         // look at how much money I have according to my copy of the game state
             playerMoney = crapsState.getPlayerFunds(this.playerId);
 
-        // if I'm already ready, do not bet again
-        if (isReady){
-            System.out.println("placeBet returned, computer is already ready");
-            return;
-        }
-
         // if I somehow have less than $100 to spend, then bet all the money I have left
         if (playerMoney < 100){
             this.amountBet = playerMoney;
@@ -166,32 +160,25 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            placeBet();
-            ready();
+
+            //if I'm not already ready, then place a bet
+            if (!crapsState.getPlayerReady(this.playerId)) {
+                placeBet();
+                //ready();
+            }
+            //then roll
             roll();
         }
         else {
             //if I'm not ready, then send a ready action
             if (crapsState.getPlayerReady(this.playerId)){
-                ready();
-                System.out.println("COMPUTER: readying.");
+                System.out.println("COMPUTER: already ready.");
+
             }
-            System.out.println("COMPUTER: already ready.");
-
-
+            else{
+                ready();
+            }
         }
-
-        //TODO we'll have to rethink this isShooter variable in the future, but right
-        //now I'm putting this here just to ensure it's accurate.
-        /*
-        if (crapsState.getPlayerTurn() == 1){
-            this.isShooter = true;
-        }
-        else {
-            this.isShooter = false;
-        }
-
-         */
     }
 
     /**

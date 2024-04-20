@@ -181,18 +181,6 @@ public class CrapsState extends GameState {
         return false;
     }
 
-    /*
-    //checks if players can bet (can't bet negative money)
-    public boolean check0CanBet() {
-        return player0Funds != 0;
-    }
-
-    public boolean check1CanBet() {
-        return player1Funds != 0;
-    }
-
-     */
-
     /**
      * placeBet
      * checks to see if bet is valid
@@ -206,21 +194,14 @@ public class CrapsState extends GameState {
         //Is it the player's turn?
 
         //Does the player have enough money to bet? if not return
-        if (action.playerId == 0) {
-            if (action.betAmount > funds[0]) {
-                return false;
-            }
-            if (ready[0]) {
-                return false;
-            }
-        } else if (action.playerId == 1) {
-            if (action.betAmount > funds[1]) {
-                return false;
-            }
-            if (ready[1]) {
-                return false;
-            }
+        if (action.betAmount > funds[action.playerId]) {
+            return false;
         }
+        //is the player ready? if so, return
+        if (ready[action.playerId]) {
+            return false;
+        }
+
 
         System.out.println("The bet sender is not ready. Proceeding");
 
@@ -235,20 +216,28 @@ public class CrapsState extends GameState {
         //assumes that a bet's bet ID is the same as it's position in the array
         // get the bet from the proper location based on the ID
 
-        /*
-           TODO: need to figure out how to get the ID of the player
-            we could put the ID in the RemoveBetAction like we did for ReadyAction
-         */
         //adds the bet's new amount to it's current amount
         this.bets[action.playerId][action.betID] = new Bet(this.bets[action.playerId][action.betID].getAmount() + action.betAmount, action.betID);
 
         //set player funds
-        Log.d("die", "changing player 0 funds");
+        Log.d("die", "changing player" + action.playerId + " funds");
         this.setPlayerFunds(action.playerId, this.funds[action.playerId] - action.betAmount);
 
 
-        //TODO if the player is a computer, automatically ready them after they bet
-
+        //TODO automatically ready the computer after they bet
+        //if the sender was the human player
+        if (action.getPlayer() instanceof CrapsHumanPlayer){
+            //if the player Id is 1
+            if (action.playerId ==1) {
+                this.ready[0] = true;  //set the computer to true
+            }
+            else{
+                this.ready[1] = true;
+            }
+        }
+        else{
+            this.ready[action.playerId] = true;
+        }
 
         //note that we will eventually initialize all bets in the array to have
         //the correct IDs and names before the game is started.
