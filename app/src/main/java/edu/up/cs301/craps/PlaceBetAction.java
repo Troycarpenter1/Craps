@@ -18,7 +18,6 @@ public class PlaceBetAction extends GameAction {
     public double betAmount;
     public int playerId;
 
-    public boolean isHuman;
 
     /**
      * constructor for GameAction
@@ -28,11 +27,10 @@ public class PlaceBetAction extends GameAction {
     public PlaceBetAction(GamePlayer player){
         super(player);
     }
-    public PlaceBetAction(GamePlayer player,int playerId, int betID, double betAmount, boolean isHuman) {
+    public PlaceBetAction(GamePlayer player,int playerId, int betID, double betAmount) {
         super(player);  //I don't remember what super(player) does - S
         this.playerId=playerId;
         this.betAmount = betAmount;
         this.betID = betID;
-        this.isHuman = isHuman;
     }
 }

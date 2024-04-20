@@ -30,11 +30,9 @@ public class CrapsState extends GameState {
 
     //the players in the game, and their current net worth
     private int playerTurn; //right now 0 is human, 1 is comp player
-    private double player0Funds;
-    private boolean player0Ready;
-    private double player1Funds;
-    private boolean player1Ready;
-    //x controls player, y controls bet
+    private double funds[] = new double[2];
+    private boolean ready [] = new boolean[2];
+
     private Bet[][] bets = new Bet[2][23];
 
     //the dice every roll
@@ -52,10 +50,10 @@ public class CrapsState extends GameState {
     //ctor
     public CrapsState() {
         this.playerTurn = 0;
-        this.player0Funds = 1000.00;
-        this.player1Funds = 1000.00;
-        this.player0Ready = false;
-        this.player1Ready = false; //TODO: please refer here if there are issues w human betting - R
+        this.funds[0] = 1000.00;
+        this.funds[1] = 1000.00;
+        this.ready[0] = false;
+        this.ready[1] = false; //TODO: please refer here if there are issues w human betting - R
         this.setDice(0, 0);
         this.offOn = false;
         this.playerSwitched = false;
@@ -78,10 +76,10 @@ public class CrapsState extends GameState {
         this.dieTotal = crap.dieTotal;
         this.die1CurrVal = crap.die1CurrVal;
         this.die2CurrVal = crap.die2CurrVal;
-        this.player0Funds = crap.player0Funds;
-        this.player1Funds = crap.player1Funds;
-        this.player0Ready = crap.player0Ready;
-        this.player1Ready = crap.player1Ready;
+        this.funds[0] = crap.funds[0];
+        this.funds[1] = crap.funds[1];
+        this.ready[0] = crap.ready[0];
+        this.ready[1] = crap.ready[1];
         this.offOn = crap.offOn;
         this.playerSwitched = crap.playerSwitched;
         this.firstDieShot = crap.firstDieShot;
@@ -102,13 +100,7 @@ public class CrapsState extends GameState {
         return bets[playerId][betId];
     }
 
-    public double getPlayer0Funds() {
-        return this.player0Funds;
-    }
-
-    public double getPlayer1Funds() {
-        return this.player1Funds;
-    }
+    public double getPlayerFunds(int playerId){return funds[playerId];}
 
     public int getDie1CurrVal() {
         return this.die1CurrVal;
@@ -130,13 +122,7 @@ public class CrapsState extends GameState {
         return this.playerSwitched;
     }
 
-    public boolean isPlayer0Ready() {
-        return player0Ready;
-    }
-
-    public boolean isPlayer1Ready() {
-        return player1Ready;
-    }
+    public boolean getPlayerReady(int playerId){return this.ready[playerId];}
 
     public boolean isOffOn() {
         return offOn;
@@ -166,18 +152,15 @@ public class CrapsState extends GameState {
         this.playerTurn = 1 - this.playerTurn;
     }
 
-    public void setPlayer0Funds(double player0Funds) {
-        this.player0Funds = player0Funds;
+    public void setPlayerFunds(int playerId, double playerFunds) {
+        this.funds[playerId] = playerFunds;
     }
 
-    public void setPlayer1Funds(double player1Funds) {
-        this.player1Funds = player1Funds;
-    }
 
     //tells the tale of the game
     @Override
     public String toString() {
-        return "Player 0 has " + this.player0Funds + "$, and Player 1 has " + this.player1Funds +
+        return "Player 0 has " + this.funds[0] + "$, and Player 1 has " + this.funds[1] +
                 "$. The current dice are " + this.die1CurrVal + " and " + this.die2CurrVal;
     }
 
@@ -191,7 +174,7 @@ public class CrapsState extends GameState {
      * @return boolean
      */
     public boolean checkCanRoll() {
-        if (this.player0Ready && this.player1Ready) {
+        if (this.ready[0] && this.ready[1]) {
             return true;
             //player will update the Game State from here
         }
@@ -224,17 +207,17 @@ public class CrapsState extends GameState {
 
         //Does the player have enough money to bet? if not return
         if (action.playerId == 0) {
-            if (action.betAmount > player0Funds) {
+            if (action.betAmount > funds[0]) {
                 return false;
             }
-            if (player0Ready) {
+            if (ready[0]) {
                 return false;
             }
         } else if (action.playerId == 1) {
-            if (action.betAmount > player1Funds) {
+            if (action.betAmount > funds[1]) {
                 return false;
             }
-            if (player1Ready) {
+            if (ready[1]) {
                 return false;
             }
         }
@@ -259,30 +242,13 @@ public class CrapsState extends GameState {
         //adds the bet's new amount to it's current amount
         this.bets[action.playerId][action.betID] = new Bet(this.bets[action.playerId][action.betID].getAmount() + action.betAmount, action.betID);
 
-
-        if (action.playerId == 0) {
-            Log.d("die", "changing player 0 funds");
-            this.setPlayer0Funds(this.getPlayer0Funds() - action.betAmount);
-
-        } else {
-            this.setPlayer1Funds(this.getPlayer1Funds() - action.betAmount);
-            System.out.println("PLAYER 1 BET");
-        }
-
-        //if the player is a computer, automatically ready them after they bet
-        /*
-        if (!action.isHuman){
-            if (action.playerId == 0){
-                player0Ready = true;
-            }
-            else{
-                player1Ready = true;
-            }
-            System.out.println("Computer is ready");
+        //set player funds
+        Log.d("die", "changing player 0 funds");
+        this.setPlayerFunds(action.playerId, this.funds[action.playerId] - action.betAmount);
 
 
-        }
-        */
+        //TODO if the player is a computer, automatically ready them after they bet
+
 
         //note that we will eventually initialize all bets in the array to have
         //the correct IDs and names before the game is started.
@@ -307,17 +273,12 @@ public class CrapsState extends GameState {
         }
 
         //add bet amount back to human's funds
-        if (action.playerId == 0) {
-            Log.d("die", "added $" + bets[action.playerId][action.betID].getAmount() +
-                    "to player's account.");
-            this.setPlayer0Funds(this.getPlayer0Funds() +
-                    bets[action.playerId][action.betID].getAmount());
 
-            //add bet amount back to computer player's funds
-        } else {
-            this.setPlayer1Funds(this.getPlayer1Funds() +
-                    bets[action.playerId][action.betID].getAmount());
-        }
+        //Log.d("die", "added $" + bets[action.playerId][action.betID].getAmount() +
+               // "to player's account.");
+        this.setPlayerFunds(action.playerId, this.funds[action.playerId] +
+                bets[action.playerId][action.betID].getAmount());
+
 
         //adjust the bet's amount
         this.bets[action.playerId][action.betID].setBetAmount(0.0); //'removes' the bet (set to 0)
@@ -347,13 +308,13 @@ public class CrapsState extends GameState {
         //note this is only for 2 players right now :)
         //if ready then changes appropriate player to ready
         if (action.playerID == 0) {
-            this.player0Ready = action.isReady;
+            this.ready[0] = action.isReady;
         } else if (action.playerID == 1) {
-            this.player1Ready = action.isReady;
+            this.ready[1] = action.isReady;
         }
 
-        System.out.println("STATE: Player 0 ready:" + this.player0Ready);
-        System.out.println("STATE: Player 1 ready:" + this.player1Ready);
+        System.out.println("STATE: Player 0 ready:" + this.ready[0]);
+        System.out.println("STATE: Player 1 ready:" + this.ready[1]);
 
         return true;
     }
@@ -395,24 +356,25 @@ public class CrapsState extends GameState {
         for (int p = 0; p < bets.length; p++) { // iterates through number of players
             for (int b = 0; b < bets[p].length; b++) { // iterates through all bet IDs
                 if (p == 0) { //updates human player money
-                    this.setPlayer0Funds(
-                            this.player0Funds + this.bets[p][b].payoutBet(this.die1CurrVal,
+                    this.setPlayerFunds(action.playerId,
+                            this.funds[action.playerId] + this.bets[p][b].payoutBet(this.die1CurrVal,
                                     this.die2CurrVal, this.dieTotal, this.firstDieShot)
                     );
                     //only prints out the bets that player has actually made
                     if (this.bets[p][b].getID() != 0) {
-                        Log.d("funds", "human money: " + this.player0Funds);
+                        Log.d("funds", "human money: " + this.funds[action.playerId]);
                         Log.d("funds", "bet: " + this.bets[p][b].toString());
                         this.bets[p][b].setBetAmount(0.0); //resets the bet amount
                     }
+                    //TODO put this in a separate method??
                 } else { //update computer money
-                    this.setPlayer1Funds(
-                            this.player1Funds + this.bets[p][b].payoutBet(this.die1CurrVal,
+                    this.setPlayerFunds(action.playerId,
+                            this.funds[action.playerId] + this.bets[p][b].payoutBet(this.die1CurrVal,
                                     this.die2CurrVal, this.dieTotal, this.firstDieShot)
                     );
-                    //only prints out the bets that computer has actually made
+                    //only prints out the bets that player has actually made
                     if (this.bets[p][b].getID() != 0) {
-                        Log.d("funds", "computer money: " + this.player1Funds);
+                        Log.d("funds", "human money: " + this.funds[action.playerId]);
                         Log.d("funds", "bet: " + this.bets[p][b].toString());
                         this.bets[p][b].setBetAmount(0.0); //resets the bet amount
                     }
@@ -427,8 +389,8 @@ public class CrapsState extends GameState {
         playerSwitched = false;
 
         //reset both player's ready after roll
-        player0Ready = false;
-        player1Ready = false;
+        ready[0] = false;
+        ready[1] = false;
 
         //SYDNEY -- switch player
         // WES -- added first die 2 or 3

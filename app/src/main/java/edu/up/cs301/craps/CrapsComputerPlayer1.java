@@ -120,12 +120,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
          */
 
         // look at how much money I have according to my copy of the game state
-        if (this.playerId == 0){
-            playerMoney = crapsState.getPlayer0Funds();
-        }
-        else {
-            playerMoney = crapsState.getPlayer1Funds();
-        }
+            playerMoney = crapsState.getPlayerFunds(this.playerId);
 
         // if I'm already ready, do not bet again
         if (isReady){
@@ -142,7 +137,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         }
 
         // bet on the pass line every time
-        PlaceBetAction pba = new PlaceBetAction(this, this.playerId, 1, amountBet, false);
+        PlaceBetAction pba = new PlaceBetAction(this, this.playerId, 1, amountBet);
         this.game.sendAction(pba);
         System.out.println("computer trying to bet");
     }
@@ -176,15 +171,8 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             roll();
         }
         else {
-            boolean check;
-            if (this.playerId == 0){
-                check = (crapsState.isPlayer0Ready() == false);
-            }
-            else {
-                check = (crapsState.isPlayer1Ready() == false);
-            }
             //if I'm not ready, then send a ready action
-            if (check){
+            if (crapsState.getPlayerReady(this.playerId)){
                 ready();
                 System.out.println("COMPUTER: readying.");
             }

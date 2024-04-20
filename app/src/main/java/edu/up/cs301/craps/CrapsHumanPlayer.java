@@ -118,7 +118,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             but.setTextColor(Color.parseColor("#FFA500"));
             //sends the bet action to the state
             PlaceBetAction pba = new PlaceBetAction(this, this.playerId, id,
-                    amountBet, true);
+                    amountBet);
             game.sendAction(pba);
             Log.d("die", "trying to place bet");
 
@@ -163,12 +163,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if (game == null) return;
         //checks all of the buttons that could be pressed
         if (but.equals(myActivity.findViewById(R.id.ready))) { //checks if the button pressed is the ready button
-            if (this.playerId == 0){
-                this.isReady = state.isPlayer0Ready();
-            }
-            else {
-                this.isReady = state.isPlayer1Ready();
-            }
+            //removed isReady here
             Ready2CrapAction P1Ready = new Ready2CrapAction(this, !this.isReady, this.playerId);
             game.sendAction(P1Ready);
         } else if (myActivity.findViewById(R.id.shoot) == button) { // checks shoot button
@@ -332,12 +327,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         //update player funds
         //todo: move this to an apropriate section
         TextView playerMoney = myActivity.findViewById(R.id.yourMoney);
-        if (this.playerId == 0) {
-            playerMoney.setText("$" + state.getPlayer0Funds());
-        }
-        else {
-            playerMoney.setText("$" + state.getPlayer1Funds());
-        }
+            playerMoney.setText("$" + state.getPlayerFunds(this.playerId));
 
     }// onClick
 
@@ -360,12 +350,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         //the text view that displays how much money is bet
         TextView betView = myActivity.findViewById(R.id.betAmount);
         //sets the max the bar can scroll to the players total money
-        if (this.playerId == 0){
-            seekBar.setMax((int) state.getPlayer0Funds());
-        }
-        else{
-            seekBar.setMax((int) state.getPlayer1Funds());
-        }
+
+        seekBar.setMax((int) state.getPlayerFunds(this.playerId));
+
 
         //remainder when progress is divided by the bet increment
         int r = progress % betIncrement;
@@ -470,25 +457,16 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         Button ready = myActivity.findViewById(R.id.ready);
         //changes ready to red when human ready
-        boolean readyCheck;
-        if (this.playerId == 0){
-            readyCheck = state.isPlayer0Ready();
-        }
-        else{
-            readyCheck = state.isPlayer1Ready();
-        }
-
         TextView myMoney = myActivity.findViewById(R.id.yourMoney);
-        if (readyCheck) {
+        if (state.getPlayerReady(this.playerId)) {
             ready.setTextColor(ContextCompat.getColor(this.myActivity, R.color.red));
-            myMoney.setText("$" + state.getPlayer0Funds());
         }
         //else black
         else {
             ready.setTextColor(ContextCompat.getColor(this.myActivity, R.color.black));
-            myMoney.setText("$" + state.getPlayer1Funds());
         }
 
+        myMoney.setText("$" + state.getPlayerFunds(this.playerId));
 
         updateDisplay();
     }

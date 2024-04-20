@@ -163,9 +163,9 @@ public class CrapsLocalGame extends LocalGame {
 	 */
 	@Override
 	protected String checkIfGameOver() {
-		if (gameState.getPlayer0Funds() == 0.0) {
+		if (gameState.getPlayerFunds(0) == 0.0) {
 			return "Player 0 lost all their money, Player 1 Wins!";
-		} else if (gameState.getPlayer1Funds() == 0.0) {
+		} else if (gameState.getPlayerFunds(1) == 0.0) {
 			return "Player 1 lost all their money, Player 0 Wins!";
 		}
 		return "That's all folks";
