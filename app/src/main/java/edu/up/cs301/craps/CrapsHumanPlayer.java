@@ -9,6 +9,7 @@ import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
@@ -70,13 +71,15 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     /**
      * sets the counter value in the text view
      */
-    protected void updateDisplay(){
+    protected void updateDisplay() {
         // set the text in the appropriate widget
         //counterValueTextView.setText("" + state.getCounter());
     }
+
     protected void updateDisplay(String displayText) {
-        testResultsTextView.setText(testResultsTextView.getText()+"\n"+displayText, TextView.BufferType.NORMAL);
+        testResultsTextView.setText(testResultsTextView.getText() + "\n" + displayText, TextView.BufferType.NORMAL);
     }
+
     protected void updateDisplay(String displayText, int id) {
         testResultsTextView.setText("", TextView.BufferType.NORMAL);
     }
@@ -96,15 +99,16 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
 
 
-        Random rand=new Random();
-        if(myActivity.findViewById(R.id.shoot)==button){
-            int die1=rand.nextInt(5)+1;
-            int die2=rand.nextInt(5)+1;
-            int totes=die1+die2;
-            RollAction roll= new RollAction(this,true,die1,die2,totes,(CrapsMainActivity) myActivity);
+
+        Random rand = new Random();
+        if (myActivity.findViewById(R.id.shoot) == button) {
+            int die1 = rand.nextInt(5) + 1;
+            int die2 = rand.nextInt(5) + 1;
+            int totes = die1 + die2;
+            RollAction roll = new RollAction(this, true, die1, die2, totes, (CrapsMainActivity) myActivity);
             //game.sendAction(roll);
-            state.ready(new Ready2CrapAction(this,true,0));
-            state.ready(new Ready2CrapAction(this,true,1));
+            state.ready(new Ready2CrapAction(this, true, 0));
+            state.ready(new Ready2CrapAction(this, true, 1));
             state.roll(roll);
         }
 
@@ -164,6 +168,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // update our state; then update the display
         this.state = (CrapsState) info;
         updateDisplay();
+
+
     }
 
     /**
@@ -178,11 +184,13 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         this.myActivity = activity;
 
         activity.setContentView(R.layout.craps_table);
-        Button shooter=(Button)activity.findViewById(R.id.shoot);
+        Button shooter = (Button) activity.findViewById(R.id.shoot);
         shooter.setOnClickListener(this);
 
+
+
         //this.testResultsTextView =
-       //         (TextView) activity.findViewById(R.id.editTextTest);
+        //         (TextView) activity.findViewById(R.id.editTextTest);
 
         //Button testButton = (Button) activity.findViewById(R.id.testButton);
         //testButton.setOnClickListener(this);

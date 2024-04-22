@@ -44,14 +44,16 @@ public class CrapsState extends GameState {
     //ctor
     public CrapsState() {
         this.isFirstRoll=true;
+        this.offOn = false;
         this.firstRoll = 0;
+
         this.playerTurn = 0;
         this.player0Funds = 1000.00;
         this.player1Funds = 1000.00;
         this.player0Ready = true;
         this.player1Ready = true;
         this.setDice(0, 0);
-        this.offOn = false;
+
         // iterates through a master 2d array and makes all bets for each player
         for (int p = 0; p < bets.length; p++) { // iterates through number of players
             for (int b = 0; b < bets[p].length; b++) { // iterates through all bet IDs
@@ -85,6 +87,22 @@ public class CrapsState extends GameState {
     //getters for instance variables
     public int getPlayerTurn() {
         return this.playerTurn;
+    }
+
+    public boolean getOffOn(){
+        return this.offOn;
+    }
+    public int getFirstRoll(){
+        return this.firstRoll;
+    }
+    public void setFirstRoll(int num){
+        this.firstRoll=num;
+    }
+    public boolean getIsFirstRoll(){
+        return this.isFirstRoll;
+    }
+    public void setIsFirstRoll(boolean boo){
+        this.isFirstRoll=boo;
     }
 
     public double getPlayer0Funds() {
@@ -339,32 +357,6 @@ public class CrapsState extends GameState {
 
         }
 
-
-        //todo: get this to stay on a single image instead of change every roll
-        //if it is the first roll of turn, change the on/off bar appropriately
-        if (!this.offOn) {
-            if(this.isFirstRoll) {
-
-                this.firstRoll = dieTotal;
-
-                if (this.firstRoll == 4) {
-                    onOff.setImageDrawable(action.craps.getDrawable(R.drawable.four));
-                } else if (this.firstRoll == 5) {
-                    onOff.setImageDrawable(action.craps.getDrawable(R.drawable.blankdice));
-                } else if (this.firstRoll == 6) {
-                    onOff.setImageDrawable(action.craps.getDrawable(R.drawable.four));
-                } else if (this.firstRoll == 8) {
-                    onOff.setImageDrawable(action.craps.getDrawable(R.drawable.blankdice));
-                } else if (this.firstRoll == 9) {
-                    onOff.setImageDrawable(action.craps.getDrawable(R.drawable.four));
-                } else if (this.firstRoll == 10) {
-                    onOff.setImageDrawable(action.craps.getDrawable(R.drawable.blankdice));
-                }
-
-                this.isFirstRoll = false;
-            }
-            this.offOn=true;
-        }
 
 
         return true;
