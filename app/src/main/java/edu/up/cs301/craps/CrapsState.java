@@ -33,6 +33,7 @@ public class CrapsState extends GameState {
     private double funds[] = new double[2];
     private boolean ready [] = new boolean[2];
 
+    //x controls player, y controls bet
     private Bet[][] bets = new Bet[2][23];
 
     //the dice every roll
@@ -157,7 +158,6 @@ public class CrapsState extends GameState {
         this.funds[playerId] = playerFunds;
     }
 
-
     //tells the tale of the game
     @Override
     public String toString() {
@@ -181,6 +181,7 @@ public class CrapsState extends GameState {
         }
         return false;
     }
+
 
     /**
      * placeBet
@@ -271,7 +272,7 @@ public class CrapsState extends GameState {
 
 
         //adjust the bet's amount
-        this.bets[action.playerId][action.betID].setBetAmount(0.0); //'removes' the bet (set to 0)
+        this.bets[action.playerId][action.betID] = new Bet(); //'removes' the bet (set to 0)
 
         Log.d("die", "REMOVED BET bet ID: " + action.betID);
         Bet thisBet = this.bets[action.playerId][action.betID];
@@ -347,7 +348,7 @@ public class CrapsState extends GameState {
             for (int b = 0; b < bets[p].length; b++) { // iterates through all bet IDs
                 if (p == 0) { //updates human player money
                     this.setPlayerFunds(action.playerId,
-                            this.funds[action.playerId] + this.bets[p][b].payoutBet(this.die1CurrVal,
+                            (int) this.funds[action.playerId] + this.bets[p][b].payoutBet(this.die1CurrVal,
                                     this.die2CurrVal, this.dieTotal, this.firstDieShot)
                     );
                     //only prints out the bets that player has actually made
@@ -359,7 +360,7 @@ public class CrapsState extends GameState {
                     //TODO put this in a separate method??
                 } else { //update computer money
                     this.setPlayerFunds(action.playerId,
-                            this.funds[action.playerId] + this.bets[p][b].payoutBet(this.die1CurrVal,
+                            (int) this.funds[action.playerId] + this.bets[p][b].payoutBet(this.die1CurrVal,
                                     this.die2CurrVal, this.dieTotal, this.firstDieShot)
                     );
                     //only prints out the bets that player has actually made

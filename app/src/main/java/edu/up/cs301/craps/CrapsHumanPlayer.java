@@ -59,8 +59,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
     private int playerId;
 
-    private boolean isHuman;
-
     private int betIncrement = 1;
 
     // we'll get the bet array by going to game state
@@ -85,19 +83,13 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     public View getTopView() {
         return myActivity.findViewById(R.id.top_test_gui_layout);
     }
-    //samba
 
-    /**
-     * sets the counter value in the text view
-     */
-    protected void updateDisplay() {
-        // set the text in the appropriate widget
-        //counterValueTextView.setText("" + state.getCounter());
-    }
-
+/*
     protected void updateDisplay(String displayText) {
         testResultsTextView.setText(testResultsTextView.getText() + "\n" + displayText, TextView.BufferType.NORMAL);
     }
+
+ */
 
     protected void updateDisplay(String displayText, int id) {
         testResultsTextView.setText("", TextView.BufferType.NORMAL);
@@ -120,15 +112,19 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             PlaceBetAction pba = new PlaceBetAction(this, this.playerId, id,
                     amountBet);
             game.sendAction(pba);
+
             Log.d("die", "trying to place bet");
 
             // }
         } else {
-            //todo: give player the money back properly
+            //update player funds
+            //TextView playerMoney = myActivity.findViewById(R.id.yourMoney); //todo I only think receiveInfo needs this
             //send remove bet action
             RemoveBetAction rba = new RemoveBetAction(this, this.playerId, id);
             Log.d("die", "trying to remove bet");
-            state.removeBet(rba);
+            game.sendAction(rba);
+
+            //playerMoney.setText("$" + state.getPlayer0Funds());
 
             //change the color for removing the bet
             if (but.equals(myActivity.findViewById(R.id.come))) {
@@ -324,10 +320,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             this.bet(button, 22);
         }
 
-        //update player funds
-        //todo: move this to an apropriate section
-        TextView playerMoney = myActivity.findViewById(R.id.yourMoney);
-            playerMoney.setText("$" + state.getPlayerFunds(this.playerId));
 
     }// onClick
 
@@ -402,6 +394,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // update our state; then update the display
         this.state = (CrapsState) info;
 
+
+
         //change the drawable
         ImageView dice1 = myActivity.findViewById(R.id.dice1);
         ImageView dice2 = myActivity.findViewById(R.id.dice2);
@@ -468,7 +462,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         myMoney.setText("$" + state.getPlayerFunds(this.playerId));
 
-        updateDisplay();
+        //todo troy killed this. I'm worried
+        //updateDisplay();
+
     }
 
     /**
@@ -619,6 +615,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // if we have a game state, "simulate" that we have just received
         // the state from the game so that the GUI values are updated
         if (state != null) {
+
             receiveInfo(state);
         }
     }
@@ -639,8 +636,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     }
 
     public int getPlayerId(){return this.playerId;}
-
-    public boolean getIsHuman(){return this.isHuman;}
 
     public boolean getIsReady() {
         return isReady;
