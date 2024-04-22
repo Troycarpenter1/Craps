@@ -394,9 +394,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // update our state; then update the display
         this.state = (CrapsState) info;
 
-
-
-        //change the drawable
+        //change the drawable for the dice
         ImageView dice1 = myActivity.findViewById(R.id.dice1);
         ImageView dice2 = myActivity.findViewById(R.id.dice2);
 
@@ -441,7 +439,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         //this doesn't work when player turn is based on order
         Button shoot = myActivity.findViewById(R.id.shoot);
         //if it's your turn then the shooter button is red
-        if (state.getPlayerTurn() == 0) {
+        if (state.getPlayerTurn() == this.playerId) {
             shoot.setTextColor(ContextCompat.getColor(this.myActivity, R.color.red));
         }
         //else black
