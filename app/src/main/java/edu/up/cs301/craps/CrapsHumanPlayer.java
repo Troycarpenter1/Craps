@@ -1,9 +1,7 @@
 package edu.up.cs301.craps;
 
-import edu.up.cs301.GameFramework.actionMessage.ReadyAction;
 import edu.up.cs301.GameFramework.players.GameHumanPlayer;
 import edu.up.cs301.GameFramework.GameMainActivity;
-import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 
 import android.util.Log;
@@ -11,7 +9,6 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -19,12 +16,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
-import androidx.annotation.ColorInt;
-
 import androidx.core.content.ContextCompat;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Random;
+import java.util.List;
 
 /**
  * A GUI of a craps-player. The GUI displays the current bets placed, and allows the
@@ -58,6 +54,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     private int die1;
     private int die2;
 
+    //hashtable holding the ID of a bet in the array and the corresponding button
+    Hashtable<Integer, List<Integer>> buttontable = new Hashtable<>();
     private int playerId;
 
     private int betIncrement = 1;
@@ -105,46 +103,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         Button but = (Button) button;
         int prevAmountBet;
 
-        //TODO there's gotta be a better place to put this
-        Hashtable<Integer, Integer> table = new Hashtable<>();
-        table.put(R.id.passLine1, 1);
-        table.put(R.id.passLine2, 1);
-        table.put(R.id.dont_pass, 2);
-        table.put(R.id.come, 3);
-        table.put(R.id.field, 4);
-        table.put(R.id.place4, 5);
-        table.put(R.id.place5, 6);
-        table.put(R.id.place6, 7);
-        table.put(R.id.place8, 8);
-        table.put(R.id.place9, 9);
-        table.put(R.id.place10, 10);
-        table.put(R.id.cButton1, 10);
-        table.put(R.id.cButton2, 10);
-        table.put(R.id.cButton3, 10);
-        table.put(R.id.cButton4, 10);
-        table.put(R.id.cButton5, 10);
-        table.put(R.id.cButton6, 10);
-        table.put(R.id.cButton7, 10);
-        table.put(R.id.cButton7, 10);
-        table.put(R.id.eButton1, 11);
-        table.put(R.id.eButton2, 11);
-        table.put(R.id.eButton3, 11);
-        table.put(R.id.eButton4, 11);
-        table.put(R.id.eButton5, 11);
-        table.put(R.id.eButton6, 11);
-        table.put(R.id.eButton7, 11);
-        table.put(R.id.sevensBet, 12);
-        table.put(R.id.pair2s, 13);
-        table.put(R.id.pair3s, 14);
-        table.put(R.id.pair4s, 15);
-        table.put(R.id.pair4s, 16);
-        table.put(R.id.pair5s, 17);
-        table.put(R.id.twoAndOne, 18);
-        table.put(R.id.pair1s, 19);
-        table.put(R.id.pair6s, 20);
-        table.put(R.id.fiveAndSix, 21);
-        table.put(R.id.craps, 21);
-
         Log.d("die", "amountBet: " + amountBet);
         if (amountBet > 0.0) {
 
@@ -158,8 +116,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             //bet corresponding to the button that was just pressed
 
 
-            Bet thisBet = state.getBet(this.playerId, table.get(button.getId()));
-            Log.d("bet", "this bet's name is " + thisBet.getName());
+            //Bet thisBet = state.getBet(this.playerId, table.get(button.getId()));
+            //Log.d("bet", "this bet's name is " + thisBet.getName());
 
             //if the bet at the location ISN'T null
             //if () {
@@ -218,6 +176,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             //removed isReady here
             Ready2CrapAction P1Ready = new Ready2CrapAction(this, !this.isReady, this.playerId);
             game.sendAction(P1Ready);
+
         } else if (myActivity.findViewById(R.id.shoot) == button) { // checks shoot button
 
             //change the color for removing the bet after rolling for all buttons that are bets
@@ -442,13 +401,32 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      *
      * @param info the message
      */
+    //TODO make receiveInfo less bulky
     @Override
     public void receiveInfo(GameInfo info) {
+
         // ignore the message if it's not a CrapState message
         if (!(info instanceof CrapsState)) return;
 
         // update our state; then update the display
         this.state = (CrapsState) info;
+
+        for (int i = 0; i < 22; i++){
+            Bet thisBet = state.getBet(this.playerId, i);
+            //if the name isn't no bet
+            if (thisBet.getName().equals("NO BET") == false){
+
+            }
+        }
+
+        /*
+        Log.d("bet", "COME ID: " + R.id.come);
+        Log.d("bet", "Get COME index: " + table.get(R.id.come));
+        int index = table.get(R.id.come);
+        Log.d("bet", "Player ID" + this.playerId);
+        Log.d("bet", "Get bet in bet array at come index: " + state.getBet(this.playerId, (int)index));
+        Log.d("bet", "Get bet in bet array at 3 index: " + state.getBet(this.playerId, 3));
+        */
 
         //change the drawable for the dice
         ImageView dice1 = myActivity.findViewById(R.id.dice1);
@@ -665,6 +643,115 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // remember the field that we update to display the counter's value
         this.testResultsTextView =
                 (TextView) activity.findViewById(R.id.counterValueTextView);
+
+        //TODO there's gotta be a better place to put this
+
+        /*
+            Makes a hashtable mapping all buttons to their corresponding spot
+            in the bet array. name is table
+         */
+        List<Integer> passlist = new ArrayList<Integer>();
+        passlist.add(R.id.passLine1);
+        passlist.add(R.id.passLine2);
+        buttontable.put(1, passlist);
+
+        List<Integer> dontpasslist = new ArrayList<Integer>();
+        dontpasslist.add(R.id.passLine2);
+        buttontable.put(2, dontpasslist);
+
+        List<Integer> comelist = new ArrayList<Integer>();
+        comelist.add(R.id.come);
+        buttontable.put(3, comelist);
+
+        List<Integer> fieldlist = new ArrayList<Integer>();
+        fieldlist.add(R.id.field);
+        buttontable.put(4, fieldlist);
+
+        List<Integer> place4list = new ArrayList<Integer>();
+        place4list.add(R.id.place4);
+        buttontable.put(5, place4list);
+
+        List<Integer> place5list = new ArrayList<Integer>();
+        place5list.add(R.id.place5);
+        buttontable.put(6, place5list);
+
+        List<Integer> place6list = new ArrayList<Integer>();
+        place6list.add(R.id.place6);
+        buttontable.put(7, place6list);
+
+        List<Integer> place8list = new ArrayList<Integer>();
+        place8list.add(R.id.place8);
+        buttontable.put(8, place8list);
+
+        List<Integer> place9list = new ArrayList<Integer>();
+        place9list.add(R.id.place9);
+        buttontable.put(9, place9list);
+
+        List<Integer> place10list = new ArrayList<Integer>();
+        place9list.add(R.id.place10);
+        buttontable.put(10, place10list);
+
+        List<Integer> clist = new ArrayList<Integer>();
+        clist.add(R.id.cButton1);
+        clist.add(R.id.cButton2);
+        clist.add(R.id.cButton3);
+        clist.add(R.id.cButton4);
+        clist.add(R.id.cButton5);
+        clist.add(R.id.cButton6);
+        clist.add(R.id.cButton7);
+        buttontable.put(11, clist);
+
+        List<Integer> elist = new ArrayList<Integer>();
+        clist.add(R.id.eButton1);
+        clist.add(R.id.eButton2);
+        clist.add(R.id.eButton3);
+        clist.add(R.id.eButton4);
+        clist.add(R.id.eButton5);
+        clist.add(R.id.eButton6);
+        clist.add(R.id.eButton7);
+        buttontable.put(12, elist);
+
+        List<Integer> sevenslist = new ArrayList<Integer>();
+        place9list.add(R.id.sevensBet);
+        buttontable.put(13, sevenslist);
+
+        List<Integer> pair2slist = new ArrayList<Integer>();
+        pair2slist.add(R.id.pair2s);
+        buttontable.put(14, pair2slist);
+
+        List<Integer> pair3slist = new ArrayList<Integer>();
+        pair3slist.add(R.id.pair3s);
+        buttontable.put(15, pair3slist);
+
+        List<Integer> pair4slist = new ArrayList<Integer>();
+        pair4slist.add(R.id.pair4s);
+        buttontable.put(16, pair4slist);
+
+        List<Integer> pair5slist = new ArrayList<Integer>();
+        pair5slist.add(R.id.pair5s);
+        buttontable.put(17, pair5slist);
+
+        List<Integer> twoAndOnelist = new ArrayList<Integer>();
+        twoAndOnelist.add(R.id.twoAndOne);
+        buttontable.put(18, pair5slist);
+
+        List<Integer> pair1slist = new ArrayList<Integer>();
+        pair1slist.add(R.id.pair1s);
+        buttontable.put(19, pair1slist);
+
+        List<Integer> pair6slist = new ArrayList<Integer>();
+        pair6slist.add(R.id.pair6s);
+        buttontable.put(20, pair6slist);
+
+        List<Integer> fiveAndSixlist = new ArrayList<Integer>();
+        fiveAndSixlist.add(R.id.fiveAndSix);
+        buttontable.put(21, fiveAndSixlist);
+
+        List<Integer> crapslist = new ArrayList<Integer>();
+        crapslist.add(R.id.craps);
+        buttontable.put(22, crapslist);
+
+
 
         // if we have a game state, "simulate" that we have just received
         // the state from the game so that the GUI values are updated

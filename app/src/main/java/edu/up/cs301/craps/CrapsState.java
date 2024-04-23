@@ -221,7 +221,7 @@ public class CrapsState extends GameState {
         //adds the bet's new amount to it's current amount
         this.bets[action.playerId][action.betID] = new Bet(this.bets[action.playerId][action.betID].getAmount() + action.betAmount, action.betID);
 
-        //set player fundsSyste
+        //set player fundsSystem
         this.setPlayerFunds(action.playerId, this.funds[action.playerId] - action.betAmount);
         Log.d("die", "player " + action.playerId + "funds changed to " + this.funds[action.playerId]);
 
