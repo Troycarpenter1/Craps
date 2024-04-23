@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Random;
 
 /**
  * A computer-version of a counter-player.  Since this is such a simple game,
@@ -46,6 +47,10 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
     // If this player is running the GUI, the handler for the GUI thread (otherwise
     // null)
     private Handler guiHandler = null;
+    private int playerMoney;// my money
+    private int amountBet;// amount I wants to bet
+    CrapsState crapsState;
+    private int playerId;
 
     /**
      * constructor
@@ -78,24 +83,32 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
         }
     }
 
-
     /**
-     * sets the counter value in the text view
-     *  */
-//	private void updateDisplay() {
-//		// if the guiHandler is available, set the new counter value
-//		// in the counter-display widget, doing it in the Activity's
-//		// thread.
-//		if (guiHandler != null) {
-//			guiHandler.post(
-//					new Runnable() {
-//						public void run() {
-//						if (counterValueTextView != null && currentGameState != null) {
-//							counterValueTextView.setText("" + currentGameState.getCounter());
-//						}
-//					}});
-//		}
-//	}
+     *  new placeBet method bets on a random bet instead of pass line every time
+     */
+    @Override
+    public void placeBet() {
+        /*
+         * Computer Betting
+         * Rowena's Version
+         */
+
+        // look at how much money I have according to my copy of the game state
+        playerMoney = crapsState.getPlayerFunds(this.playerId);
+
+        // if I somehow have less than $100 to spend, then bet all the money I have left
+        if (playerMoney < 100) {
+            this.amountBet = playerMoney;
+        } else {
+            // Set my amount to bet to $100
+            this.amountBet = 100;
+        }
+
+        // bet on the pass line every time
+        PlaceBetAction pba = new PlaceBetAction(this, this.playerId, 1, amountBet);
+        this.game.sendAction(pba);
+        System.out.println("computer trying to bet");
+    }
 
     /**
      * Tells whether we support a GUI
@@ -123,16 +136,6 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
 
         // Load the layout resource for the our GUI's configuration
         activityForGui.setContentView(R.layout.craps_table);
-
-//        // remember who our text view is, for updating the counter value
-//        this.counterValueTextView =
-//                (TextView) activityForGui.findViewById(R.id.counterValueTextView);
-//
-//        // disable the buttons, since they will have no effect anyway
-//        Button plusButton = (Button) activityForGui.findViewById(R.id.plusButton);
-//        plusButton.setEnabled(false);
-//        Button minusButton = (Button) activityForGui.findViewById(R.id.minusButton);
-//        minusButton.setEnabled(false);
 
         // if the state is non=null, update the display
         if (currentGameState != null) {

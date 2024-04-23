@@ -155,9 +155,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if (game == null) return;
         //checks all of the buttons that could be pressed
         if (but.equals(myActivity.findViewById(R.id.ready))) { //checks if the button pressed is the ready button
-            //removed isReady here
-            isReady = !isReady;
-            Ready2CrapAction P1Ready = new Ready2CrapAction(this, this.isReady, this.playerNum);
+            isReady = state.getPlayerReady(playerNum);
+            Ready2CrapAction P1Ready = new Ready2CrapAction(this, !this.isReady, this.playerNum);
             game.sendAction(P1Ready);
         } else if (myActivity.findViewById(R.id.shoot) == button) { // checks shoot button
 
@@ -451,8 +450,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if(state.getFirstRoll()==0){
             onOff.setImageDrawable(myActivity.getDrawable(R.drawable.off));
         }
-        //
-        //}
 
 
         /*
@@ -487,9 +484,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         }
 
         myMoney.setText("$" + state.getPlayerFunds(this.playerNum));
-
-        //todo troy killed this. I'm worried
-        //updateDisplay();
 
     } //receiveInfo
 
