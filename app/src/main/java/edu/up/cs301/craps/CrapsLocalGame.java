@@ -8,7 +8,7 @@ import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import android.util.Log;
 
 /**
- * A class that represents the state of a game. In our counter game, the only
+ * A class that represents the state of a game. In our craps game, the only
  * relevant piece of information is the value of the game's counter. The
  * CounterState object is therefore very simple.
  * 
@@ -18,7 +18,7 @@ import android.util.Log;
  */
 public class CrapsLocalGame extends LocalGame {
 
-	// When a counter game is played, any number of players. The first player
+	// When a craps game is played, any number of players. The first player
 	// is trying to get the counter value to TARGET_MAGNITUDE; the second player,
 	// if present, is trying to get the counter to -TARGET_MAGNITUDE. The
 	// remaining players are neither winners nor losers, but can interfere by
@@ -41,7 +41,7 @@ public class CrapsLocalGame extends LocalGame {
 	}
 
 	/**
-	 * This ctor should be called when a new counter game is started
+	 * This ctor should be called when a new craps game is started
 	 */
 	public CrapsLocalGame(GameState state) {
 		// initialize the game state, with the counter value starting at 0

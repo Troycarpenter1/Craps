@@ -9,7 +9,7 @@ import edu.up.cs301.GameFramework.LocalGame;
 import edu.up.cs301.GameFramework.gameConfiguration.*;
 
 /**
- * this is the primary activity for Counter game
+ * this is the primary activity for Craps game
  * 
  * @author Andrew M. Nuxoll
  * @author Steven R. Vegdahl
@@ -56,9 +56,9 @@ public class CrapsMainActivity extends GameMainActivity {
 		// Create a game configuration class for Counter:
 		// - player types as given above
 		// - from 1 to 2 players
-		// - name of game is "Counter Game"
+		// - name of game is "Craps Game"
 		// - port number as defined above
-		GameConfig defaultConfig = new GameConfig(playerTypes, 1, 2, "Counter Game",
+		GameConfig defaultConfig = new GameConfig(playerTypes, 1, 2, "Craps Game",
 				PORT_NUMBER);
 
 		// Add the default players to the configuration
@@ -79,7 +79,7 @@ public class CrapsMainActivity extends GameMainActivity {
 	 * create a local game
 	 * 
 	 * @return
-	 * 		the local game, a counter game
+	 * 		the local game, a craps game
 	 */
 	@Override
 	public LocalGame createLocalGame(GameState state) {
