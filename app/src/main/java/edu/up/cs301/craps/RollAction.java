@@ -1,5 +1,7 @@
 package edu.up.cs301.craps;
 
+import java.io.Serializable;
+
 import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.players.GamePlayer;
 

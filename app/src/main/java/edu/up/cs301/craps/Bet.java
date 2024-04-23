@@ -1,5 +1,7 @@
 package edu.up.cs301.craps;
 
+import java.io.Serializable;
+
 /**
  * @author Wes H.       Last Revision: 4/22/2024
  * @author Troy C.      Last Revision: TBD
@@ -16,9 +18,11 @@ package edu.up.cs301.craps;
  * checkThisBetWon method (includes most helper methods)
  */
 
-public class Bet {
-    //instance variables
+public class Bet implements Serializable {
 
+    private static final long serialVersionUID = 5;
+
+    //instance variables
     private int ID; //value that represents the type of bet in an array of bet names & payouts
     private String name; //name of the bet
     private int amount; //the amount of money this bet has put on it
