@@ -706,7 +706,7 @@
                     android:layout_height="wrap_content"
                     android:text="Your Money:"
                     android:textSize="30dp"
-                    android:fontFamily="serif"
+                    android:fontFamily="seOrif"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     android:textColor="@color/white"
                     android:textStyle="bold"/>
