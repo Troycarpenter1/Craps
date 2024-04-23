@@ -21,7 +21,7 @@ public class Bet {
 
     private int ID; //value that represents the type of bet in an array of bet names & payouts
     private String name; //name of the bet
-    private double amount; //the amount of money this bet has put on it
+    private int amount; //the amount of money this bet has put on it
     private double payout;
 
     //public static final variables
@@ -71,7 +71,7 @@ public class Bet {
     }
 
     //betID cnstr
-    public Bet(double newAmount, int newID) {
+    public Bet(int newAmount, int newID) {
         this.ID = newID;
         this.name = ALL_BET_NAMES[newID];
         this.payout = ALL_BET_PAYOUTS[newID];
@@ -87,7 +87,7 @@ public class Bet {
     }
 
     //simple getter methods
-    public double getAmount() {
+    public int getAmount() {
         return this.amount;
     }
 
@@ -104,7 +104,7 @@ public class Bet {
     }
 
     //set bet amount
-    public void setBetAmount(double newAmount) {
+    public void setBetAmount(int newAmount) {
         this.amount = newAmount;
     }
 
@@ -118,15 +118,14 @@ public class Bet {
      * @param firstRoll the first roll the shooter made
      * @return the value that will be paid out to the player if the player wins the bet (otherwise it is 0)
      */
-    public double payoutBet(int die1, int die2, int diceTotal, int firstRoll) {
+    public int payoutBet(int die1, int die2, int diceTotal, int firstRoll) {
         if (checkThisBetWon(die1, die2, diceTotal, firstRoll)) { //checks if the bet is won
             if (this.name.equals("FIELD") && (diceTotal == 2 || diceTotal == 12)) { // checks double pay out on field bets
-                return this.amount * (this.payout * 2);
+                return (int) (this.amount * (this.payout * 2));
             }
-            return this.amount * this.payout;
-
+            return (int) (this.amount * this.payout);
         } else { //takes your money if you lose haha
-            return 0.0;
+            return 0;
         }
     }
 

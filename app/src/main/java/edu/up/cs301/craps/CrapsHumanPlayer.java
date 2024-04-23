@@ -35,7 +35,7 @@ import java.util.Random;
  * @author Troy Carpenter
  * @author Sydney Dean
  * @author Rowena Archer
- * @version March 2024
+ * @version April 2024
  */
 public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener,
         SeekBar.OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
@@ -50,15 +50,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
     // the android activity that we are running
     private GameMainActivity myActivity;
-    private int playerMoney;// player's money
     private int amountBet;// amount player wants to bet
-    private boolean isShooter;// shooter status
     private boolean isReady; // player is ready (done placing bets)
-    private int die1;
-    private int die2;
-
     private int playerId;
-
     private int betIncrement = 1;
 
     // we'll get the bet array by going to game state
@@ -396,7 +390,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // update our state; then update the display
         this.state = (CrapsState) info;
 
-
         //change the drawable
         ImageView dice1 = myActivity.findViewById(R.id.dice1);
         ImageView dice2 = myActivity.findViewById(R.id.dice2);
@@ -649,41 +642,11 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     /**
      * getters & setters
      */
-    public int getPlayerMoney() {
-        return playerMoney;
-    }
-
     public int getAmountBet() {
         return amountBet;
     }
 
-    public boolean getIsShooter() {
-        return isShooter;
-    }
-
-    public int getPlayerId() {
-        return this.playerId;
-    }
-
-    public boolean getIsReady() {
-        return isReady;
-    }
-
-    public void setPlayerMoney(int newVal) {
-        playerMoney = newVal;
-    }
-
-    public void setShooter(boolean newShooter) {
-        isShooter = newShooter;
-    }
-
-    public void setAmountBet(int amountBet) {
-        this.amountBet = amountBet;
-    }
-
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
-    }
+    public void setPlayerId(int playerId){this.playerId = playerId;}
 
 
     /**
