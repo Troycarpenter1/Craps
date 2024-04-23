@@ -34,7 +34,6 @@ public class Bet {
             "Pair of 6s", "5 & 6", "CRAPS"
     };
     //list of all payouts of all bets
-    //TODO: pass/dont/come/field should all payout x1
     public static final double[] ALL_BET_PAYOUTS = new double[]{
             /* No Bet: */        0.0,
             /* Pass Line Bet: */ 1.0,
@@ -109,8 +108,8 @@ public class Bet {
     }
 
     /**
+     * payoutBet
      * big bad method that pays the player the moneyzz (if the bet is won overall)
-     * Note: See "to-do" in the checkThisBetWon() method
      *
      * @param die1      dice 1
      * @param die2      dice 2
@@ -130,9 +129,8 @@ public class Bet {
     }
 
     /**
+     * checkThisBetWon
      * big bad method that checks if bet is won overall
-     * TODO: NOT YET HAS ALL BET TYPES CODED NOR ARE THE HELPER METHODS DONE
-     * <p>
      *
      * @param die1      dice 1
      * @param die2      dice 2
@@ -267,7 +265,7 @@ public class Bet {
 
     /**
      * toString method
-     * @return
+     * @return string value of all information about this bet
      */
     @Override
     public String toString() {

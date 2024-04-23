@@ -9,6 +9,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +35,7 @@ import edu.up.cs301.GameFramework.utilities.IPCoder;
 import edu.up.cs301.GameFramework.utilities.Logger;
 import edu.up.cs301.GameFramework.utilities.MessageBox;
 import edu.up.cs301.GameFramework.utilities.Saving;
+import edu.up.cs301.craps.CrapsState;
 import edu.up.cs301.craps.R;
 
 /**
@@ -524,6 +526,10 @@ public abstract class GameMainActivity extends Activity implements
         int id = item.getItemId();
         if (id == R.id.menu_help) {
             Logger.log(TAG, "This is the help button!");
+            Log.d("help","This is the help button!");
+            if (this.game != null) {
+                MessageBox.popUpMessage(game.getGameState().toString(),this);
+            }
             return true;
         }
 

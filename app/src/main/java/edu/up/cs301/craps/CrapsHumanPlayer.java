@@ -316,8 +316,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             this.bet(button, 22);
         }
 
-        //for testing purposes display the state of the game as a string
-        //TODO instead of logging this info make the "state.toString(other player's id)" display to the player
+        //for testing purposes display the state of the game as a string (this now is also displayed in the help button)
         Log.d("string", state.toString());
 
     }// onClick
