@@ -362,7 +362,7 @@ public class CrapsState extends GameState {
                     // updates the players funds
                     this.setPlayerFunds(action.playerId, newFunds);
                     //removes the bets that player has actually made
-                    if (oneTimeBet) {
+                    if (!oneTimeBet) {
                         this.bets[p][b].setBetAmount(0); //resets the bet amount
                     }
                 }
@@ -392,8 +392,9 @@ public class CrapsState extends GameState {
         Random rand = new Random();
         this.setDice(rand.nextInt(6) + 1, rand.nextInt(6) + 1);
         //this.setDice(1, 1); //always rolls a crap (for testing purposes)
-        this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
+        //this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
         //this.setDice(5, 6); //always rolls an 11 (for testing purposes)
+        this.setDice(6, 6); //always rolls 3 6s (for testing purposes)
 
         //checks if this is the first round and updates the first roll
         //or if the shooter just lost (player switched)
