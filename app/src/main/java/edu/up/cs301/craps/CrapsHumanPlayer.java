@@ -321,34 +321,37 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // update our state; then update the display
         this.state = (CrapsState) info;
 
-        //iterate through the bet array and highlight all buttons for bets placed
+        /*
+            iterate through the bet array and change color for all bets placed or removed
+            note the hashtables are instance variables and initialized in the setAsGui method
+            written by Sydney
+        */
         for (int i = 0; i < 23; i++){
+
+            //get the bet at this inidex
             Bet thisBet = state.getBet(this.playerId, i);
 
-            //if the name isn't no bet (a bet exists)
-            //if (thisBet.getName().equals("NO BET") == false){
-                //get all the the buttons associated with bet at index
-                List <Integer> buttons = buttontable.get(i);
-                //iterate through all the buttons in the button table and find all IDs
+            //get all the the buttons (button IDs) associated with bet at index
+            List <Integer> buttons = buttontable.get(i);
 
-            //at the very beginning of the game, sometimes the button is null, and that causes a crash
+            //at the very beginning of the game, sometimes the button is null
             if (buttons!= null) {
+
+                //iterate through all the buttons in the button table and find all IDs
                 for (int j = 0; j < buttons.size(); j++) {
                     Integer buttonId = buttons.get(j); //get the ID associated with the spot in the array
                     Button button = myActivity.findViewById(buttonId);
 
-                    //if there is a bet here
+                    //if there is a bet here, higlihgt the text
                     if (thisBet.getName().equals("NO BET") == false) {
                         button.setTextColor(Color.parseColor("#FFA500"));
+
+                    //else, no bet revert to original color
                     } else {
                         button.setTextColor(Color.parseColor(colortable.get(buttonId)));
-                        //revert to original color
                     }
                 }
             }
-
-            //}
-            //if there's no bet there
 
         }
 
@@ -435,10 +438,11 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         activity.setContentView(R.layout.craps_table);
 
-        //create all listeners
+        //CREATE ALL LISTENERS
         //makes the shooter button work
         Button shooter = (Button) activity.findViewById(R.id.shoot);
         shooter.setOnClickListener(this);
+
         //makes the ready button work
         Button join = (Button) activity.findViewById(R.id.ready);
         join.setOnClickListener(this);
@@ -537,7 +541,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         Button crap = activity.findViewById(R.id.craps);
         crap.setOnClickListener(this);
 
-
         SeekBar betSelector = activity.findViewById(R.id.betAmountSelector);
         betSelector.setOnSeekBarChangeListener(this);
 
@@ -568,11 +571,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         this.testResultsTextView =
                 (TextView) activity.findViewById(R.id.counterValueTextView);
 
-        //TODO there's gotta be a better place to put this
-
         /*
-            Makes a hashtable mapping all spots in the bet array to their
-            corresponding buttons. name is button table
+            Fills hashtable button table mapping all spots in the bet array to their
+            corresponding buttons.
          */
         List<Integer> passlist = new ArrayList<Integer>();
         passlist.add(R.id.passLine1);
@@ -677,7 +678,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         buttontable.put(22, crapslist);
 
         /*
-            Makes a hashtable mapping all IDs to
+            Fills hashtable color table mapping all IDs to
             the colors they should be originally
          */
         colortable.put(R.id.come, "#D61818"); //red
