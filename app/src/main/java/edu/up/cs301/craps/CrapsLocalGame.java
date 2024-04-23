@@ -166,9 +166,20 @@ public class CrapsLocalGame extends LocalGame {
 	 */
 	@Override
 	protected String checkIfGameOver() {
-		if (gameState.getPlayerFunds(0) == 0.0) {
+		int player0funds = gameState.getPlayerFunds(0);
+		int player1funds = gameState.getPlayerFunds(1);
+		for (int p = 0; p < gameState.bets.length; p++) {
+			for (int b = 0; b < gameState.bets[p].length; b++) {
+				if (p == 0) {
+					player0funds += gameState.bets[p][b].getAmount();
+				} else {
+					player1funds += gameState.bets[p][b].getAmount();
+				}
+			}
+		}
+		if (player0funds == 0) {
 			return "Player 0 lost all their money, Player 1 Wins!";
-		} else if (gameState.getPlayerFunds(1) == 0.0) {
+		} else if (player1funds == 0) {
 			return "Player 1 lost all their money, Player 0 Wins!";
 		}
 		return "That's all folks";

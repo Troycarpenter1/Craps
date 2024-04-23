@@ -35,7 +35,7 @@ public class CrapsState extends GameState {
     private boolean ready[] = new boolean[2];
 
     //x controls player, y controls bet
-    private Bet[][] bets = new Bet[2][23];
+    protected Bet[][] bets = new Bet[2][23];
 
     //the dice every roll
     private int die1CurrVal;
@@ -48,7 +48,7 @@ public class CrapsState extends GameState {
     private boolean isFirstRoll;
 
     //purpose is to prevent one roll counting double
-    boolean playerSwitched; //local variable used to indicate if the turn has just been switched (7 was the last number rolled)
+    private boolean playerSwitched; //local variable used to indicate if the turn has just been switched (7 was the last number rolled)
     //if false > a new roll has been made
     //true > we're still on the 7 from last time
 
