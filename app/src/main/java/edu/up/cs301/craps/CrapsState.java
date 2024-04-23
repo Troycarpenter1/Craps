@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import java.util.Random;
 
 import edu.up.cs301.GameFramework.infoMessage.GameState;
+import edu.up.cs301.GameFramework.players.GameComputerPlayer;
+import edu.up.cs301.GameFramework.players.GameHumanPlayer;
 import edu.up.cs301.GameFramework.players.GamePlayer;
 
 /**
@@ -31,7 +33,7 @@ public class CrapsState extends GameState {
     //the players in the game, and their current net worth
     private int playerTurn; //right now 0 is human, 1 is comp player
     private double funds[] = new double[2];
-    private boolean ready [] = new boolean[2];
+    private boolean ready[] = new boolean[2];
 
     //x controls player, y controls bet
     private Bet[][] bets = new Bet[2][23];
@@ -51,24 +53,19 @@ public class CrapsState extends GameState {
     //ctor
     public CrapsState() {
         this.playerTurn = 0;
-        this.funds[0] = 1000.00;
-        this.funds[1] = 1000.00;
-        this.ready[0] = false;
-        this.ready[1] = false; //TODO: please refer here if there are issues w human betting - R
         this.setDice(0, 0);
         this.offOn = false;
         this.playerSwitched = false;
         this.firstDieShot = 0;
-
         // iterates through a master 2d array and makes all bets for each player
         for (int p = 0; p < bets.length; p++) { // iterates through number of players
+            this.funds[p] = 1000; // initializes all players funds
+            this.ready[p] = false; // initializes all players ready status
             for (int b = 0; b < bets[p].length; b++) { // iterates through all bet IDs
                 this.bets[p][b] = new Bet();
                 //this.bets[p][b] = new Bet(0, 1.0, b);
             }
         }
-
-
     }
 
     //copy constructor, currently is deep since no objects are used as variables atm
@@ -101,7 +98,9 @@ public class CrapsState extends GameState {
         return bets[playerId][betId];
     }
 
-    public double getPlayerFunds(int playerId){return funds[playerId];}
+    public double getPlayerFunds(int playerId) {
+        return funds[playerId];
+    }
 
     public int getDie1CurrVal() {
         return this.die1CurrVal;
@@ -123,7 +122,9 @@ public class CrapsState extends GameState {
         return this.playerSwitched;
     }
 
-    public boolean getPlayerReady(int playerId){return this.ready[playerId];}
+    public boolean getPlayerReady(int playerId) {
+        return this.ready[playerId];
+    }
 
     public boolean isOffOn() {
         return offOn;
@@ -158,15 +159,49 @@ public class CrapsState extends GameState {
         this.funds[playerId] = playerFunds;
     }
 
-    //tells the tale of the game
+    /**
+     * toString
+     * Creates the string value of ALL of the information this class stores
+     * @return the tale of the game
+     */
     @Override
     public String toString() {
-        return "Player 0 has " + this.funds[0] + "$, and Player 1 has " + this.funds[1] +
-                "$. The current dice are " + this.die1CurrVal + " and " + this.die2CurrVal;
+        String player0 = this.toString(0);
+        String player1 = this.toString(1);
+        String gameON = this.offOn ? "ON" : "OFF";
+        String gameStats = "The game is " + gameON + " The current dice are " + this.die1CurrVal + " and " + this.die2CurrVal
+                + " which total to " + this.dieTotal + " The first dice roll of this shooter was " + this.firstDieShot;
+        String gameStory = gameStats + "\nAll Player Stats: \n" + player0 + "\n" + player1;
+        return gameStory.trim(); //snip, snip
     }
 
-    //Actions.txt checkers
-    //see header comment for omitted methods
+    /**
+     * toString
+     * Creates all of the information the game has on a specified player id
+     *
+     * @param id the player that is being reported into a string
+     * @return the string value of the information of a given player
+     */
+    public String toString(int id) {
+        //creating helpful string to be concat with the final string that will be returned
+        String readyOrNot = this.ready[id] ? "READY" : "NOT READY";
+        String betString = "";
+        //iterates through the strings of all of the player of this id's bets and adds them to the player string
+        for (int b = 0; b < this.bets[id].length; b++) {
+            if (this.bets[id][b].getID() != 0) { //checks if this bet in the array has any valuable data
+                betString = betString + ("\t" + this.bets[id][b].toString() + ", \n");
+            }
+        }
+        if (betString.length() < 4) {
+            betString = "NO BETS PLACED";
+        }
+        return "Player" + id + " is " + readyOrNot + " has $" + this.funds[id] + " and has the following bets:\n" + betString;
+    }
+
+    /*
+     * Actions.txt checkers
+     * see header comment for omitted methods
+     */
 
     /**
      * called when a player wants to roll
@@ -228,16 +263,14 @@ public class CrapsState extends GameState {
 
         //TODO automatically ready the computer after they bet
         //if the sender was the human player
-        if (action.getPlayer() instanceof CrapsHumanPlayer){
+        if (action.getPlayer() instanceof CrapsHumanPlayer) {
             //if the player Id is 1
-            if (action.playerId ==1) {
+            if (action.playerId == 1) {
                 this.ready[0] = true;  //set the computer to true
-            }
-            else{
+            } else {
                 this.ready[1] = true;
             }
-        }
-        else{
+        } else {
             this.ready[action.playerId] = true;
         }
 
@@ -266,7 +299,7 @@ public class CrapsState extends GameState {
         //add bet amount back to human's funds
 
         //Log.d("die", "added $" + bets[action.playerId][action.betID].getAmount() +
-               // "to player's account.");
+        // "to player's account.");
         this.setPlayerFunds(action.playerId, this.funds[action.playerId] +
                 bets[action.playerId][action.betID].getAmount());
 
@@ -399,4 +432,5 @@ public class CrapsState extends GameState {
 
         return true;
     }
+
 }
