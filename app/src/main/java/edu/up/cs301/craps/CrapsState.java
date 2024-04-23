@@ -356,13 +356,13 @@ public class CrapsState extends GameState {
         for (int p = 0; p < bets.length; p++) { // iterates through number of players
             for (int b = 0; b < bets[p].length; b++) { // iterates through all bet IDs
                 //checks if this bet should pay out at all
-                if (this.bets[p][b].isOneTimeBet() == oneTimeBet) {
+                if ((this.bets[p][b].isOneTimeBet() == oneTimeBet) || oneTimeBet) {
                     // calculates how much money the player has won
                     int newFunds = this.funds[action.playerId] + this.bets[p][b].payoutBet(this.die1CurrVal, this.die2CurrVal, this.dieTotal, this.firstDieShot);
                     // updates the players funds
                     this.setPlayerFunds(action.playerId, newFunds);
                     //removes the bets that player has actually made
-                    if (this.bets[p][b].getID() != 0 && oneTimeBet) {
+                    if (oneTimeBet) {
                         this.bets[p][b].setBetAmount(0); //resets the bet amount
                     }
                 }
