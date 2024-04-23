@@ -29,6 +29,9 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
  */
 public class CrapsState extends GameState {
 
+    //for network play
+    private static final long serialVersionUID = 1;
+
     //the players in the game, their current net worth, and ready status
     private int playerTurn;
     private int funds[] = new int[2];

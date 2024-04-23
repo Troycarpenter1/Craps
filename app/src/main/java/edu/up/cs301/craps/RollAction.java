@@ -15,6 +15,8 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
 
 public class RollAction extends GameAction {
 
+    private static final long serialVersionUID = 5;
+
     public boolean isShooter;
     public int playerId;
 
