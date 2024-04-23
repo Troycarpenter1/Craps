@@ -14,7 +14,11 @@ import android.util.Log;
  * 
  * @author Steven R. Vegdahl
  * @author Andrew M. Nuxoll
- * @version July 2013
+ * @author Wes H.       Last Revision: 4/22/2024
+ * @author Troy C.      Last Revision: TBD
+ * @author Rowena A.    Last Revision: TBD
+ * @author Sydney D.    Last Revision: TBD
+ * @version 4/22/2024
  */
 public class CrapsLocalGame extends LocalGame {
 

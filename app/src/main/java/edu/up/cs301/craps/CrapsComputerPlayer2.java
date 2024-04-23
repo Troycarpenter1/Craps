@@ -122,17 +122,17 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
         this.guiHandler = new Handler();
 
         // Load the layout resource for the our GUI's configuration
-        activityForGui.setContentView(R.layout.counter_human_player);
+        activityForGui.setContentView(R.layout.craps_table);
 
-        // remember who our text view is, for updating the counter value
-        this.counterValueTextView =
-                (TextView) activityForGui.findViewById(R.id.counterValueTextView);
-
-        // disable the buttons, since they will have no effect anyway
-        Button plusButton = (Button) activityForGui.findViewById(R.id.plusButton);
-        plusButton.setEnabled(false);
-        Button minusButton = (Button) activityForGui.findViewById(R.id.minusButton);
-        minusButton.setEnabled(false);
+//        // remember who our text view is, for updating the counter value
+//        this.counterValueTextView =
+//                (TextView) activityForGui.findViewById(R.id.counterValueTextView);
+//
+//        // disable the buttons, since they will have no effect anyway
+//        Button plusButton = (Button) activityForGui.findViewById(R.id.plusButton);
+//        plusButton.setEnabled(false);
+//        Button minusButton = (Button) activityForGui.findViewById(R.id.minusButton);
+//        minusButton.setEnabled(false);
 
         // if the state is non=null, update the display
         if (currentGameState != null) {
