@@ -156,7 +156,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         //checks all of the buttons that could be pressed
         if (but.equals(myActivity.findViewById(R.id.ready))) { //checks if the button pressed is the ready button
             //removed isReady here
-            Ready2CrapAction P1Ready = new Ready2CrapAction(this, !this.isReady, this.playerId);
+            isReady = !isReady;
+            Ready2CrapAction P1Ready = new Ready2CrapAction(this, this.isReady, this.playerId);
             game.sendAction(P1Ready);
         } else if (myActivity.findViewById(R.id.shoot) == button) { // checks shoot button
 
