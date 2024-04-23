@@ -37,10 +37,10 @@ public class Bet {
     //TODO: pass/dont/come/field should all payout x1
     public static final double[] ALL_BET_PAYOUTS = new double[]{
             /* No Bet: */        0.0,
-            /* Pass Line Bet: */ 1.2,
-            /* Dont Pass Bet: */ 1.2,
-            /* Come Bet: */      1.2,
-            /* Field Bet: */     1.2,
+            /* Pass Line Bet: */ 1.0,
+            /* Dont Pass Bet: */ 1.0,
+            /* Come Bet: */      1.0,
+            /* Field Bet: */     1.0,
             /* 4: */             9.0/5.0,
             /* 5: */             7.0/5.0,
             /* 6: */             7.0/6.0,
