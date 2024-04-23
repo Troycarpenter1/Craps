@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Random;
 
 /**
  * A computer-version of a counter-player.  Since this is such a simple game,
@@ -75,6 +76,7 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
             // if we indeed have a counter-state, update the GUI
             currentGameState = (CrapsState) info;
             //updateDisplay();
+
         }
     }
 
