@@ -101,7 +101,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      */
     public void bet(View button, int id) {
         Button but = (Button) button;
-        int prevAmountBet;
 
         Log.d("die", "amountBet: " + amountBet);
         if (amountBet > 0.0) {
@@ -122,7 +121,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             //if the bet at the location ISN'T null
             //if () {
                 //set the color if we place a bet (only if it actually placed)
-                but.setTextColor(Color.parseColor("#FFA500"));
+                //but.setTextColor(Color.parseColor("#FFA500"));
             //}
 
 
@@ -411,22 +410,22 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // update our state; then update the display
         this.state = (CrapsState) info;
 
-        for (int i = 0; i < 22; i++){
+        //iterate through the bet array and highlight all buttons for bets placed
+        for (int i = 0; i < 23; i++){
             Bet thisBet = state.getBet(this.playerId, i);
             //if the name isn't no bet
             if (thisBet.getName().equals("NO BET") == false){
 
+                //get all the the buttons associated with bet at index
+                List <Integer> buttons = buttontable.get(i);
+                //iterate through all the buttons in the button table and find all IDs
+                for (int j = 0; j < buttons.size(); j ++){
+                    Integer buttonId = buttons.get(j); //get the ID associated with the spot in the array
+                    Button button = myActivity.findViewById(buttonId);
+                    button.setTextColor(Color.parseColor("#FFA500"));
+                }
             }
         }
-
-        /*
-        Log.d("bet", "COME ID: " + R.id.come);
-        Log.d("bet", "Get COME index: " + table.get(R.id.come));
-        int index = table.get(R.id.come);
-        Log.d("bet", "Player ID" + this.playerId);
-        Log.d("bet", "Get bet in bet array at come index: " + state.getBet(this.playerId, (int)index));
-        Log.d("bet", "Get bet in bet array at 3 index: " + state.getBet(this.playerId, 3));
-        */
 
         //change the drawable for the dice
         ImageView dice1 = myActivity.findViewById(R.id.dice1);
