@@ -23,7 +23,6 @@ import edu.up.cs301.GameFramework.utilities.Tickable;
  * @version April 2024
  */
 public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable {
-
     //instance variables
     //private GameMainActivity myActivity; //no usages but might be important idk - W
     private int playerMoney;// my money
@@ -32,6 +31,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     private int playerId;
 
     /**
+     * CrapsComputerPlayer1
      * Constructor for objects of class CounterComputerPlayer1
      *
      * @param name the player's name
@@ -49,8 +49,9 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         this.amountBet = 200;
     }
 
-    /** roll
-     *  roll the dice on the game-board
+    /**
+     * roll
+     * roll the dice on the game-board
      */
     public void roll() {
 
@@ -61,23 +62,23 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 
     }
 
-    /** ready
-     *  tells the game I'm (comp player) is ready
+    /**
+     * ready
+     * tells the game I'm (comp player) is ready
      */
-    public void ready(){
+    public void ready() {
         //create a ready action then send it
         Ready2CrapAction ready = new Ready2CrapAction(this, true, this.playerId);
         game.sendAction(ready);
     }
 
 
-    //place a random set of bets on a turn, then ready up
     /**
      * takeTurn
      * called when it's time to take bets (shooter has rolled, or everyone
      * is ready and they are the shooter)
      * shoots if they're the shooter, then
-     * places a random number (between 0-5) of random bets
+     * places a bet on the pass line
      */
     public void takeTurn() {
         // roll the dice
@@ -85,21 +86,21 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         roll();
         //state will unready both players after roll
 
-		/* Sydney commented this out for testing the changing turns
-		 *
+        /* Sydney commented this out for testing the changing turns
+         *
          * //make a random amount of bets
-		 * Random rand = new Random();
-		 * int numBets = rand.nextInt(5); //make 0 to 4 bets
-		 * for (int i = 0; i < numBets; i++){
-		 *	bet();
-		 *}
-		 */
+         * Random rand = new Random();
+         * int numBets = rand.nextInt(5); //make 0 to 4 bets
+         * for (int i = 0; i < numBets; i++){
+         *	bet();
+         *}
+         */
         Log.d("computer", "Computer Money: $" + this.playerMoney);
     }
 
     /**
      * bet
-     * places a bet of a semi-random amount on a random spot
+     * places a bet of a 100 on pass line
      * adds the bet to the local bet array
      */
     public void placeBet() {
@@ -109,12 +110,12 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
          */
 
         // look at how much money I have according to my copy of the game state
-            playerMoney = crapsState.getPlayerFunds(this.playerId);
+        playerMoney = crapsState.getPlayerFunds(this.playerId);
 
         // if I somehow have less than $100 to spend, then bet all the money I have left
-        if (playerMoney < 100){
+        if (playerMoney < 100) {
             this.amountBet = playerMoney;
-        }else{
+        } else {
             // Set my amount to bet to $100
             this.amountBet = 100;
         }
@@ -126,6 +127,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     }
 
     /**
+     * receiveInfo
      * callback method--game's state has changed
      *
      * @param info the information (presumably containing the game's state)
@@ -157,14 +159,12 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             }
             //then roll
             roll();
-        }
-        else {
+        } else {
             //if I'm not ready, then send a ready action
-            if (crapsState.getPlayerReady(this.playerId)){
+            if (crapsState.getPlayerReady(this.playerId)) {
                 System.out.println("COMPUTER: already ready.");
 
-            }
-            else{
+            } else {
                 ready();
             }
         }
@@ -184,9 +184,14 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         game.sendAction(new CrapsMoveAction(this, move));
     }
 
-    public void setPlayerId(int playerId){this.playerId = playerId;}
+    /**
+     * setPlayerId
+     * setter method
+     *
+     * @param playerId
+     */
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
 
 }
-
-
-
