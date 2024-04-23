@@ -34,8 +34,7 @@ public class Bet {
             "Pair of 6s", "5 & 6", "CRAPS"
     };
     //list of all payouts of all bets
-    //todo: add all the payouts
-
+    //TODO: pass/dont/come/field should all payout x1
     public static final double[] ALL_BET_PAYOUTS = new double[]{
             /* No Bet: */        0.0,
             /* Pass Line Bet: */ 1.2,
@@ -273,7 +272,7 @@ public class Bet {
      */
     @Override
     public String toString() {
-        return this.name + " Bet ID of: " + this.ID + " with $" + this.amount + " and Pays out: " + this.payout;
+        return this.name + " ID of: " + this.ID + " with $" + this.amount + " and Pays out: " + this.payout;
     }
 
 }

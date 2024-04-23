@@ -153,7 +153,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      * @param button the button that was clicked
      */
     public void onClick(View button) {
-
         Button but = (Button) button;
         // if we are not yet connected to a game, ignore
         if (game == null) return;
@@ -320,6 +319,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             this.bet(button, 22);
         }
 
+        //for testing purposes display the state of the game as a string
+        //TODO instead of logging this info make the "state.toString(other player's id)" display to the player
+        Log.d("string",state.toString());
 
     }// onClick
 
