@@ -413,18 +413,32 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         //iterate through the bet array and highlight all buttons for bets placed
         for (int i = 0; i < 23; i++){
             Bet thisBet = state.getBet(this.playerId, i);
-            //if the name isn't no bet
-            if (thisBet.getName().equals("NO BET") == false){
 
+            //if the name isn't no bet (a bet exists)
+            //if (thisBet.getName().equals("NO BET") == false){
                 //get all the the buttons associated with bet at index
                 List <Integer> buttons = buttontable.get(i);
                 //iterate through all the buttons in the button table and find all IDs
-                for (int j = 0; j < buttons.size(); j ++){
+
+            //at the very beginning of the game, sometimes the button is null, and that causes a crash
+            if (buttons!= null) {
+                for (int j = 0; j < buttons.size(); j++) {
                     Integer buttonId = buttons.get(j); //get the ID associated with the spot in the array
                     Button button = myActivity.findViewById(buttonId);
-                    button.setTextColor(Color.parseColor("#FFA500"));
+
+                    //if there is a bet here
+                    if (thisBet.getName().equals("NO BET") == false) {
+                        button.setTextColor(Color.parseColor("#FFA500"));
+                    } else {
+
+                        //revert to original color
+                    }
                 }
             }
+
+            //}
+            //if there's no bet there
+
         }
 
         //change the drawable for the dice
@@ -508,7 +522,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         // remember the activity
         this.myActivity = activity;
-
 
         activity.setContentView(R.layout.craps_table);
         //makes the shooter button work
@@ -655,7 +668,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         buttontable.put(1, passlist);
 
         List<Integer> dontpasslist = new ArrayList<Integer>();
-        dontpasslist.add(R.id.passLine2);
+        dontpasslist.add(R.id.dont_pass);
+        dontpasslist.add(R.id.donPass1);
         buttontable.put(2, dontpasslist);
 
         List<Integer> comelist = new ArrayList<Integer>();
@@ -687,7 +701,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         buttontable.put(9, place9list);
 
         List<Integer> place10list = new ArrayList<Integer>();
-        place9list.add(R.id.place10);
+        place10list.add(R.id.place10);
         buttontable.put(10, place10list);
 
         List<Integer> clist = new ArrayList<Integer>();
@@ -701,17 +715,17 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         buttontable.put(11, clist);
 
         List<Integer> elist = new ArrayList<Integer>();
-        clist.add(R.id.eButton1);
-        clist.add(R.id.eButton2);
-        clist.add(R.id.eButton3);
-        clist.add(R.id.eButton4);
-        clist.add(R.id.eButton5);
-        clist.add(R.id.eButton6);
-        clist.add(R.id.eButton7);
+        elist.add(R.id.eButton1);
+        elist.add(R.id.eButton2);
+        elist.add(R.id.eButton3);
+        elist.add(R.id.eButton4);
+        elist.add(R.id.eButton5);
+        elist.add(R.id.eButton6);
+        elist.add(R.id.eButton7);
         buttontable.put(12, elist);
 
         List<Integer> sevenslist = new ArrayList<Integer>();
-        place9list.add(R.id.sevensBet);
+        sevenslist.add(R.id.sevensBet);
         buttontable.put(13, sevenslist);
 
         List<Integer> pair2slist = new ArrayList<Integer>();
