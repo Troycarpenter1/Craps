@@ -90,16 +90,8 @@ public class Bet {
         return this.amount;
     }
 
-    public double getPayout() {
-        return this.payout;
-    }
-
     public int getID() {
         return this.ID;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     //set bet amount

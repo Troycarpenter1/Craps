@@ -450,8 +450,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if(state.getFirstRoll()==0){
             onOff.setImageDrawable(myActivity.getDrawable(R.drawable.off));
         }
-        //
-        //}
 
 
         /*
@@ -486,9 +484,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         }
 
         myMoney.setText("$" + state.getPlayerFunds(this.playerId));
-
-        //todo troy killed this. I'm worried
-        //updateDisplay();
 
     } //receiveInfo
 

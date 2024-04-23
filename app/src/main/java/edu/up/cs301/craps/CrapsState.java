@@ -68,7 +68,6 @@ public class CrapsState extends GameState {
             this.ready[p] = false; // initializes all players ready status
             for (int b = 0; b < bets[p].length; b++) { // iterates through all bet IDs
                 this.bets[p][b] = new Bet();
-                //this.bets[p][b] = new Bet(0, 1.0, b);
             }
         }
     }
@@ -81,9 +80,7 @@ public class CrapsState extends GameState {
      */
     public CrapsState(CrapsState crap) {
         this.playerTurn = crap.playerTurn;
-        this.dieTotal = crap.dieTotal;
-        this.die1CurrVal = crap.die1CurrVal;
-        this.die2CurrVal = crap.die2CurrVal;
+        this.setDice(crap.die1CurrVal, crap.die2CurrVal);
         this.offOn = crap.offOn;
         this.playerSwitched = crap.playerSwitched;
         this.firstDieShot = crap.firstDieShot;
@@ -105,18 +102,8 @@ public class CrapsState extends GameState {
         return this.playerTurn;
     }
 
-    public boolean getIsFirstRoll(){
-        return this.isFirstRoll;
-    }
-    public int getFirstRoll(){
+    public int getFirstRoll() {
         return this.firstDieShot;
-    }
-    public boolean getOffOn(){
-        return offOn;
-    }
-
-    public Bet getBet(int playerId, int betId) {
-        return bets[playerId][betId];
     }
 
     public int getPlayerFunds(int playerId) {
@@ -131,20 +118,8 @@ public class CrapsState extends GameState {
         return this.die2CurrVal;
     }
 
-    public int getDieTotal() {
-        return this.dieTotal;
-    }
-
-    public int getFirstDieShot() {
-        return this.firstDieShot;
-    }
-
     public boolean getPlayerReady(int playerId) {
         return this.ready[playerId];
-    }
-
-    public boolean isOffOn() {
-        return offOn;
     }
 
     //setters
@@ -401,29 +376,13 @@ public class CrapsState extends GameState {
         // iterates through a master 2d array and pays all bets to each player
         for (int p = 0; p < bets.length; p++) { // iterates through number of players
             for (int b = 0; b < bets[p].length; b++) { // iterates through all bet IDs
-                if (p == 0) { //updates human player money
-                    this.setPlayerFunds(action.playerId,
-                            (int) this.funds[action.playerId] + this.bets[p][b].payoutBet(this.die1CurrVal,
-                                    this.die2CurrVal, this.dieTotal, this.firstDieShot)
-                    );
-                    //only prints out the bets that player has actually made
-                    if (this.bets[p][b].getID() != 0) {
-                        Log.d("funds", "human money: " + this.funds[action.playerId]);
-                        Log.d("funds", "bet: " + this.bets[p][b].toString());
-                        this.bets[p][b].setBetAmount(0); //resets the bet amount
-                    }
-                    //TODO put this in a separate method??
-                } else { //update computer money
-                    this.setPlayerFunds(action.playerId,
-                            (int) this.funds[action.playerId] + this.bets[p][b].payoutBet(this.die1CurrVal,
-                                    this.die2CurrVal, this.dieTotal, this.firstDieShot)
-                    );
-                    //only prints out the bets that player has actually made
-                    if (this.bets[p][b].getID() != 0) {
-                        Log.d("funds", "human money: " + this.funds[action.playerId]);
-                        Log.d("funds", "bet: " + this.bets[p][b].toString());
-                        this.bets[p][b].setBetAmount(0); //resets the bet amount
-                    }
+                this.setPlayerFunds(action.playerId,
+                        (int) this.funds[action.playerId] + this.bets[p][b].payoutBet(this.die1CurrVal,
+                                this.die2CurrVal, this.dieTotal, this.firstDieShot)
+                );
+                //only prints out the bets that player has actually made
+                if (this.bets[p][b].getID() != 0) {
+                    this.bets[p][b].setBetAmount(0); //resets the bet amount
                 }
             }
         }
@@ -464,7 +423,7 @@ public class CrapsState extends GameState {
             Log.d("die", "Switching to player: " + this.playerTurn);
             //set playerSwitched to true since the shooter lost
             playerSwitched = true;
-            this.firstDieShot=0;
+            this.firstDieShot = 0;
         }
 
         System.out.println("STATE: after roll, player turn: " + this.getPlayerTurn());
