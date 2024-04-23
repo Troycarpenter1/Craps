@@ -291,16 +291,16 @@ public class CrapsState extends GameState {
 
         //TODO automatically ready the computer after they bet
         //if the sender was the human player
-        if (action.getPlayer() instanceof CrapsHumanPlayer) {
-            //if the player Id is 1
-            if (action.playerId == 1) {
-                this.ready[0] = true;  //set the computer to true
-            } else {
-                this.ready[1] = true;
-            }
-        } else {
-            this.ready[action.playerId] = true;
-        }
+//        if (action.getPlayer() instanceof CrapsHumanPlayer) {
+//            //if the player Id is 1
+////            if (action.playerId == 1) {
+////                this.ready[0] = true;  //set the computer to true
+////            } else {
+////                this.ready[1] = true;
+////            }
+//        } else {
+//            this.ready[action.playerId] = true;
+//        }
 
         //note that we will eventually initialize all bets in the array to have
         //the correct IDs and names before the game is started.
