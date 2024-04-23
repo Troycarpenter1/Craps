@@ -23,6 +23,7 @@ import androidx.annotation.ColorInt;
 
 import androidx.core.content.ContextCompat;
 
+import java.util.Hashtable;
 import java.util.Random;
 
 /**
@@ -104,16 +105,68 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         Button but = (Button) button;
         int prevAmountBet;
 
+        //TODO there's gotta be a better place to put this
+        Hashtable<Integer, Integer> table = new Hashtable<>();
+        table.put(R.id.passLine1, 1);
+        table.put(R.id.passLine2, 1);
+        table.put(R.id.dont_pass, 2);
+        table.put(R.id.come, 3);
+        table.put(R.id.field, 4);
+        table.put(R.id.place4, 5);
+        table.put(R.id.place5, 6);
+        table.put(R.id.place6, 7);
+        table.put(R.id.place8, 8);
+        table.put(R.id.place9, 9);
+        table.put(R.id.place10, 10);
+        table.put(R.id.cButton1, 10);
+        table.put(R.id.cButton2, 10);
+        table.put(R.id.cButton3, 10);
+        table.put(R.id.cButton4, 10);
+        table.put(R.id.cButton5, 10);
+        table.put(R.id.cButton6, 10);
+        table.put(R.id.cButton7, 10);
+        table.put(R.id.cButton7, 10);
+        table.put(R.id.eButton1, 11);
+        table.put(R.id.eButton2, 11);
+        table.put(R.id.eButton3, 11);
+        table.put(R.id.eButton4, 11);
+        table.put(R.id.eButton5, 11);
+        table.put(R.id.eButton6, 11);
+        table.put(R.id.eButton7, 11);
+        table.put(R.id.sevensBet, 12);
+        table.put(R.id.pair2s, 13);
+        table.put(R.id.pair3s, 14);
+        table.put(R.id.pair4s, 15);
+        table.put(R.id.pair4s, 16);
+        table.put(R.id.pair5s, 17);
+        table.put(R.id.twoAndOne, 18);
+        table.put(R.id.pair1s, 19);
+        table.put(R.id.pair6s, 20);
+        table.put(R.id.fiveAndSix, 21);
+        table.put(R.id.craps, 21);
+
         Log.d("die", "amountBet: " + amountBet);
         if (amountBet > 0.0) {
-            //  if (state.getBet(0, id).getAmount() == 0.0) {
-            but.setTextColor(Color.parseColor("#FFA500"));
+
             //sends the bet action to the state
             PlaceBetAction pba = new PlaceBetAction(this, this.playerId, id,
                     amountBet);
             game.sendAction(pba);
 
-            Log.d("die", "trying to place bet");
+            Log.d("die", "HumanPlayer: trying to place bet");
+
+            //bet corresponding to the button that was just pressed
+
+
+            Bet thisBet = state.getBet(this.playerId, table.get(button.getId()));
+            Log.d("bet", "this bet's name is " + thisBet.getName());
+
+            //if the bet at the location ISN'T null
+            //if () {
+                //set the color if we place a bet (only if it actually placed)
+                but.setTextColor(Color.parseColor("#FFA500"));
+            //}
+
 
             // }
         } else {
@@ -125,6 +178,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             game.sendAction(rba);
 
             //playerMoney.setText("$" + state.getPlayer0Funds());
+
+
+            System.out.println(Bet.ALL_BET_NAMES); //get all the bet names
 
             //change the color for removing the bet
             if (but.equals(myActivity.findViewById(R.id.come))) {
