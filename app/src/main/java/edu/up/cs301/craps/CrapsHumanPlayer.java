@@ -78,12 +78,11 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         return myActivity.findViewById(R.id.top_test_gui_layout);
     }
 
-/*
-    protected void updateDisplay(String displayText) {
-        testResultsTextView.setText(testResultsTextView.getText() + "\n" + displayText, TextView.BufferType.NORMAL);
-    }
-
- */
+    /*
+        protected void updateDisplay(String displayText) {
+            testResultsTextView.setText(testResultsTextView.getText() + "\n" + displayText, TextView.BufferType.NORMAL);
+        }
+     */
 
     protected void updateDisplay(String displayText, int id) {
         testResultsTextView.setText("", TextView.BufferType.NORMAL);
@@ -91,8 +90,11 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
 
     /**
-     * @param button
-     * @param id
+     * bet
+     * helper method for betting
+     *
+     * @param button the button that was clicked to bet
+     * @param id the id of the bet in the bet class
      */
     public void bet(View button, int id) {
         Button but = (Button) button;
@@ -137,9 +139,10 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
                 but.setTextColor(Color.parseColor("#FFFFFF")); //sets the button to white
             }
         }
-    }
+    } //bet
 
     /**
+     * onClick
      * This method gets called when the user clicks a button. It
      * creates a new action to return to the parent activity.The
      * action type depends on the respective button clicked.
@@ -315,11 +318,12 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         //for testing purposes display the state of the game as a string
         //TODO instead of logging this info make the "state.toString(other player's id)" display to the player
-        Log.d("string",state.toString());
+        Log.d("string", state.toString());
 
     }// onClick
 
     /**
+     * onProgressChanged
      * This method gets called each time the money seekbar is changed
      *
      * @param seekBar  The SeekBar whose progress has changed
@@ -354,6 +358,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     }
 
     /**
+     * onCheckedChanged
      * This method gets called each time a radio button thing happens
      *
      * @param group     the group in which the checked radio button has changed
@@ -378,6 +383,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     }
 
     /**
+     * receiveInfo
      * callback method when we get a message (e.g., from the game)
      *
      * @param info the message
@@ -389,7 +395,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         // update our state; then update the display
         this.state = (CrapsState) info;
-
 
 
         //change the drawable
@@ -461,9 +466,10 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         //todo troy killed this. I'm worried
         //updateDisplay();
 
-    }
+    } //receiveInfo
 
     /**
+     * setAsGui
      * callback method--our game has been chosen/rechosen to be the GUI,
      * called from the GUI thread
      *
@@ -614,7 +620,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
             receiveInfo(state);
         }
-    }
+    } //setAsGui
 
     /**
      * getters & setters
@@ -623,11 +629,13 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         return amountBet;
     }
 
-    public void setPlayerId(int playerId){this.playerId = playerId;}
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
 
 
     /**
-     * Unused methods (here to satisfy implementing OnSeekbarChangedListener)
+     * Unused methods  to satisfy implementing all of the listeners in this class
      */
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
@@ -636,6 +644,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+
     }
 
     @Override

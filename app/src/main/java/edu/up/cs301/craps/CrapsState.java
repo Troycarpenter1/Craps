@@ -27,11 +27,10 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
  * @author Sydney Dean
  * @version April 2024
  */
-
 public class CrapsState extends GameState {
 
-    //the players in the game, and their current net worth
-    private int playerTurn; //right now 0 is human, 1 is comp player
+    //the players in the game, their current net worth, and ready status
+    private int playerTurn;
     private int funds[] = new int[2];
     private boolean ready[] = new boolean[2];
 
@@ -52,7 +51,10 @@ public class CrapsState extends GameState {
     //if false > a new roll has been made
     //true > we're still on the 7 from last time
 
-    //ctor
+    /**
+     * CrapsState
+     * ctor
+     */
     public CrapsState() {
         this.playerTurn = 0;
         this.setDice(0, 0);
@@ -70,34 +72,36 @@ public class CrapsState extends GameState {
         }
     }
 
-    //copy constructor, currently is deep since no objects are used as variables atm
+    /**
+     * CrapsState
+     * copy constructor, currently is deep since no objects are used as variables
+     *
+     * @param crap the other crap we want to copy
+     */
     public CrapsState(CrapsState crap) {
         this.playerTurn = crap.playerTurn;
         this.dieTotal = crap.dieTotal;
         this.die1CurrVal = crap.die1CurrVal;
         this.die2CurrVal = crap.die2CurrVal;
-        this.funds[0] = crap.funds[0];
-        this.funds[1] = crap.funds[1];
-        this.ready[0] = crap.ready[0];
-        this.ready[1] = crap.ready[1];
         this.offOn = crap.offOn;
         this.playerSwitched = crap.playerSwitched;
         this.firstDieShot = crap.firstDieShot;
-        //uses the copy constructor of the bet class
+        //iterates through all arrays of player data (mainly bets)
         for (int p = 0; p < bets.length; p++) {
+            this.funds[p] = crap.funds[p]; //copies all player funds
+            this.ready[p] = crap.ready[p]; //copies all players ready status
+            //uses the copy constructor of the bet class for all bets
             for (int b = 0; b < bets[p].length; b++) {
                 this.bets[p][b] = new Bet(crap.bets[p][b]);
             }
         }
     }
 
-    //getters for instance variables
+    /*
+     * getter methods for instance variables
+     */
     public int getPlayerTurn() {
         return this.playerTurn;
-    }
-
-    public Bet getBet(int playerId, int betId) {
-        return bets[playerId][betId];
     }
 
     public int getPlayerFunds(int playerId) {
@@ -120,10 +124,6 @@ public class CrapsState extends GameState {
         return this.firstDieShot;
     }
 
-    public boolean getPlayerSwitched() {
-        return this.playerSwitched;
-    }
-
     public boolean getPlayerReady(int playerId) {
         return this.ready[playerId];
     }
@@ -136,10 +136,10 @@ public class CrapsState extends GameState {
 
     /**
      * setDice
-     * sets dice and finds sum
+     * sets both dice sets the total after it finds the sum
      *
-     * @param die1Val
-     * @param die2Val
+     * @param die1Val the first dice to set
+     * @param die2Val the other dice to set
      */
     public void setDice(int die1Val, int die2Val) {
         this.die1CurrVal = die1Val;
@@ -157,6 +157,13 @@ public class CrapsState extends GameState {
         Log.d("die", "Player turn just switched to:" + this.playerTurn);
     }
 
+
+    /**
+     * setPlayerFunds
+     *
+     * @param playerId    the id of the player we are changing their money
+     * @param playerFunds the new funds to update
+     */
     public void setPlayerFunds(int playerId, int playerFunds) {
         this.funds[playerId] = playerFunds;
     }
@@ -164,6 +171,7 @@ public class CrapsState extends GameState {
     /**
      * toString
      * Creates the string value of ALL of the information this class stores
+     *
      * @return the tale of the game
      */
     @Override
@@ -226,8 +234,8 @@ public class CrapsState extends GameState {
      * changes the bet in the GameState bet array
      * if sender is ready, they can't bet
      *
-     * @param action
-     * @return
+     * @param action the place bet action that is being passed into the craps game state
+     * @return boolean value that dictates if this action is a legal move
      */
     public boolean placeBet(PlaceBetAction action) {
         //Is it the player's turn?
@@ -281,15 +289,15 @@ public class CrapsState extends GameState {
         Log.d("die", "PLACED BET bet ID: " + action.betID + ", betAmount: " + action.betAmount);
 
         return true;
-    }
+    }//placeBet
 
     /**
      * removeBet
      * checks to see if there is a bet to remove
      * changes the bet in the GameState bet array
      *
-     * @param action
-     * @return
+     * @param action the remove bet action that is being passed to the craps game state
+     * @return boolean value that dictates if this action is a legal move
      */
     public boolean removeBet(RemoveBetAction action) {
 
@@ -315,15 +323,14 @@ public class CrapsState extends GameState {
 
 
         return true;
-    }
+    }//removeBet
 
     /**
      * ready
-     * <p>
      * set player's ready to what is sent in the action
      *
-     * @param action
-     * @return
+     * @param action the Ready2CrapAction action that is being passed to the craps game state
+     * @return boolean value that dictates if this action is a legal move
      */
     public boolean ready(Ready2CrapAction action) {
         //what conditions should a person ready under...
@@ -343,17 +350,15 @@ public class CrapsState extends GameState {
         System.out.println("STATE: Player 1 ready:" + this.ready[1]);
 
         return true;
-    }
+    }//Ready2CrapAction
 
     /**
      * roll
-     * <p>
      * if player is shooter they can roll
      *
-     * @param action
-     * @return NOTE: later on we might want to calculate roll in here instead - Troy
+     * @param action the roll action being passed to the craps game state
+     * @return boolean value that dictates if this action is a legal move
      */
-
     public boolean roll(RollAction action) {
 
         //checks if both players are ready
@@ -433,6 +438,6 @@ public class CrapsState extends GameState {
         System.out.println("STATE: after roll, player turn: " + this.getPlayerTurn());
 
         return true;
-    }
+    }//rollAction
 
 }

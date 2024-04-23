@@ -10,7 +10,7 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
  * @author Troy Carpenter
  * @author Sydney Dean
  * @author Rowena Archer
- * @version March 2024
+ * @version April 2024
  */
 
 public class RemoveBetAction extends GameAction {

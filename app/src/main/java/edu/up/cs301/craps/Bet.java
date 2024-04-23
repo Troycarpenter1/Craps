@@ -1,11 +1,11 @@
 package edu.up.cs301.craps;
 
 /**
- * @author Wes H.       Last Revision: 3/18/2024
+ * @author Wes H.       Last Revision: 4/22/2024
  * @author Troy C.      Last Revision: TBD
  * @author Rowena A.    Last Revision: TBD
  * @author Sydney D.    Last Revision: TBD
- * @version 3/18/2024
+ * @version 4/22/2024
  * <p>
  * Important notes for this version:
  * Completed:
