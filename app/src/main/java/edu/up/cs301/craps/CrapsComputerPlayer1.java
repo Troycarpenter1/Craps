@@ -20,21 +20,15 @@ import edu.up.cs301.GameFramework.utilities.Tickable;
  * @author Rowena Archer
  * @author Sydney Dean
  * @author Wes Helms
- * @version September 2013
+ * @version April 2024
  */
 public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable {
 
     //instance variables
-    private GameMainActivity myActivity;
-    private double playerMoney;// my money
-    private double amountBet;// amount I wants to bet
-    private boolean isShooter;// my shooter status
-    private boolean isReady; // my ready status
-    private int die1;
-    private int die2;
-    public boolean isHuman;
+    //private GameMainActivity myActivity; //no usages but might be important idk - W
+    private int playerMoney;// my money
+    private int amountBet;// amount I wants to bet
     CrapsState crapsState;
-
     private int playerId;
 
     /**
@@ -52,12 +46,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 
         //initialize instance variables
         this.playerMoney = 1000;
-        this.amountBet = 200.0;
-        this.isShooter = false;
-        this.isReady = false;
-        this.die1 = 0;
-        this.die2 = 0;
-        this.isHuman = false;
+        this.amountBet = 200;
     }
 
     /** roll
@@ -127,7 +116,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             this.amountBet = playerMoney;
         }else{
             // Set my amount to bet to $100
-            this.amountBet = 100.0;
+            this.amountBet = 100;
         }
 
         // bet on the pass line every time
@@ -194,13 +183,6 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         // send the move-action to the game
         game.sendAction(new CrapsMoveAction(this, move));
     }
-
-
-    public boolean getIsShooter() {
-        return isShooter;
-    }
-
-    public boolean getIsHuman(){return this.isHuman;}
 
     public void setPlayerId(int playerId){this.playerId = playerId;}
 

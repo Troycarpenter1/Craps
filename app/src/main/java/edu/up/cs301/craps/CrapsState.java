@@ -25,14 +25,14 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
  * @author Rowena Archer
  * @author Wes Helms
  * @author Sydney Dean
- * @version March 2024
+ * @version April 2024
  */
 
 public class CrapsState extends GameState {
 
     //the players in the game, and their current net worth
     private int playerTurn; //right now 0 is human, 1 is comp player
-    private double funds[] = new double[2];
+    private int funds[] = new int[2];
     private boolean ready[] = new boolean[2];
 
     //x controls player, y controls bet
@@ -43,6 +43,8 @@ public class CrapsState extends GameState {
     private int die2CurrVal;
     private int dieTotal;
     private int firstDieShot; //the total of the first roll the shooter rolls
+
+    //on off status of the game
     private boolean offOn;
 
     //purpose is to prevent one roll counting double
@@ -98,7 +100,7 @@ public class CrapsState extends GameState {
         return bets[playerId][betId];
     }
 
-    public double getPlayerFunds(int playerId) {
+    public int getPlayerFunds(int playerId) {
         return funds[playerId];
     }
 
@@ -155,7 +157,7 @@ public class CrapsState extends GameState {
         Log.d("die", "Player turn just switched to:" + this.playerTurn);
     }
 
-    public void setPlayerFunds(int playerId, double playerFunds) {
+    public void setPlayerFunds(int playerId, int playerFunds) {
         this.funds[playerId] = playerFunds;
     }
 
@@ -388,7 +390,7 @@ public class CrapsState extends GameState {
                     if (this.bets[p][b].getID() != 0) {
                         Log.d("funds", "human money: " + this.funds[action.playerId]);
                         Log.d("funds", "bet: " + this.bets[p][b].toString());
-                        this.bets[p][b].setBetAmount(0.0); //resets the bet amount
+                        this.bets[p][b].setBetAmount(0); //resets the bet amount
                     }
                     //TODO put this in a separate method??
                 } else { //update computer money
@@ -400,7 +402,7 @@ public class CrapsState extends GameState {
                     if (this.bets[p][b].getID() != 0) {
                         Log.d("funds", "human money: " + this.funds[action.playerId]);
                         Log.d("funds", "bet: " + this.bets[p][b].toString());
-                        this.bets[p][b].setBetAmount(0.0); //resets the bet amount
+                        this.bets[p][b].setBetAmount(0); //resets the bet amount
                     }
                 }
             }

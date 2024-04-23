@@ -15,7 +15,7 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
 
 public class PlaceBetAction extends GameAction {
     public int betID;
-    public double betAmount;
+    public int betAmount;
     public int playerId;
 
 
@@ -27,7 +27,7 @@ public class PlaceBetAction extends GameAction {
     public PlaceBetAction(GamePlayer player){
         super(player);
     }
-    public PlaceBetAction(GamePlayer player,int playerId, int betID, double betAmount) {
+    public PlaceBetAction(GamePlayer player,int playerId, int betID, int betAmount) {
         super(player);  //I don't remember what super(player) does - S
         this.playerId=playerId;
         this.betAmount = betAmount;
