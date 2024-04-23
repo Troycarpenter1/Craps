@@ -392,7 +392,7 @@ public class CrapsState extends GameState {
         Random rand = new Random();
         this.setDice(rand.nextInt(6) + 1, rand.nextInt(6) + 1);
         //this.setDice(1, 1); //always rolls a crap (for testing purposes)
-        //this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
+        this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
         //this.setDice(5, 6); //always rolls an 11 (for testing purposes)
 
         //checks if this is the first round and updates the first roll

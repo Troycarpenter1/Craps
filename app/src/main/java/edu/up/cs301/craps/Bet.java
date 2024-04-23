@@ -61,16 +61,6 @@ public class Bet {
             /* Craps: */         15.0
     };
 
-
-    //default cnstr
-    public Bet() {
-        this.ID = 0;
-        this.name = ALL_BET_NAMES[0];
-        this.payout = ALL_BET_PAYOUTS[0];
-        this.amount = 0;
-        this.oneTimeOnly = false;
-    }
-
     public Bet(int id) {
         this.ID = id;
         this.name = ALL_BET_NAMES[id];
