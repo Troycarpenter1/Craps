@@ -395,7 +395,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         this.state = (CrapsState) info;
 
 
-
         //change the drawable
         ImageView dice1 = myActivity.findViewById(R.id.dice1);
         ImageView dice2 = myActivity.findViewById(R.id.dice2);
@@ -427,6 +426,31 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         } else if (state.getDie2CurrVal() == 6) {
             dice2.setImageDrawable(myActivity.getDrawable(R.drawable.side6dice));
         }
+
+        //todo: get this to stay on a single image instead of change every roll
+        //if it is the first roll of turn, change the on/off bar appropriately
+        ImageView onOff = myActivity.findViewById(R.id.onOff);
+
+        //if (state.getOffOn()) {
+        if (state.getFirstRoll() == 4) {
+            onOff.setImageDrawable(myActivity.getDrawable(R.drawable.four));
+        } else if (state.getFirstRoll() == 5) {
+            onOff.setImageDrawable(myActivity.getDrawable(R.drawable.five));
+        } else if (state.getFirstRoll() == 6) {
+            onOff.setImageDrawable(myActivity.getDrawable(R.drawable.six));
+        } else if (state.getFirstRoll() == 8) {
+            onOff.setImageDrawable(myActivity.getDrawable(R.drawable.eight));
+        } else if (state.getFirstRoll() == 9) {
+            onOff.setImageDrawable(myActivity.getDrawable(R.drawable.nine));
+        } else if (state.getFirstRoll() == 10) {
+            onOff.setImageDrawable(myActivity.getDrawable(R.drawable.ten));
+        }
+        //}else {
+        if(state.getFirstRoll()==0){
+            onOff.setImageDrawable(myActivity.getDrawable(R.drawable.off));
+        }
+        //
+        //}
 
 
         /*
@@ -635,7 +659,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         return isShooter;
     }
 
-    public int getPlayerId(){return this.playerId;}
+    public int getPlayerId() {
+        return this.playerId;
+    }
 
     public boolean getIsReady() {
         return isReady;
@@ -653,7 +679,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         this.amountBet = amountBet;
     }
 
-    public void setPlayerId(int playerId){this.playerId = playerId;}
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
 
 
     /**

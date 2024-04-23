@@ -42,6 +42,7 @@ public class CrapsState extends GameState {
     private int dieTotal;
     private int firstDieShot; //the total of the first roll the shooter rolls
     private boolean offOn;
+    private boolean isFirstRoll;
 
     //purpose is to prevent one roll counting double
     boolean playerSwitched; //local variable used to indicate if the turn has just been switched (7 was the last number rolled)
@@ -95,6 +96,16 @@ public class CrapsState extends GameState {
     //getters for instance variables
     public int getPlayerTurn() {
         return this.playerTurn;
+    }
+
+    public boolean getIsFirstRoll(){
+        return this.isFirstRoll;
+    }
+    public int getFirstRoll(){
+        return this.firstDieShot;
+    }
+    public boolean getOffOn(){
+        return offOn;
     }
 
     public Bet getBet(int playerId, int betId) {
@@ -376,6 +387,22 @@ public class CrapsState extends GameState {
         Log.d("die", "DIE TOTAL: " + this.dieTotal);
         Log.d("die", "FIRST ROLL : " + this.firstDieShot);
 
+
+        //sets the value for the on/off button
+        if (!offOn) {
+            //makes sure that the roll is the first of the "round"
+            if (isFirstRoll) {
+                //makes sure the roll is a valid place bet
+                if ((dieTotal > 3 && dieTotal < 11) && dieTotal != 7) {
+                    //sets the first roll variable, and sets the other booleans to appropriate values
+                    this.isFirstRoll = false;
+                    this.firstDieShot = dieTotal;
+                    this.offOn = true;
+                }
+            }
+        }
+
+
         //change playerSwitched to false after roll
         playerSwitched = false;
 
@@ -393,6 +420,7 @@ public class CrapsState extends GameState {
             Log.d("die", "Switching to player: " + this.playerTurn);
             //set playerSwitched to true since the shooter lost
             playerSwitched = true;
+            this.firstDieShot=0;
         }
 
         System.out.println("STATE: after roll, player turn: " + this.getPlayerTurn());
