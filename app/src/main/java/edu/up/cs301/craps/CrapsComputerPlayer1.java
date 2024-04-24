@@ -109,9 +109,6 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
          * Rowena's Version
          */
 
-        // look at how much money I have according to my copy of the game state
-        playerMoney = crapsState.getPlayerFunds(this.playerId);
-
         // if I somehow have less than $100 to spend, then bet all the money I have left
         if (playerMoney < 100) {
             this.amountBet = playerMoney;
@@ -140,6 +137,9 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             return;
         }
         crapsState = (CrapsState) info;
+
+        // store locally how much money I have according to my copy of the game state
+        playerMoney = crapsState.getPlayerFunds(this.playerId);
 
         // if is shooter take my turn
         if (crapsState.getPlayerTurn() == this.playerId) {
