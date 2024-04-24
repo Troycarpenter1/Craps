@@ -166,34 +166,15 @@ public abstract class GameMainActivity extends Activity implements
          Date: 23 April 2024
          Problem: could not figure out how to play music
          Resource:
-         https://stackoverflow.com/questions/37244357/how-to-play-music-in-android-studio
          https://www.geeksforgeeks.org/how-to-add-audio-files-to-android-app-in-android-studio/
          Solution: I used the example code from this post.
          */
+        MediaPlayer music = MediaPlayer.create(this, R.raw.dripdrop);
+        if(!music.isPlaying()){
+            music.start();
+            music.setLooping(true);
+        }
 
-//        class song extends Activity {
-//            MediaPlayer mediaPlayer;
-//
-//            @Override
-//            protected void onCreate(Bundle savedInstanceState) {
-//                super.onCreate(savedInstanceState);
-//                setContentView(R.layout.craps_table);
-//                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.soldierOfDance);
-//
-//                mediaPlayer.start();
-//
-//            }
-//
-//            @Override
-//            protected void onPause() {
-//                super.onPause();
-//                mediaPlayer.stop();
-//                mediaPlayer.release();
-//
-//            }
-//        }
-        MediaPlayer music = MediaPlayer.create(this, R.raw.soldierOfDance);
-        music.start();
 
 
         //Set Context for Toast Logging
