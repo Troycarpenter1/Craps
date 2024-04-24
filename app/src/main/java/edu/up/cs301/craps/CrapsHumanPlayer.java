@@ -122,23 +122,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             game.sendAction(rba);
 
             //playerMoney.setText("$" + state.getPlayer0Funds());
-
-            //change the color for removing the bet
-            if (but.equals(myActivity.findViewById(R.id.come))) {
-                but.setTextColor(Color.parseColor("#D61818")); //sets the button red
-            } else if (
-                    but.equals(myActivity.findViewById(R.id.field)) ||
-                            but.equals(myActivity.findViewById(R.id.place4)) ||
-                            but.equals(myActivity.findViewById(R.id.place5)) ||
-                            but.equals(myActivity.findViewById(R.id.place6)) ||
-                            but.equals(myActivity.findViewById(R.id.place8)) ||
-                            but.equals(myActivity.findViewById(R.id.place9)) ||
-                            but.equals(myActivity.findViewById(R.id.place10))
-            ) {
-                but.setTextColor(Color.parseColor("#FFD700")); //sets the buttons to yellow
-            } else {
-                but.setTextColor(Color.parseColor("#FFFFFF")); //sets the button to white
-            }
         }
     } //bet
 
@@ -329,8 +312,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
                     Integer buttonId = buttons.get(j); //get the ID associated with the spot in the array
                     Button button = myActivity.findViewById(buttonId);
 
-                    //if there is a bet here, higlihgt the text
-                    if (thisBet.getName().equals("NO BET") == false) {
+                    //if there is a bet here, highlight the text
+                    if (thisBet.getAmount() != 0) {
                         button.setTextColor(Color.parseColor("#FFA500"));
 
                     //else, no bet revert to original color

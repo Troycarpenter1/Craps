@@ -321,10 +321,14 @@ public class CrapsState extends GameState {
             return false;
         }
 
-        //add bet amount back to human's funds
+        //player shouldn't be able to remove bet if they're already ready
+        if (ready[action.playerId]){
+            return false;
+        }
 
         //Log.d("die", "added $" + bets[action.playerId][action.betID].getAmount() +
         // "to player's account.");
+        //add bet amount back to human's funds
         this.setPlayerFunds(action.playerId, this.funds[action.playerId] +
                 bets[action.playerId][action.betID].getAmount());
 
