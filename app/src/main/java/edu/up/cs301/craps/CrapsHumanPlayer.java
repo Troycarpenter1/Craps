@@ -1,9 +1,7 @@
 package edu.up.cs301.craps;
 
-import edu.up.cs301.GameFramework.actionMessage.ReadyAction;
 import edu.up.cs301.GameFramework.players.GameHumanPlayer;
 import edu.up.cs301.GameFramework.GameMainActivity;
-import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 
 import android.util.Log;
@@ -11,7 +9,6 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -19,11 +16,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
-import androidx.annotation.ColorInt;
-
 import androidx.core.content.ContextCompat;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 
 /**
  * A GUI of a craps-player. The GUI displays the current bets placed, and allows the
@@ -54,6 +51,12 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     private boolean isReady; // player is ready (done placing bets)
     private int playerId;
     private int betIncrement = 1;
+
+    //hashtable holding the ID of a bet in the array and the corresponding button
+    Hashtable<Integer, List<Integer>> buttontable = new Hashtable<>();
+
+    Hashtable<Integer, String> colortable = new Hashtable<>();
+
 
     // we'll get the bet array by going to game state
 
@@ -98,12 +101,10 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      */
     public void bet(View button, int id) {
         Button but = (Button) button;
-        int prevAmountBet;
 
         Log.d("die", "amountBet: " + amountBet);
         if (amountBet > 0.0) {
-            //  if (state.getBet(0, id).getAmount() == 0.0) {
-            but.setTextColor(Color.parseColor("#FFA500"));
+
             //sends the bet action to the state
             PlaceBetAction pba = new PlaceBetAction(this, this.playerId, id,
                     amountBet);
@@ -158,98 +159,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             //removed isReady here
             Ready2CrapAction P1Ready = new Ready2CrapAction(this, !this.isReady, this.playerId);
             game.sendAction(P1Ready);
-        } else if (myActivity.findViewById(R.id.shoot) == button) { // checks shoot button
 
-            //change the color for removing the bet after rolling for all buttons that are bets
-
-            //resets come bet colors
-            Button come = (Button) myActivity.findViewById(R.id.come);      //come
-            come.setTextColor(Color.parseColor("#D61818")); //red
-
-            //resets field bet colors
-            Button field = (Button) myActivity.findViewById(R.id.field);    //field
-            field.setTextColor(Color.parseColor("#FFD700"));  //yellow
-
-            //resets place bets colors
-            Button place4 = (Button) myActivity.findViewById(R.id.place4);  //place4
-            place4.setTextColor(Color.parseColor("#FFD700"));  //yellow
-            Button place5 = (Button) myActivity.findViewById(R.id.place5);  //place5
-            place5.setTextColor(Color.parseColor("#FFD700"));  //yellow
-            Button place6 = (Button) myActivity.findViewById(R.id.place6);  //place6
-            place6.setTextColor(Color.parseColor("#FFD700"));  //yellow
-            Button place8 = (Button) myActivity.findViewById(R.id.place8);  //place8
-            place8.setTextColor(Color.parseColor("#FFD700"));  //yellow
-            Button place9 = (Button) myActivity.findViewById(R.id.place9);  //place9
-            place9.setTextColor(Color.parseColor("#FFD700"));  //yellow
-            Button place10 = (Button) myActivity.findViewById(R.id.place10);  //place10
-            place10.setTextColor(Color.parseColor("#FFD700"));  //yellow
-
-            //resets the pass line colors
-            Button pass1 = (Button) myActivity.findViewById(R.id.passLine1);//pass1
-            pass1.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button pass2 = (Button) myActivity.findViewById(R.id.passLine2);//pass2
-            pass2.setTextColor(Color.parseColor("#FFFFFF"));  //white
-
-            //resets the don't pass line colors
-            Button dontpass1 = (Button) myActivity.findViewById(R.id.donPass1);//don't pass1
-            dontpass1.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button dontpass2 = (Button) myActivity.findViewById(R.id.dont_pass);//don't pass2
-            dontpass2.setTextColor(Color.parseColor("#FFFFFF"));  //white
-
-            //resets the C button colors
-            Button c1 = (Button) myActivity.findViewById(R.id.cButton1);//c1
-            c1.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button c2 = (Button) myActivity.findViewById(R.id.cButton2);//c2
-            c2.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button c3 = (Button) myActivity.findViewById(R.id.cButton3);//c3
-            c3.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button c4 = (Button) myActivity.findViewById(R.id.cButton4);//c4
-            c4.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button c5 = (Button) myActivity.findViewById(R.id.cButton5);//c5
-            c5.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button c6 = (Button) myActivity.findViewById(R.id.cButton6);//c6
-            c6.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button c7 = (Button) myActivity.findViewById(R.id.cButton7);//c7
-            c7.setTextColor(Color.parseColor("#FFFFFF"));  //white
-
-            //resets the E button colors
-            Button e1 = (Button) myActivity.findViewById(R.id.eButton1);//e1
-            e1.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button e2 = (Button) myActivity.findViewById(R.id.eButton2);//e2
-            e2.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button e3 = (Button) myActivity.findViewById(R.id.eButton3);//e3
-            e3.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button e4 = (Button) myActivity.findViewById(R.id.eButton4);//e4
-            e4.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button e5 = (Button) myActivity.findViewById(R.id.eButton5);//e5
-            e5.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button e6 = (Button) myActivity.findViewById(R.id.eButton6);//e6
-            e6.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button e7 = (Button) myActivity.findViewById(R.id.eButton7);//e7
-            e7.setTextColor(Color.parseColor("#FFFFFF"));  //white
-
-            //resets special bets
-            Button seven = (Button) myActivity.findViewById(R.id.sevensBet);//seven bet
-            seven.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button pair2 = (Button) myActivity.findViewById(R.id.pair2s);//Pair 2s bet
-            pair2.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button pair3 = (Button) myActivity.findViewById(R.id.pair3s);//Pair 3s bet
-            pair3.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button pair4 = (Button) myActivity.findViewById(R.id.pair4s);//Pair 4s bet
-            pair4.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button pair5 = (Button) myActivity.findViewById(R.id.pair5s);//Pair 5s bet
-            pair5.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button pair1 = (Button) myActivity.findViewById(R.id.pair1s);//Pair 1s bet
-            pair1.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button pair6 = (Button) myActivity.findViewById(R.id.pair6s);//Pair 6s bet
-            pair6.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button two1 = (Button) myActivity.findViewById(R.id.twoAndOne);//2 and 1
-            two1.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button five6 = (Button) myActivity.findViewById(R.id.fiveAndSix);//5 and 6
-            five6.setTextColor(Color.parseColor("#FFFFFF"));  //white
-            Button crap = (Button) myActivity.findViewById(R.id.craps);//crap bet
-            crap.setTextColor(Color.parseColor("#FFFFFF"));  //white
-
+        //check shoot button
+        } else if (myActivity.findViewById(R.id.shoot) == button) {
             //create and send the roll action
             RollAction roll = new RollAction(this, this.playerId);
             game.sendAction(roll);
@@ -344,7 +256,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         seekBar.setMax((int) state.getPlayerFunds(this.playerId));
 
-
         //remainder when progress is divided by the bet increment
         int r = progress % betIncrement;
         //set amount bet to the difference
@@ -387,16 +298,51 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      *
      * @param info the message
      */
+    //TODO make receiveInfo less bulky
     @Override
     public void receiveInfo(GameInfo info) {
+
         // ignore the message if it's not a CrapState message
         if (!(info instanceof CrapsState)) return;
 
         // update our state; then update the display
         this.state = (CrapsState) info;
 
+        /*
+            iterate through the bet array and change color for all bets placed or removed
+            note the hashtables are instance variables and initialized in the setAsGui method
+            written by Sydney
+        */
+        for (int i = 0; i < 23; i++){
 
-        //change the drawable
+            //get the bet at this inidex
+            Bet thisBet = state.getBet(this.playerId, i);
+
+            //get all the the buttons (button IDs) associated with bet at index
+            List <Integer> buttons = buttontable.get(i);
+
+            //at the very beginning of the game, sometimes the button is null
+            if (buttons!= null) {
+
+                //iterate through all the buttons in the button table and find all IDs
+                for (int j = 0; j < buttons.size(); j++) {
+                    Integer buttonId = buttons.get(j); //get the ID associated with the spot in the array
+                    Button button = myActivity.findViewById(buttonId);
+
+                    //if there is a bet here, higlihgt the text
+                    if (thisBet.getName().equals("NO BET") == false) {
+                        button.setTextColor(Color.parseColor("#FFA500"));
+
+                    //else, no bet revert to original color
+                    } else {
+                        button.setTextColor(Color.parseColor(colortable.get(buttonId)));
+                    }
+                }
+            }
+
+        }
+
+        //change the drawable for the dice
         ImageView dice1 = myActivity.findViewById(R.id.dice1);
         ImageView dice2 = myActivity.findViewById(R.id.dice2);
 
@@ -466,7 +412,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         //this doesn't work when player turn is based on order
         Button shoot = myActivity.findViewById(R.id.shoot);
         //if it's your turn then the shooter button is red
-        if (state.getPlayerTurn() == 0) {
+        if (state.getPlayerTurn() == this.playerId) {
             shoot.setTextColor(ContextCompat.getColor(this.myActivity, R.color.red));
         }
         //else black
@@ -504,11 +450,13 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         // remember the activity
         this.myActivity = activity;
 
-
         activity.setContentView(R.layout.craps_table);
+
+        //CREATE ALL LISTENERS
         //makes the shooter button work
         Button shooter = (Button) activity.findViewById(R.id.shoot);
         shooter.setOnClickListener(this);
+
         //makes the ready button work
         Button join = (Button) activity.findViewById(R.id.ready);
         join.setOnClickListener(this);
@@ -607,7 +555,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         Button crap = activity.findViewById(R.id.craps);
         crap.setOnClickListener(this);
 
-
         SeekBar betSelector = activity.findViewById(R.id.betAmountSelector);
         betSelector.setOnSeekBarChangeListener(this);
 
@@ -638,10 +585,164 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         this.testResultsTextView =
                 (TextView) activity.findViewById(R.id.counterValueTextView);
 
+        /*
+            Fills hashtable button table mapping all spots in the bet array to their
+            corresponding buttons.
+         */
+        List<Integer> passlist = new ArrayList<Integer>();
+        passlist.add(R.id.passLine1);
+        passlist.add(R.id.passLine2);
+        buttontable.put(1, passlist);
+
+        List<Integer> dontpasslist = new ArrayList<Integer>();
+        dontpasslist.add(R.id.dont_pass);
+        dontpasslist.add(R.id.donPass1);
+        buttontable.put(2, dontpasslist);
+
+        List<Integer> comelist = new ArrayList<Integer>();
+        comelist.add(R.id.come);
+        buttontable.put(3, comelist);
+
+        List<Integer> fieldlist = new ArrayList<Integer>();
+        fieldlist.add(R.id.field);
+        buttontable.put(4, fieldlist);
+
+        List<Integer> place4list = new ArrayList<Integer>();
+        place4list.add(R.id.place4);
+        buttontable.put(5, place4list);
+
+        List<Integer> place5list = new ArrayList<Integer>();
+        place5list.add(R.id.place5);
+        buttontable.put(6, place5list);
+
+        List<Integer> place6list = new ArrayList<Integer>();
+        place6list.add(R.id.place6);
+        buttontable.put(7, place6list);
+
+        List<Integer> place8list = new ArrayList<Integer>();
+        place8list.add(R.id.place8);
+        buttontable.put(8, place8list);
+
+        List<Integer> place9list = new ArrayList<Integer>();
+        place9list.add(R.id.place9);
+        buttontable.put(9, place9list);
+
+        List<Integer> place10list = new ArrayList<Integer>();
+        place10list.add(R.id.place10);
+        buttontable.put(10, place10list);
+
+        List<Integer> clist = new ArrayList<Integer>();
+        clist.add(R.id.cButton1);
+        clist.add(R.id.cButton2);
+        clist.add(R.id.cButton3);
+        clist.add(R.id.cButton4);
+        clist.add(R.id.cButton5);
+        clist.add(R.id.cButton6);
+        clist.add(R.id.cButton7);
+        buttontable.put(11, clist);
+
+        List<Integer> elist = new ArrayList<Integer>();
+        elist.add(R.id.eButton1);
+        elist.add(R.id.eButton2);
+        elist.add(R.id.eButton3);
+        elist.add(R.id.eButton4);
+        elist.add(R.id.eButton5);
+        elist.add(R.id.eButton6);
+        elist.add(R.id.eButton7);
+        buttontable.put(12, elist);
+
+        List<Integer> sevenslist = new ArrayList<Integer>();
+        sevenslist.add(R.id.sevensBet);
+        buttontable.put(13, sevenslist);
+
+        List<Integer> pair2slist = new ArrayList<Integer>();
+        pair2slist.add(R.id.pair2s);
+        buttontable.put(14, pair2slist);
+
+        List<Integer> pair3slist = new ArrayList<Integer>();
+        pair3slist.add(R.id.pair3s);
+        buttontable.put(15, pair3slist);
+
+        List<Integer> pair4slist = new ArrayList<Integer>();
+        pair4slist.add(R.id.pair4s);
+        buttontable.put(16, pair4slist);
+
+        List<Integer> pair5slist = new ArrayList<Integer>();
+        pair5slist.add(R.id.pair5s);
+        buttontable.put(17, pair5slist);
+
+        List<Integer> twoAndOnelist = new ArrayList<Integer>();
+        twoAndOnelist.add(R.id.twoAndOne);
+        buttontable.put(18, twoAndOnelist);
+
+        List<Integer> pair1slist = new ArrayList<Integer>();
+        pair1slist.add(R.id.pair1s);
+        buttontable.put(19, pair1slist);
+
+        List<Integer> pair6slist = new ArrayList<Integer>();
+        pair6slist.add(R.id.pair6s);
+        buttontable.put(20, pair6slist);
+
+        List<Integer> fiveAndSixlist = new ArrayList<Integer>();
+        fiveAndSixlist.add(R.id.fiveAndSix);
+        buttontable.put(21, fiveAndSixlist);
+
+        List<Integer> crapslist = new ArrayList<Integer>();
+        crapslist.add(R.id.craps);
+        buttontable.put(22, crapslist);
+
+        /*
+            Fills hashtable color table mapping all IDs to
+            the colors they should be originally
+         */
+        colortable.put(R.id.come, "#D61818"); //red
+
+        //yellow
+        colortable.put(R.id.field, "#FFD700");
+        colortable.put(R.id.place4, "#FFD700");
+        colortable.put(R.id.place5, "#FFD700");
+        colortable.put(R.id.place6, "#FFD700");
+        colortable.put(R.id.place8, "#FFD700");
+        colortable.put(R.id.place9, "#FFD700");
+        colortable.put(R.id.place10, "#FFD700");
+
+        //white
+        colortable.put(R.id.passLine1, "#FFFFFF");
+        colortable.put(R.id.passLine2, "#FFFFFF");
+
+        colortable.put(R.id.dont_pass, "#FFFFFF");
+        colortable.put(R.id.donPass1, "#FFFFFF");
+
+        colortable.put(R.id.cButton1, "#FFFFFF");
+        colortable.put(R.id.cButton2, "#FFFFFF");
+        colortable.put(R.id.cButton3, "#FFFFFF");
+        colortable.put(R.id.cButton4, "#FFFFFF");
+        colortable.put(R.id.cButton5, "#FFFFFF");
+        colortable.put(R.id.cButton6, "#FFFFFF");
+        colortable.put(R.id.cButton7, "#FFFFFF");
+
+        colortable.put(R.id.eButton1, "#FFFFFF");
+        colortable.put(R.id.eButton2, "#FFFFFF");
+        colortable.put(R.id.eButton3, "#FFFFFF");
+        colortable.put(R.id.eButton4, "#FFFFFF");
+        colortable.put(R.id.eButton5, "#FFFFFF");
+        colortable.put(R.id.eButton6, "#FFFFFF");
+        colortable.put(R.id.eButton7, "#FFFFFF");
+
+        colortable.put(R.id.sevensBet, "#FFFFFF");
+        colortable.put(R.id.pair2s, "#FFFFFF");
+        colortable.put(R.id.pair3s, "#FFFFFF");
+        colortable.put(R.id.pair4s, "#FFFFFF");
+        colortable.put(R.id.pair5s, "#FFFFFF");
+        colortable.put(R.id.pair1s, "#FFFFFF");
+        colortable.put(R.id.pair6s, "#FFFFFF");
+        colortable.put(R.id.twoAndOne, "#FFFFFF");
+        colortable.put(R.id.fiveAndSix, "#FFFFFF");
+        colortable.put(R.id.craps, "#FFFFFF");
+
         // if we have a game state, "simulate" that we have just received
         // the state from the game so that the GUI values are updated
         if (state != null) {
-
             receiveInfo(state);
         }
     } //setAsGui
