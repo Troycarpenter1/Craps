@@ -155,15 +155,17 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             //if I'm not already ready, then place a bet
             if (!crapsState.getPlayerReady(this.playerId)) {
                 placeBet();
-                //ready();
+                ready();
             }
             //then roll
             roll();
+
+        //if I'm not the shooter
         } else {
-            //if I'm not ready, then send a ready action
             if (crapsState.getPlayerReady(this.playerId)) {
                 System.out.println("COMPUTER: already ready.");
 
+            //if I'm not ready, then send a ready action
             } else {
                 ready();
             }
