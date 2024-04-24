@@ -49,7 +49,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     private GameMainActivity myActivity;
     private int amountBet;// amount player wants to bet
     private boolean isReady; // player is ready (done placing bets)
-    private int playerId;
+    //private int playerId;
     private int betIncrement = 1;
 
     //hashtable holding the ID of a bet in the array and the corresponding button
@@ -106,7 +106,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if (amountBet > 0.0) {
 
             //sends the bet action to the state
-            PlaceBetAction pba = new PlaceBetAction(this, this.playerId, id,
+            PlaceBetAction pba = new PlaceBetAction(this, this.playerNum, id,
                     amountBet);
             game.sendAction(pba);
 
@@ -117,7 +117,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             //update player funds
             //TextView playerMoney = myActivity.findViewById(R.id.yourMoney); //todo I only think receiveInfo needs this
             //send remove bet action
-            RemoveBetAction rba = new RemoveBetAction(this, this.playerId, id);
+            RemoveBetAction rba = new RemoveBetAction(this, this.playerNum, id);
             Log.d("die", "trying to remove bet");
             game.sendAction(rba);
 
@@ -139,14 +139,14 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if (game == null) return;
         //checks all of the buttons that could be pressed
         if (but.equals(myActivity.findViewById(R.id.ready))) { //checks if the button pressed is the ready button
-            //removed isReady here
-            Ready2CrapAction P1Ready = new Ready2CrapAction(this, !this.isReady, this.playerId);
+            isReady = state.getPlayerReady(playerNum);
+            Ready2CrapAction P1Ready = new Ready2CrapAction(this, !this.isReady, this.playerNum);
             game.sendAction(P1Ready);
 
         //check shoot button
         } else if (myActivity.findViewById(R.id.shoot) == button) {
             //create and send the roll action
-            RollAction roll = new RollAction(this, this.playerId);
+            RollAction roll = new RollAction(this, this.playerNum);
             game.sendAction(roll);
 
         } else if (myActivity.findViewById(R.id.passLine1) == button) {    //pass line 1
@@ -237,7 +237,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         TextView betView = myActivity.findViewById(R.id.betAmount);
         //sets the max the bar can scroll to the players total money
 
-        seekBar.setMax((int) state.getPlayerFunds(this.playerId));
+        seekBar.setMax(state.getPlayerFunds(this.playerNum));
 
         //remainder when progress is divided by the bet increment
         int r = progress % betIncrement;
@@ -379,8 +379,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         if(state.getFirstRoll()==0){
             onOff.setImageDrawable(myActivity.getDrawable(R.drawable.off));
         }
-        //
-        //}
 
 
         /*
@@ -406,7 +404,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         Button ready = myActivity.findViewById(R.id.ready);
         //changes ready to red when human ready
         TextView myMoney = myActivity.findViewById(R.id.yourMoney);
-        if (state.getPlayerReady(this.playerId)) {
+        if (state.getPlayerReady(this.playerNum)) {
             ready.setTextColor(ContextCompat.getColor(this.myActivity, R.color.red));
         }
         //else black
@@ -414,10 +412,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             ready.setTextColor(ContextCompat.getColor(this.myActivity, R.color.black));
         }
 
-        myMoney.setText("$" + state.getPlayerFunds(this.playerId));
-
-        //todo troy killed this. I'm worried
-        //updateDisplay();
+        myMoney.setText("$" + state.getPlayerFunds(this.playerNum));
 
     } //receiveInfo
 
@@ -737,9 +732,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         return amountBet;
     }
 
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
-    }
+    //public void setPlayerId(int playerId) {
+        //this.playerId = playerId;
+    //}
 
 
     /**

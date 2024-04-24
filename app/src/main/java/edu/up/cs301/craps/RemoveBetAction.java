@@ -14,6 +14,8 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
  */
 
 public class RemoveBetAction extends GameAction {
+
+    private static final long serialVersionUID = 4;
     public int betID;
     public int playerId;
 

@@ -1,5 +1,7 @@
 package edu.up.cs301.craps;
 
+import java.io.Serializable;
+
 /**
  * @author Wes H.       Last Revision: 4/22/2024
  * @author Troy C.      Last Revision: TBD
@@ -16,13 +18,16 @@ package edu.up.cs301.craps;
  * checkThisBetWon method (includes most helper methods)
  */
 
-public class Bet {
-    //instance variables
+public class Bet implements Serializable {
 
+    private static final long serialVersionUID = 5;
+
+    //instance variables
     private int ID; //value that represents the type of bet in an array of bet names & payouts
     private String name; //name of the bet
     private int amount; //the amount of money this bet has put on it
-    private double payout;
+    private double payout; // the ratio of money this pays out
+    private boolean oneTimeOnly; // determines if this bet pays out every roll (True) or every round (False)
 
     //public static final variables
     //list of all names of all bets
@@ -60,23 +65,12 @@ public class Bet {
             /* Craps: */         15.0
     };
 
-
-
-
-    //default cnstr
-    public Bet() {
-        this.ID = 0;
-        this.name = ALL_BET_NAMES[0];
-        this.payout = ALL_BET_PAYOUTS[0];
+    public Bet(int id) {
+        this.ID = id;
+        this.name = ALL_BET_NAMES[id];
+        this.payout = ALL_BET_PAYOUTS[id];
         this.amount = 0;
-    }
-
-    //betID cnstr
-    public Bet(int newAmount, int newID) {
-        this.ID = newID;
-        this.name = ALL_BET_NAMES[newID];
-        this.payout = ALL_BET_PAYOUTS[newID];
-        this.amount = newAmount;
+        this.oneTimeOnly = (this.ID >= 11);
     }
 
     //copy cnstr
@@ -85,6 +79,8 @@ public class Bet {
         this.name = ALL_BET_NAMES[copyBet.ID];
         this.payout = ALL_BET_PAYOUTS[copyBet.ID];
         this.amount = copyBet.amount;
+        // all bets that have an ID >= 11 pay out every roll
+        this.oneTimeOnly = (this.ID >= 11);
     }
 
     //simple getter methods
@@ -92,22 +88,19 @@ public class Bet {
         return this.amount;
     }
 
-    public double getPayout() {
-        return this.payout;
-    }
-
     public int getID() {
         return this.ID;
     }
 
-    public String getName() {
-        return this.name;
+    public boolean isOneTimeBet() {
+        return oneTimeOnly;
     }
 
     //set bet amount
     public void setBetAmount(int newAmount) {
         this.amount = newAmount;
     }
+
 
     /**
      * payoutBet
@@ -271,7 +264,8 @@ public class Bet {
      */
     @Override
     public String toString() {
-        return this.name + " ID of: " + this.ID + " with $" + this.amount + " and Pays out: " + this.payout;
+        String oneTimeBet = this.oneTimeOnly ? "Every Roll" : "Every Round";
+        return this.name + " ID of: " + this.ID + " with $" + this.amount + " and Pays out: " + this.payout + " " + oneTimeBet;
     }
 
 }

@@ -76,7 +76,7 @@ public class CrapsLocalGame extends LocalGame {
 			//if this player is a human, set that player's ID its ID stored in localGame
 			if (player instanceof CrapsHumanPlayer){
 				CrapsHumanPlayer human = (CrapsHumanPlayer) player;
-				human.setPlayerId(this.getPlayerIdx(player));
+				//human.setPlayerId(this.getPlayerIdx(player));
 
 			}
 			//if this player is a human, set that player's ID its ID stored in localGame
@@ -169,6 +169,12 @@ public class CrapsLocalGame extends LocalGame {
 		// initializes the players money to what they currently have
 		int player0funds = gameState.getPlayerFunds(0);
 		int player1funds = gameState.getPlayerFunds(1);
+		// checks if either player has too much money
+		if (player0funds == Integer.MAX_VALUE) {
+			return "Player 0 won too much money and has been kicked out of the casino and lost,\nPlayer 0 Wins!\n";
+		} else if (player0funds == Integer.MAX_VALUE) {
+			return "Player 1 won too much money and has been kicked out of the casino and lost,\nPlayer 1 Wins!\n";
+		}
 		// iterates through all of the bets in the game and adds their amount to the correct player
 		for (int p = 0; p < gameState.bets.length; p++) {
 			for (int b = 0; b < gameState.bets[p].length; b++) {
@@ -181,9 +187,9 @@ public class CrapsLocalGame extends LocalGame {
 		}
 		// checks if the player has any money (now including the momey they have bet)
 		if (player0funds == 0) {
-			return "Player 0 lost all their money, Player 1 Wins!";
+			return "Player 0 lost all their money,\nPlayer 1 Wins!\n";
 		} else if (player1funds == 0) {
-			return "Player 1 lost all their money, Player 0 Wins!";
+			return "Player 1 lost all their money,\nPlayer 0 Wins!\n";
 		}
 		return "That's all folks";
 	}

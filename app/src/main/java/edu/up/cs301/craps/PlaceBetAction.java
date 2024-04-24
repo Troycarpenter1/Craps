@@ -14,6 +14,8 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
  */
 
 public class PlaceBetAction extends GameAction {
+
+    private static final long serialVersionUID = 2;
     public int betID;
     public int betAmount;
     public int playerId;
