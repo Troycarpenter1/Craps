@@ -52,6 +52,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     //private int playerId;
     private int betIncrement = 1;
 
+    public int playerId;
+
     //hashtable holding the ID of a bet in the array and the corresponding button
     Hashtable<Integer, List<Integer>> buttontable = new Hashtable<>();
 
@@ -732,9 +734,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         return amountBet;
     }
 
-    //public void setPlayerId(int playerId) {
-        //this.playerId = playerId;
-    //}
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
 
 
     /**

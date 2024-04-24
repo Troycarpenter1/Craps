@@ -105,6 +105,11 @@ public class CrapsState extends GameState {
         return this.playerTurn;
     }
 
+    //TODO is this gonna be problematic since it returns an object? -Sydney
+    public Bet getBet(int playerId, int index) {
+        return this.bets[playerId][index];
+    }
+
     public int getFirstRoll() {
         return this.firstDieShot;
     }

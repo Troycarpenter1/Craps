@@ -192,7 +192,7 @@ public abstract class GameMainActivity extends Activity implements
 //
 //            }
 //        }
-        MediaPlayer music = MediaPlayer.create(this, R.raw.soldierOfDance);
+        MediaPlayer music = MediaPlayer.create(this, R.raw.soldierofdance);
         music.start();
 
 
