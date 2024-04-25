@@ -161,22 +161,6 @@ public abstract class GameMainActivity extends Activity implements
     public final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /**
-         External Citation
-         Date: 23 April 2024
-         Problem: could not figure out how to play music
-         Resource:
-         https://www.geeksforgeeks.org/how-to-add-audio-files-to-android-app-in-android-studio/
-         Solution: I used the example code from this post.
-         */
-        MediaPlayer music = MediaPlayer.create(this, R.raw.dripdrop);
-        if(!music.isPlaying()){
-            music.start();
-            music.setLooping(true);
-        }
-
-
-
         //Set Context for Toast Logging
         Logger.setContext(getApplicationContext());
 
