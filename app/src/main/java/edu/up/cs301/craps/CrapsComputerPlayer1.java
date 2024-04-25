@@ -157,7 +157,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             //then roll
             if (crapsState.getPlayerReady(this.playerId - 1)){
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
