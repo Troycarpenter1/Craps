@@ -50,6 +50,10 @@ public class CrapsState extends GameState {
     private boolean offOn;
     private boolean isFirstRoll;
 
+    public static final boolean ON = true;
+    public static final boolean OFF = false;
+
+
     //purpose is to prevent one roll counting double
     private boolean playerSwitched; //local variable used to indicate if the turn has just been switched (7 was the last number rolled)
     //if false > a new roll has been made
@@ -62,8 +66,9 @@ public class CrapsState extends GameState {
     public CrapsState() {
         this.playerTurn = 0;
         this.setDice(0, 0);
-        this.offOn = false;
+        this.offOn = OFF;
         this.playerSwitched = false;
+        this.isFirstRoll = true;
         this.firstDieShot = 0;
         // iterates through a master 2d array and makes all bets for each player
         for (int p = 0; p < bets.length; p++) { // iterates through number of players
@@ -86,6 +91,7 @@ public class CrapsState extends GameState {
         this.setDice(crap.die1CurrVal, crap.die2CurrVal);
         this.offOn = crap.offOn;
         this.playerSwitched = crap.playerSwitched;
+        this.isFirstRoll = crap.isFirstRoll;
         this.firstDieShot = crap.firstDieShot;
         //iterates through all arrays of player data (mainly bets)
         for (int p = 0; p < bets.length; p++) {
@@ -356,29 +362,37 @@ public class CrapsState extends GameState {
         return true;
     }//Ready2CrapAction
 
-    /**
-     * payoutPlayers
-     * helper method for the roll method
-     * this method is only for paying the players whenever it is called
-     * and does not check anything within the state it ONLY UPDATES VALUES
-     *
-     * @param action the rollAction that it needs to know to pay the player based on the bets
-     */
-    public void payoutPlayers(RollAction action, boolean oneTimeBet) {
-        // iterates through a master 2d array and pays all bets to each player
-        for (int p = 0; p < bets.length; p++) { // iterates through number of players
-            for (int b = 0; b < bets[p].length; b++) { // iterates through all bet IDs
-                //checks if this bet should pay out at all
-                if ((this.bets[p][b].isOneTimeBet() == oneTimeBet) || oneTimeBet) {
+
+    public void payoutOnetime(RollAction action){
+        for(int p=0;p< bets.length;p++){
+            //sets to look at only bets that pay out after a single roll
+            for(int b=11;b<bets[p].length;b++){
+                // calculates how much money the player has won
+                int newFunds = this.funds[action.playerId] +
+                        this.bets[p][b].payoutBet(this.die1CurrVal, this.die2CurrVal,
+                                this.dieTotal, this.firstDieShot);
+                // updates the players funds
+                this.setPlayerFunds(action.playerId, newFunds);
+                //removes the bet
+                this.bets[p][b].setBetAmount(0);
+            }
+        }
+    }
+    public void payoutAccordance(RollAction action){
+        for(int p=0;p< bets.length;p++){
+            //sets to look at only bets that pay out continuously through a round
+            for(int b=0;b<12;b++){
+                if(!offOn){
+                    this.bets[p][b].setBetAmount(0);
+                }else {
                     // calculates how much money the player has won
-                    int newFunds = this.funds[action.playerId] + this.bets[p][b].payoutBet(this.die1CurrVal, this.die2CurrVal, this.dieTotal, this.firstDieShot);
+                    int newFunds = this.funds[action.playerId] +
+                            this.bets[p][b].payoutBet(this.die1CurrVal, this.die2CurrVal,
+                                    this.dieTotal, this.firstDieShot);
                     // updates the players funds
                     this.setPlayerFunds(action.playerId, newFunds);
-                    //removes the bets that player has actually made
-                    if (!oneTimeBet) {
-                        this.bets[p][b].setBetAmount(0); //resets the bet amount
-                    }
                 }
+
             }
         }
     }
@@ -393,7 +407,7 @@ public class CrapsState extends GameState {
     public boolean roll(RollAction action) {
 
         //checks if both players are ready
-        if (!checkCanRoll()) {
+        if (!(this.checkCanRoll())) {
             return false;
         }
         //checks if it is the shooters turn
@@ -405,7 +419,6 @@ public class CrapsState extends GameState {
         Random rand = new Random();
         this.setDice(rand.nextInt(6) + 1, rand.nextInt(6) + 1);
         //this.setDice(1, 1); //always rolls a crap (for testing purposes)
-        //this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
         //this.setDice(5, 6); //always rolls an 11 (for testing purposes)
         //this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
 
@@ -414,53 +427,72 @@ public class CrapsState extends GameState {
         if (this.firstDieShot == 0 || playerSwitched) {
             //updates the first roll of the round
             this.firstDieShot = this.dieTotal;
-            //pays out all of the bets that are paid only every round
-            payoutPlayers(action, false);
         }
 
-        // pays out all of the bets that are paid out every roll
-        payoutPlayers(action, true);
 
-        Log.d("die", "DIE TOTAL: " + this.dieTotal);
-        Log.d("die", "FIRST ROLL : " + this.firstDieShot);
+        if(!isFirstRoll){
+            payoutAccordance(action);
+            payoutOnetime(action);
+        }
 
+        //sets the value for the on/off button and makes sure that the roll is the first of the "round"
+        if (this.offOn == OFF && this.isFirstRoll) {
+            //makes sure the roll is a valid place bet
+            if ((this.dieTotal > 3 && this.dieTotal < 11) && this.dieTotal != 7) {
+                //sets the first roll variable, and sets the other booleans to appropriate values
+                this.isFirstRoll = false;
+                this.firstDieShot = this.dieTotal;
+                this.offOn = ON;
+                //payoutPlayers(action, !this.offOn);
+                payoutAccordance(action);
+                payoutOnetime(action);
+            }
+        }else if(this.offOn==ON){
+            if(this.dieTotal==firstDieShot){
+                this.offOn=OFF;
+                this.isFirstRoll=true;
+                this.firstDieShot=0;
 
-        //sets the value for the on/off button
-        if (!offOn) {
-            //makes sure that the roll is the first of the "round"
-            if (isFirstRoll) {
-                //makes sure the roll is a valid place bet
-                if ((dieTotal > 3 && dieTotal < 11) && dieTotal != 7) {
-                    //sets the first roll variable, and sets the other booleans to appropriate values
-                    this.isFirstRoll = false;
-                    this.firstDieShot = dieTotal;
-                    this.offOn = true;
+                payoutOnetime(action);
+                payoutAccordance(action);
+                for(int p=0;p< bets.length;p++){
+                    for(int b=0;b<bets[p].length;b++){
+                        bets[p][b].setBetAmount(0);
+                    }
                 }
             }
         }
 
 
+
+
         //change playerSwitched to false after roll
-        playerSwitched = false;
+        this.playerSwitched = false;
 
         //reset both player's ready after roll
-        ready[0] = false;
-        ready[1] = false;
+        this.ready[0] = false;
+        this.ready[1] = false;
 
         //SYDNEY -- switch player
         // WES -- added first die 2 or 3
-        //TODO this is written assuming there is one human and one computer playing
         //checks if the shooter wins or loses
         if ((this.dieTotal == 7 || this.firstDieShot == 2 || this.firstDieShot == 3) && !playerSwitched) {
             Log.d("die", "SWITCH SHOOTER!");
             this.changeTurn();
             Log.d("die", "Switching to player: " + this.playerTurn);
             //set playerSwitched to true since the shooter lost
-            playerSwitched = true;
+            this.playerSwitched = true;
             this.firstDieShot = 0;
+            this.isFirstRoll=true;
+            this.offOn=OFF;
+            payoutOnetime(action);
+            payoutAccordance(action);
+            for(int p=0;p< bets.length;p++){
+                for(int b=0;b<bets[p].length;b++){
+                    bets[p][b].setBetAmount(0);
+                }
+            }
         }
-
-        System.out.println("STATE: after roll, player turn: " + this.getPlayerTurn());
 
         return true;
     }//rollAction

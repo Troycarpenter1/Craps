@@ -136,9 +136,9 @@ public class CrapsLocalGame extends LocalGame {
 		int player0funds = gameState.getPlayerFunds(0);
 		int player1funds = gameState.getPlayerFunds(1);
 		// checks if either player has too much money
-		if (player0funds == Integer.MAX_VALUE) {
+		if (player0funds >= Integer.MIN_VALUE && player0funds < 0) {
 			return "Player 0 won too much money and has been kicked out of the casino and lost,\nPlayer 0 Wins!\n";
-		} else if (player0funds == Integer.MAX_VALUE) {
+		} else if (player1funds >= Integer.MIN_VALUE && player1funds < 0) {
 			return "Player 1 won too much money and has been kicked out of the casino and lost,\nPlayer 1 Wins!\n";
 		}
 		// iterates through all of the bets in the game and adds their amount to the correct player
