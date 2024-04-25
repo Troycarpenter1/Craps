@@ -196,6 +196,7 @@ public abstract class GameMainActivity extends Activity implements
         music.start();
 
 
+
         //Set Context for Toast Logging
         Logger.setContext(getApplicationContext());
 

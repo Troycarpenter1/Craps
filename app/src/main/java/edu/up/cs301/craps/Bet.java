@@ -117,7 +117,7 @@ public class Bet implements Serializable {
             if (this.name.equals("FIELD") && (diceTotal == 2 || diceTotal == 12)) { // checks double pay out on field bets
                 return (int) this.payout * this.amount * 2;
             }
-            return (int) this.payout * this.amount;
+            return (int)(this.payout * this.amount)+this.amount;
         } else { //takes your money if you lose haha
             return 0;
         }
