@@ -115,9 +115,9 @@ public class Bet implements Serializable {
     public int payoutBet(int die1, int die2, int diceTotal, int firstRoll) {
         if (checkThisBetWon(die1, die2, diceTotal, firstRoll)) { //checks if the bet is won
             if (this.name.equals("FIELD") && (diceTotal == 2 || diceTotal == 12)) { // checks double pay out on field bets
-                return (int) (this.amount * (this.payout * 2));
+                return (int) this.payout * this.amount * 2;
             }
-            return (int) (this.amount * this.payout);
+            return (int) this.payout * this.amount;
         } else { //takes your money if you lose haha
             return 0;
         }
@@ -143,12 +143,12 @@ public class Bet implements Serializable {
             case "NO BET":
                 return false;
             case "PASS":
-                if (firstRoll == 7 || firstRoll == 11 || firstRoll == diceTotal) {
+                if (firstRoll == 7 || firstRoll == 11 || diceTotal == firstRoll) {
                     return true;
                 }
                 return false;
             case "DON'T PASS":
-                if (firstRoll == 2 || firstRoll == 3 || diceTotal == 7) {
+                if (firstRoll == 2 || firstRoll == 3 || (firstRoll!= 7 && diceTotal == 7)) {
                     return true;
                 }
                 return false;
@@ -157,8 +157,9 @@ public class Bet implements Serializable {
                 int[] comeWinningVals = new int[]{
                         4, 5, 6, 8, 9, 10
                 };
-                //checks if the dice total CAN win
+                //iterates through all winning come bet values
                 for (int num : comeWinningVals) {
+                    //checks if the dice total CAN win
                     if (diceTotal == num) {
                         //checks if the die sum of this roll matches the first roll
                         return (diceTotal == firstRoll);
