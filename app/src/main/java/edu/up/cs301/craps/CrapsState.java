@@ -102,6 +102,7 @@ public class CrapsState extends GameState {
      * getter methods for instance variables
      */
     public int getPlayerTurn() {
+        //System.out.println("Current player turn: " + playerTurn);
         return this.playerTurn;
     }
 
@@ -349,8 +350,8 @@ public class CrapsState extends GameState {
             this.ready[1] = action.isReady;
         }
 
-        System.out.println("STATE: Player 0 ready:" + this.ready[0]);
-        System.out.println("STATE: Player 1 ready:" + this.ready[1]);
+        //System.out.println("STATE: Player 0 ready:" + this.ready[0]);
+        //System.out.println("STATE: Player 1 ready:" + this.ready[1]);
 
         return true;
     }//Ready2CrapAction

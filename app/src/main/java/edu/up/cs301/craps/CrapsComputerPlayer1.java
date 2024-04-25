@@ -67,8 +67,10 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
      */
     public void ready() {
         //create a ready action then send it
-        Ready2CrapAction ready = new Ready2CrapAction(this, true, this.playerNum);
-        game.sendAction(ready);
+        if (!crapsState.getPlayerReady(playerNum)) {
+            Ready2CrapAction ready = new Ready2CrapAction(this, true, this.playerNum);
+            game.sendAction(ready);
+        }
     }
 
 
@@ -140,29 +142,35 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         }
         crapsState = (CrapsState) info;
 
+        // store locally how much money I have according to my copy of the game state
+        playerMoney = crapsState.getPlayerFunds(this.playerNum); // TODO: add to smart computer properly
+
         // if is shooter take my turn
         if (crapsState.getPlayerTurn() == this.playerNum) {
             System.out.println("IT is the computer's turn!!!");
             //have to delay BEFORE we take turn or we won't be able to see the 7 rolled
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
 
             //if I'm not already ready, then place a bet
             if (!crapsState.getPlayerReady(this.playerNum)) {
                 placeBet();
                 ready();
             }
+            //is the other player ready
             //then roll
-            roll();
-        } else {
-            //if I'm not ready, then send a ready action
-            if (crapsState.getPlayerReady(this.playerNum)) {
-                System.out.println("COMPUTER: already ready.");
+            if (crapsState.getPlayerReady(this.playerNum - 1)){
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                roll();
+            }
 
+        //if I'm not the shooter
+        } else {
+            if (crapsState.getPlayerReady(this.playerNum)) {
+                //System.out.println("COMPUTER: already ready.");
+            //if I'm not ready, then send a ready action
             } else {
                 ready();
             }

@@ -59,6 +59,13 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
      */
     public CrapsComputerPlayer2(String name) {
         super(name);
+        // start the timer, ticking 20 times per second
+        getTimer().setInterval(50);
+        getTimer().start();
+
+        //initialize instance variables
+        this.playerMoney = 1000;
+        this.amountBet = 200;
     }
 
     /**
@@ -93,9 +100,6 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
          * Rowena's Version
          */
 
-        // look at how much money I have according to my copy of the game state
-        playerMoney = crapsState.getPlayerFunds(this.playerId);
-
         // if I somehow have less than $100 to spend, then bet all the money I have left
         if (playerMoney < 100) {
             this.amountBet = playerMoney;
@@ -105,7 +109,10 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
         }
 
         // bet on the pass line every time
-        PlaceBetAction pba = new PlaceBetAction(this, this.playerId, 1, amountBet);
+        // make a random bet
+        Random rand = new Random();
+        int betNum = rand.nextInt(22) + 1;
+        PlaceBetAction pba = new PlaceBetAction(this, playerNum, betNum, amountBet);
         this.game.sendAction(pba);
         System.out.println("computer trying to bet");
     }
