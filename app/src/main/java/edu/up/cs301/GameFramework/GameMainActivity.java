@@ -564,7 +564,7 @@ public abstract class GameMainActivity extends Activity implements
             Logger.log(TAG, "This is the help button!");
             Log.d("help","This is the help button!");
             if (this.game != null) {
-                MessageBox.popUpMessage(game.getGameState().toString(),this);
+                MessageBox.popUpMessage(game.getGameState().toString() ,this);
             }
             return true;
         }

@@ -76,7 +76,7 @@ public class CrapsLocalGame extends LocalGame {
 			//if this player is a human, set that player's ID its ID stored in localGame
 			if (player instanceof CrapsHumanPlayer){
 				CrapsHumanPlayer human = (CrapsHumanPlayer) player;
-				//human.setPlayerId(this.getPlayerIdx(player));
+				human.setPlayerId(this.getPlayerIdx(player));
 
 			}
 			//if this player is a human, set that player's ID its ID stored in localGame
