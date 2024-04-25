@@ -4,6 +4,7 @@ import edu.up.cs301.GameFramework.players.GameHumanPlayer;
 import edu.up.cs301.GameFramework.GameMainActivity;
 import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.graphics.Color;
 import android.view.View;
@@ -47,6 +48,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
     // the android activity that we are running
     private GameMainActivity myActivity;
+
+    private MediaPlayer music;
     private int amountBet;// amount player wants to bet
     private boolean isReady; // player is ready (done placing bets)
     //private int playerId;
@@ -285,6 +288,8 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     @Override
     public void receiveInfo(GameInfo info) {
 
+
+
         // ignore the message if it's not a CrapState message
         if (!(info instanceof CrapsState)) return;
 
@@ -427,6 +432,21 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
 
         // remember the activity
         this.myActivity = activity;
+
+        /*
+         External Citation
+         Date: 23 April 2024
+         Problem: could not figure out how to play music
+         Resource:
+         https://www.geeksforgeeks.org/how-to-add-audio-files-to-android-app-in-android-studio/
+         Solution: I used the example code from this post.
+         */
+        music = MediaPlayer.create(myActivity, R.raw.soldierofdance);
+
+        music.start();
+        music.setLooping(true);
+
+
 
         activity.setContentView(R.layout.craps_table);
 
