@@ -58,16 +58,18 @@ public class CrapsLocalGame extends LocalGame {
 	}
 
 
-	/**
+	/*
 	 * starts the game
 	 * prints to log a list of players and their IDs (LocalGame)
 	 *
 	 * @param players
 	 * 			the list of players who are playing in the game
 	 */
+	/*
 	@Override
 	public void start(GamePlayer[] players){
 		super.start(players);
+
 
 		//for each player, print out the ID
 		for (GamePlayer player : this.getPlayers()){
@@ -86,10 +88,13 @@ public class CrapsLocalGame extends LocalGame {
 				comp.setPlayerId(this.getPlayerIdx(player));
 			}
 
+
 		}
 
 
 	}
+	*/
+
 
 	/**
 	 * The only type of GameAction that should be sent is CounterMoveAction

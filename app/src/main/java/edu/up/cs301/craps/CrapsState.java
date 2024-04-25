@@ -406,7 +406,7 @@ public class CrapsState extends GameState {
         //this.setDice(1, 1); //always rolls a crap (for testing purposes)
         //this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
         //this.setDice(5, 6); //always rolls an 11 (for testing purposes)
-        this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
+        //this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
 
         //checks if this is the first round and updates the first roll
         //or if the shooter just lost (player switched)

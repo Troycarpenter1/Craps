@@ -52,7 +52,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     //private int playerId;
     private int betIncrement = 1;
 
-    public int playerId;
+    //public int playerId;
 
     //hashtable holding the ID of a bet in the array and the corresponding button
     Hashtable<Integer, List<Integer>> buttontable = new Hashtable<>();
@@ -301,7 +301,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         for (int i = 0; i < 23; i++){
 
             //get the bet at this inidex
-            Bet thisBet = state.getBet(this.playerId, i);
+            Bet thisBet = state.getBet(this.playerNum, i);
 
             //get all the the buttons (button IDs) associated with bet at index
             List <Integer> buttons = buttontable.get(i);
@@ -395,7 +395,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         //this doesn't work when player turn is based on order
         Button shoot = myActivity.findViewById(R.id.shoot);
         //if it's your turn then the shooter button is red
-        if (state.getPlayerTurn() == this.playerId) {
+        if (state.getPlayerTurn() == this.playerNum) {
             shoot.setTextColor(ContextCompat.getColor(this.myActivity, R.color.red));
         }
         //else black
@@ -734,9 +734,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         return amountBet;
     }
 
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
-    }
 
 
     /**

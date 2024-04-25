@@ -28,7 +28,6 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     private int playerMoney;// my money
     private int amountBet;// amount I wants to bet
     CrapsState crapsState;
-    private int playerId;
 
     /**
      * CrapsComputerPlayer1
@@ -57,7 +56,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 
         //create a roll action then send it
         //Log.d("die", "Computer player shooter? " + this.isShooter);
-        RollAction roll = new RollAction(this, this.playerId);
+        RollAction roll = new RollAction(this, this.playerNum);
         game.sendAction(roll);
 
     }
@@ -68,7 +67,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
      */
     public void ready() {
         //create a ready action then send it
-        Ready2CrapAction ready = new Ready2CrapAction(this, true, this.playerId);
+        Ready2CrapAction ready = new Ready2CrapAction(this, true, this.playerNum);
         game.sendAction(ready);
     }
 
@@ -110,7 +109,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
          */
 
         // look at how much money I have according to my copy of the game state
-        playerMoney = crapsState.getPlayerFunds(this.playerId);
+        playerMoney = crapsState.getPlayerFunds(this.playerNum);
 
         // if I somehow have less than $100 to spend, then bet all the money I have left
         if (playerMoney < 100) {
@@ -121,7 +120,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         }
 
         // bet on the pass line every time
-        PlaceBetAction pba = new PlaceBetAction(this, this.playerId, 1, amountBet);
+        PlaceBetAction pba = new PlaceBetAction(this, this.playerNum, 1, amountBet);
         this.game.sendAction(pba);
         System.out.println("computer trying to bet");
     }
@@ -142,7 +141,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         crapsState = (CrapsState) info;
 
         // if is shooter take my turn
-        if (crapsState.getPlayerTurn() == this.playerId) {
+        if (crapsState.getPlayerTurn() == this.playerNum) {
             System.out.println("IT is the computer's turn!!!");
             //have to delay BEFORE we take turn or we won't be able to see the 7 rolled
 
@@ -153,15 +152,15 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
             }
 
             //if I'm not already ready, then place a bet
-            if (!crapsState.getPlayerReady(this.playerId)) {
+            if (!crapsState.getPlayerReady(this.playerNum)) {
                 placeBet();
-                //ready();
+                ready();
             }
             //then roll
             roll();
         } else {
             //if I'm not ready, then send a ready action
-            if (crapsState.getPlayerReady(this.playerId)) {
+            if (crapsState.getPlayerReady(this.playerNum)) {
                 System.out.println("COMPUTER: already ready.");
 
             } else {
@@ -184,14 +183,5 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         game.sendAction(new CrapsMoveAction(this, move));
     }
 
-    /**
-     * setPlayerId
-     * setter method
-     *
-     * @param playerId
-     */
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
-    }
 
 }
