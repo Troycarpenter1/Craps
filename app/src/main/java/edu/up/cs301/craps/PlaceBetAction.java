@@ -20,7 +20,6 @@ public class PlaceBetAction extends GameAction {
     public int betAmount;
     public int playerId;
 
-
     /**
      * constructor for GameAction
      *

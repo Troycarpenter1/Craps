@@ -16,7 +16,6 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
 public class Ready2CrapAction extends GameAction {
 
     private static final long serialVersionUID = 3;
-
     public int playerID;
     public boolean isReady;
 

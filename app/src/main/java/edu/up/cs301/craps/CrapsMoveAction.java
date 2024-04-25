@@ -31,7 +31,8 @@ public class CrapsMoveAction extends GameAction {
 		super(player);
 		this.isPlus = isPlus;
 	}
-	
+
+	//todo: might not need this class
 	/**
 	 * getter method, to tell whether the move is a "plus"
 	 * 

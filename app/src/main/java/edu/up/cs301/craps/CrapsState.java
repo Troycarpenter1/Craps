@@ -325,8 +325,8 @@ public class CrapsState extends GameState {
 
         //adjust the bet's amount
         this.bets[action.playerId][action.betID].setBetAmount(0); //'removes' the bet (set to 0)
-        //this.bets[action.playerId][action.betID] = new Bet(); //'removes' the bet (set to 0)
 
+        //todo: remove logs if uneeded
         Log.d("die", "REMOVED BET bet ID: " + action.betID);
         Bet thisBet = this.bets[action.playerId][action.betID];
         Log.d("die", "amount of REMOVED bet: " + thisBet.getAmount());
@@ -356,9 +356,6 @@ public class CrapsState extends GameState {
             this.ready[1] = action.isReady;
         }
 
-        //System.out.println("STATE: Player 0 ready:" + this.ready[0]);
-        //System.out.println("STATE: Player 1 ready:" + this.ready[1]);
-
         return true;
     }//Ready2CrapAction
 
@@ -382,6 +379,7 @@ public class CrapsState extends GameState {
         for(int p=0;p< bets.length;p++){
             //sets to look at only bets that pay out continuously through a round
             for(int b=0;b<12;b++){
+                //removes the lasting bet depending on on/off
                 if(!offOn){
                     this.bets[p][b].setBetAmount(0);
                 }else {
@@ -418,6 +416,8 @@ public class CrapsState extends GameState {
         //updates the values of the die
         Random rand = new Random();
         this.setDice(rand.nextInt(6) + 1, rand.nextInt(6) + 1);
+
+        //todo:remove the test cases
         //this.setDice(1, 1); //always rolls a crap (for testing purposes)
         //this.setDice(5, 6); //always rolls an 11 (for testing purposes)
         //this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
@@ -443,16 +443,18 @@ public class CrapsState extends GameState {
                 this.isFirstRoll = false;
                 this.firstDieShot = this.dieTotal;
                 this.offOn = ON;
-                //payoutPlayers(action, !this.offOn);
+                //pays any bets made before on/off initialized
                 payoutAccordance(action);
                 payoutOnetime(action);
             }
         }else if(this.offOn==ON){
             if(this.dieTotal==firstDieShot){
+                //resets instance variables for the next round
                 this.offOn=OFF;
                 this.isFirstRoll=true;
                 this.firstDieShot=0;
 
+                //pays out and removes all bets upon round end
                 payoutOnetime(action);
                 payoutAccordance(action);
                 for(int p=0;p< bets.length;p++){
@@ -485,6 +487,7 @@ public class CrapsState extends GameState {
             this.firstDieShot = 0;
             this.isFirstRoll=true;
             this.offOn=OFF;
+            //pays out and removes all bets upon turn switching
             payoutOnetime(action);
             payoutAccordance(action);
             for(int p=0;p< bets.length;p++){

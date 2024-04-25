@@ -442,7 +442,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
          Solution: I used the example code from this post.
          */
         music = MediaPlayer.create(myActivity, R.raw.soldierofdance);
-
         music.start();
         music.setLooping(true);
 
