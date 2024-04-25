@@ -57,45 +57,6 @@ public class CrapsLocalGame extends LocalGame {
 
 	}
 
-
-	/*
-	 * starts the game
-	 * prints to log a list of players and their IDs (LocalGame)
-	 *
-	 * @param players
-	 * 			the list of players who are playing in the game
-	 */
-	/*
-	@Override
-	public void start(GamePlayer[] players){
-		super.start(players);
-
-
-		//for each player, print out the ID
-		for (GamePlayer player : this.getPlayers()){
-			System.out.println("Name: "+ player.toString() + ", Id: " + this.getPlayerIdx(player) + "\n");
-
-			//if this player is a human, set that player's ID its ID stored in localGame
-			if (player instanceof CrapsHumanPlayer){
-				CrapsHumanPlayer human = (CrapsHumanPlayer) player;
-				human.setPlayerId(this.getPlayerIdx(player));
-
-			}
-			//if this player is a human, set that player's ID its ID stored in localGame
-			//TODO gotta make sure this works for compplayer2, I think it will
-			else if ((player instanceof CrapsComputerPlayer1) || (player instanceof CrapsComputerPlayer2)){
-				CrapsComputerPlayer1 comp = (CrapsComputerPlayer1) player;
-				comp.setPlayerId(this.getPlayerIdx(player));
-			}
-
-
-		}
-
-
-	}
-	*/
-
-
 	/**
 	 * The only type of GameAction that should be sent is CounterMoveAction
 	 */
