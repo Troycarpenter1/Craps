@@ -6,6 +6,7 @@ import edu.up.cs301.GameFramework.actionMessage.GameAction;
 /**
  * A CounterMoveAction is an action that is a "move" the game: either increasing
  * or decreasing the counter value.
+ * TODO: We may not need this class
  * 
  * @author Steven R. Vegdahl
  * @author Andrew M. Nuxoll
@@ -20,7 +21,7 @@ public class CrapsMoveAction extends GameAction {
 	private boolean isPlus;
 	
 	/**
-	 * Constructor for the CounterMoveAction class.
+	 * Constructor for the CrapsMoveAction class.
 	 * 
 	 * @param player
 	 *            the player making the move
@@ -32,7 +33,6 @@ public class CrapsMoveAction extends GameAction {
 		this.isPlus = isPlus;
 	}
 
-	//todo: might not need this class
 	/**
 	 * getter method, to tell whether the move is a "plus"
 	 * 

@@ -73,7 +73,7 @@ public class Bet implements Serializable {
         this.oneTimeOnly = (this.ID >= 11);
     }
 
-    //copy cnstr
+    //copy constructor
     public Bet(Bet copyBet) {
         this.ID = copyBet.ID;
         this.name = ALL_BET_NAMES[copyBet.ID];
@@ -224,7 +224,7 @@ public class Bet implements Serializable {
                 return false;
         }
         return false; //returns false if none of the previous cases are met
-    }
+    }//checkThisBetWon
 
 
     /*

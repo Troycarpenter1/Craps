@@ -1,15 +1,9 @@
 package edu.up.cs301.craps;
 
-import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.widget.ImageView;
-
+import androidx.annotation.NonNull;
 import java.util.Random;
-
 import edu.up.cs301.GameFramework.infoMessage.GameState;
-import edu.up.cs301.GameFramework.players.GameComputerPlayer;
-import edu.up.cs301.GameFramework.players.GameHumanPlayer;
-import edu.up.cs301.GameFramework.players.GamePlayer;
 
 /**
  * This contains the state for the Craps game. The state consist the player and
@@ -55,13 +49,14 @@ public class CrapsState extends GameState {
 
 
     //purpose is to prevent one roll counting double
-    private boolean playerSwitched; //local variable used to indicate if the turn has just been switched (7 was the last number rolled)
-    //if false > a new roll has been made
-    //true > we're still on the 7 from last time
+    //local variable used to indicate if 7 was the last number rolled(turn switch)
+    private boolean playerSwitched;
+    //false = a new roll has been made
+    //true = we're still on the 7 from last time
 
     /**
      * CrapsState
-     * ctor
+     * constructor
      */
     public CrapsState() {
         this.playerTurn = 0;
@@ -82,7 +77,7 @@ public class CrapsState extends GameState {
 
     /**
      * CrapsState
-     * copy constructor, currently is deep since no objects are used as variables
+     * copy constructor, it's currently a deep copy since no objects are used as variables
      *
      * @param crap the other crap we want to copy
      */
@@ -104,15 +99,12 @@ public class CrapsState extends GameState {
         }
     }
 
-    /*
-     * getter methods for instance variables
-     */
+
+     // getter methods for instance variables
     public int getPlayerTurn() {
-        //System.out.println("Current player turn: " + playerTurn);
         return this.playerTurn;
     }
 
-    //TODO is this gonna be problematic since it returns an object? -Sydney
     public Bet getBet(int playerId, int index) {
         return this.bets[playerId][index];
     }
@@ -138,7 +130,6 @@ public class CrapsState extends GameState {
     }
 
     //setters
-
     /**
      * setDice
      * sets both dice sets the total after it finds the sum
@@ -162,7 +153,6 @@ public class CrapsState extends GameState {
         Log.d("die", "Player turn just switched to:" + this.playerTurn);
     }
 
-
     /**
      * setPlayerFunds
      *
@@ -179,13 +169,15 @@ public class CrapsState extends GameState {
      *
      * @return the tale of the game
      */
-    @Override
+    @NonNull
     public String toString() {
         String player0 = this.toString(0);
         String player1 = this.toString(1);
         String gameON = this.offOn ? "ON" : "OFF";
-        String gameStats = "The game is " + gameON + " The current dice are " + this.die1CurrVal + " and " + this.die2CurrVal
-                + " which total to " + this.dieTotal + " The first dice roll of this shooter was " + this.firstDieShot + " the current shooter is player" + this.playerTurn;
+        String gameStats = "The game is " + gameON + " The current dice are "
+                + this.die1CurrVal + " and " + this.die2CurrVal + " which total to "
+                + this.dieTotal + " The first dice roll of this shooter was "
+                + this.firstDieShot + " the current shooter is player" + this.playerTurn;
         String gameStory = gameStats + "\nAll Player Stats: \n" + player0 + "\n" + player1;
         return gameStory.trim(); //snip, snip
     }
@@ -201,7 +193,8 @@ public class CrapsState extends GameState {
         //creating helpful string to be concat with the final string that will be returned
         String readyOrNot = this.ready[id] ? "READY" : "NOT READY";
         String betString = "";
-        //iterates through the strings of all of the player of this id's bets and adds them to the player string
+        //iterates through the strings of all of the player of this
+        // id's bets and adds them to the player string
         for (int b = 0; b < this.bets[id].length; b++) {
             if (this.bets[id][b].getAmount() != 0) { //checks if this bet in the array has any money bet on it
                 betString = betString + ("\t" + this.bets[id][b].toString() + ", \n");
@@ -210,7 +203,8 @@ public class CrapsState extends GameState {
         if (betString.length() < 3) {
             betString = "NO BETS PLACED";
         }
-        return "Player" + id + " is " + readyOrNot + " has $" + this.funds[id] + " and has the following bets:\n" + betString;
+        return "Player" + id + " is " + readyOrNot + " has $" + this.funds[id]
+                + " and has the following bets:\n" + betString;
     }
 
     /*
@@ -231,7 +225,6 @@ public class CrapsState extends GameState {
         }
         return false;
     }
-
 
     /**
      * placeBet
@@ -254,7 +247,6 @@ public class CrapsState extends GameState {
             return false;
         }
 
-
         System.out.println("The bet sender is not ready. Proceeding");
 
         //Is the bet ID a valid point in the array?
@@ -263,31 +255,16 @@ public class CrapsState extends GameState {
             return false;
         }
 
-        //Change the state to add the new bet
-
-        //assumes that a bet's bet ID is the same as it's position in the array
-        // get the bet from the proper location based on the ID
-
-        //adds the bet's new amount to it's current amount
-        this.bets[action.playerId][action.betID].setBetAmount(this.bets[action.playerId][action.betID].getAmount() + action.betAmount);
+        //1. Change the state to add the new bet
+        //2. assumes that a bet's bet ID is the same as it's position in the array
+        //3. get the bet from the proper location based on the ID
+        //4. adds the bet's new amount to it's current amount
+        this.bets[action.playerId][action.betID].setBetAmount
+                (this.bets[action.playerId][action.betID].getAmount() + action.betAmount);
 
         //set player fundsSystem
         this.setPlayerFunds(action.playerId, this.funds[action.playerId] - action.betAmount);
         Log.d("die", "player " + action.playerId + "funds changed to " + this.funds[action.playerId]);
-
-
-        //TODO automatically ready the computer after they bet
-        //if the sender was the human player
-//        if (action.getPlayer() instanceof CrapsHumanPlayer) {
-//            //if the player Id is 1
-////            if (action.playerId == 1) {
-////                this.ready[0] = true;  //set the computer to true
-////            } else {
-////                this.ready[1] = true;
-////            }
-//        } else {
-//            this.ready[action.playerId] = true;
-//        }
 
         //note that we will eventually initialize all bets in the array to have
         //the correct IDs and names before the game is started.
@@ -316,21 +293,12 @@ public class CrapsState extends GameState {
             return false;
         }
 
-        //Log.d("die", "added $" + bets[action.playerId][action.betID].getAmount() +
-        // "to player's account.");
         //add bet amount back to human's funds
         this.setPlayerFunds(action.playerId, this.funds[action.playerId] +
                 bets[action.playerId][action.betID].getAmount());
 
-
         //adjust the bet's amount
         this.bets[action.playerId][action.betID].setBetAmount(0); //'removes' the bet (set to 0)
-
-        //todo: remove logs if uneeded
-        Log.d("die", "REMOVED BET bet ID: " + action.betID);
-        Bet thisBet = this.bets[action.playerId][action.betID];
-        Log.d("die", "amount of REMOVED bet: " + thisBet.getAmount());
-
 
         return true;
     }//removeBet
@@ -390,7 +358,6 @@ public class CrapsState extends GameState {
                     // updates the players funds
                     this.setPlayerFunds(action.playerId, newFunds);
                 }
-
             }
         }
     }
@@ -417,18 +384,12 @@ public class CrapsState extends GameState {
         Random rand = new Random();
         this.setDice(rand.nextInt(6) + 1, rand.nextInt(6) + 1);
 
-        //todo:remove the test cases
-        //this.setDice(1, 1); //always rolls a crap (for testing purposes)
-        //this.setDice(5, 6); //always rolls an 11 (for testing purposes)
-        //this.setDice(5, 5); //always rolls 2 5s (for testing purposes)
-
         //checks if this is the first round and updates the first roll
         //or if the shooter just lost (player switched)
         if (this.firstDieShot == 0 || playerSwitched) {
             //updates the first roll of the round
             this.firstDieShot = this.dieTotal;
         }
-
 
         if(!isFirstRoll){
             payoutAccordance(action);
@@ -465,9 +426,6 @@ public class CrapsState extends GameState {
             }
         }
 
-
-
-
         //change playerSwitched to false after roll
         this.playerSwitched = false;
 
@@ -475,8 +433,6 @@ public class CrapsState extends GameState {
         this.ready[0] = false;
         this.ready[1] = false;
 
-        //SYDNEY -- switch player
-        // WES -- added first die 2 or 3
         //checks if the shooter wins or loses
         if ((this.dieTotal == 7 || this.firstDieShot == 2 || this.firstDieShot == 3) && !playerSwitched) {
             Log.d("die", "SWITCH SHOOTER!");

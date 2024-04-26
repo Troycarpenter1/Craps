@@ -9,10 +9,11 @@ import edu.up.cs301.GameFramework.infoMessage.GameInfo;
 import edu.up.cs301.GameFramework.utilities.Tickable;
 
 /**
- * Simple Computer Player, at this point should always be in player 1 spot (not player 0).
+ * Dumb Computer Player
+ *
  * Doesn't place any bets when the human is the shooter.
- * Will bet about every roll when it is the shooter, $100 on the pass line each time, until
- * it runs out of money.
+ * Will bet about every roll when it is the shooter, $100
+ * on the pass line each time, until it runs out of money.
  *
  * @author Steven R. Vegdahl
  * @author Andrew M. Nuxoll
@@ -27,7 +28,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     //private GameMainActivity myActivity; //no usages but might be important idk - W
     private int playerMoney;// my money
     private int amountBet;// amount I wants to bet
-    CrapsState crapsState;
+    CrapsState crapsState;// reference to the crapState
 
     /**
      * CrapsComputerPlayer1
@@ -50,7 +51,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 
     /**
      * roll
-     * roll the dice on the game-board
+     * sends a RollAction to the crapState
      */
     public void roll() {
 
@@ -63,52 +64,22 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
 
     /**
      * ready
-     * tells the game I'm (comp player) is ready
+     * sends a ReadyAction to the crapState if I am not already ready
+     * otherwise does nothing
      */
     public void ready() {
-        //create a ready action then send it
         if (!crapsState.getPlayerReady(playerNum)) {
             Ready2CrapAction ready = new Ready2CrapAction(this, true, this.playerNum);
             game.sendAction(ready);
         }
     }
 
-
-    /**
-     * takeTurn
-     * called when it's time to take bets (shooter has rolled, or everyone
-     * is ready and they are the shooter)
-     * shoots if they're the shooter, then
-     * places a bet on the pass line
-     */
-    public void takeTurn() {
-        // roll the dice
-        placeBet();
-        roll();
-        //state will unready both players after roll
-
-        /* Sydney commented this out for testing the changing turns
-         *
-         * //make a random amount of bets
-         * Random rand = new Random();
-         * int numBets = rand.nextInt(5); //make 0 to 4 bets
-         * for (int i = 0; i < numBets; i++){
-         *	bet();
-         *}
-         */
-        Log.d("computer", "Computer Money: $" + this.playerMoney);
-    }
-
     /**
      * bet
-     * places a bet of a 100 on pass line
-     * adds the bet to the local bet array
+     * sends a betAction to the crapState
+     * places a bet of $100 on pass line
      */
     public void placeBet() {
-        /*
-         * Computer Betting
-         * Rowena's Version
-         */
 
         // look at how much money I have according to my copy of the game state
         playerMoney = crapsState.getPlayerFunds(this.playerNum);
@@ -130,20 +101,20 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
     /**
      * receiveInfo
      * callback method--game's state has changed
+     * the computer will execute actions automatically
+     * whenever it receives new game info
      *
      * @param info the information (presumably containing the game's state)
      */
     @Override
     protected void receiveInfo(GameInfo info) {
-        // Do nothing, as we ignore all state in deciding our next move. It
-        // depends totally on the timer and random numbers.
         if (!(info instanceof CrapsState)) {
             return;
         }
         crapsState = (CrapsState) info;
 
         // store locally how much money I have according to my copy of the game state
-        playerMoney = crapsState.getPlayerFunds(this.playerNum); // TODO: add to smart computer properly
+        playerMoney = crapsState.getPlayerFunds(this.playerNum);
 
         // if is shooter take my turn
         if (crapsState.getPlayerTurn() == this.playerNum) {
@@ -155,8 +126,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
                 placeBet();
                 ready();
             }
-            //is the other player ready
-            //then roll
+            //if other player ready then roll
             if (crapsState.getPlayerReady(this.playerNum - 1)){
                 try {
                     Thread.sleep(500);
@@ -169,7 +139,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
         //if I'm not the shooter
         } else {
             if (crapsState.getPlayerReady(this.playerNum)) {
-                //System.out.println("COMPUTER: already ready.");
+                System.out.println("COMPUTER: already ready.");
             //if I'm not ready, then send a ready action
             } else {
                 ready();

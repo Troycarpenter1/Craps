@@ -12,6 +12,7 @@ import edu.up.cs301.GameFramework.gameConfiguration.*;
 
 /**
  * this is the primary activity for Craps game
+ * TODO: comment to describe all functional parts of this class
  *
  * @author Andrew M. Nuxoll
  * @author Steven R. Vegdahl
@@ -60,7 +61,7 @@ public class CrapsMainActivity extends GameMainActivity {
                 return new CrapsComputerPlayer2(name);
             }});
 
-        // Create a game configuration class for Counter:
+        // Create a game configuration class for Craps:
         // - player types as given above
         // - from 1 to 2 players
         // - name of game is "Craps Game"

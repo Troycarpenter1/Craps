@@ -4,7 +4,7 @@ import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.players.GamePlayer;
 
 /**
- * PlaceBet Action
+ * PlaceBet Action is an action that will place a bet on the board
  *
  * @author Wes Helms
  * @author Troy Carpenter
@@ -28,6 +28,15 @@ public class PlaceBetAction extends GameAction {
     public PlaceBetAction(GamePlayer player){
         super(player);
     }
+
+    /**
+     * PlaceBetAction constructor
+     *
+     * @param player the player that sent the action
+     * @param playerId Id of the given player
+     * @param betID Id of the bet the player wants to place
+     * @param betAmount Amount the player wants to place on that bet
+     */
     public PlaceBetAction(GamePlayer player,int playerId, int betID, int betAmount) {
         super(player);  //I don't remember what super(player) does - S
         this.playerId=playerId;
