@@ -4,7 +4,8 @@ import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.players.GamePlayer;
 
 /**
- * RemoveBet Action
+ * RemoveBet Action is an action that will remove an existing
+ * bet on the craps board
  *
  * @author Wes Helms
  * @author Troy Carpenter
@@ -20,9 +21,11 @@ public class RemoveBetAction extends GameAction {
     public int playerId;
 
     /**
-     * constructor for GameAction
+     * RemoveBetAction constructor
      *
-     * @param player the player who created the action
+     * @param player the player that sent the action
+     * @param playerId Id of the player that sent the action
+     * @param betID Id of the bet that we want to remove
      */
     public RemoveBetAction(GamePlayer player,int playerId, int betID) {
         super(player);

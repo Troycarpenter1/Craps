@@ -5,6 +5,8 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
 
 /**
  * Ready2Crap Action (the Ready action name was taken)
+ * This action will set the given GamePlayer to ready
+ * when delivered to the game state
  *
  * @author Wes Helms
  * @author Troy Carpenter
@@ -20,9 +22,11 @@ public class Ready2CrapAction extends GameAction {
     public boolean isReady;
 
     /**
-     * constructor for GameAction
+     * Ready2CrapAction constructor
      *
-     * @param player the player who created the action
+     * @param player the player that sent the action
+     * @param isReady the ready status that we want to send
+     * @param playerID Id of the player that sent the action
      */
     public Ready2CrapAction(GamePlayer player, boolean isReady, int playerID) {
         super(player);

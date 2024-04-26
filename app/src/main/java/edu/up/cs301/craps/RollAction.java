@@ -6,7 +6,8 @@ import edu.up.cs301.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.GameFramework.players.GamePlayer;
 
 /**
- * Roll Action
+ * Roll Action is an action that will roll the dice on the craps board
+ * and in turn update the gui accordingly
  *
  * @author Wes Helms
  * @author Troy Carpenter
@@ -16,15 +17,14 @@ import edu.up.cs301.GameFramework.players.GamePlayer;
  */
 
 public class RollAction extends GameAction {
-
     private static final long serialVersionUID = 5;
     int playerId;
 
-
     /**
-     * constructor for GameAction
+     * RollAction constructor
      *
-     * @param player the player who created the action
+     * @param player player that sent the action
+     * @param playerId Id of the player that sent the action
      */
     public RollAction(GamePlayer player, int playerId) {
         super(player);
