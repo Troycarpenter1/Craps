@@ -12,12 +12,11 @@ import android.widget.TextView;
 import java.util.Random;
 
 /**
- * A computer-version of a counter-player.  Since this is such a simple game,
- * it just sends "+" and "-" commands with equal probability, at an average
- * rate of one per second. This computer player does, however, have an option to
- * display the game as it is progressing, so if there is no human player on the
- * device, this player will display a GUI that shows the value of the counter
- * as the game is being played.
+ * Dumb Computer Player
+ *
+ * Doesn't place any bets when the human is the shooter.
+ * Will bet about every roll when it is the shooter, $100
+ * on a random bet each time, until it runs out of money.
  *
  * @author Steven R. Vegdahl
  * @author Andrew M. Nuxoll
@@ -40,17 +39,11 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
     // not running a GUI).
     private Activity activityForGui = null;
 
-    // If this player is running the GUI, the widget containing the counter's
-    // value (otherwise, null);
-    private TextView counterValueTextView = null;
-
     // If this player is running the GUI, the handler for the GUI thread (otherwise
     // null)
     private Handler guiHandler = null;
     private int playerMoney;// my money
     private int amountBet;// amount I wants to bet
-    CrapsState crapsState;
-    private int playerId;
 
     /**
      * constructor
@@ -91,15 +84,12 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
     }
 
     /**
-     *  new placeBet method bets on a random bet instead of pass line every time
+     *  placeBet
+     *  Sends a PlaceBetAction to the crapState
+     *  Will place a random bet on the board whenever called
      */
     @Override
     public void placeBet() {
-        /*
-         * Computer Betting
-         * Rowena's Version
-         */
-
         // if I somehow have less than $100 to spend, then bet all the money I have left
         if (playerMoney < 100) {
             this.amountBet = playerMoney;
