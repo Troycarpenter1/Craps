@@ -38,7 +38,7 @@ public class PlaceBetAction extends GameAction {
      * @param betAmount Amount the player wants to place on that bet
      */
     public PlaceBetAction(GamePlayer player,int playerId, int betID, int betAmount) {
-        super(player);  //I don't remember what super(player) does - S
+        super(player);
         this.playerId=playerId;
         this.betAmount = betAmount;
         this.betID = betID;

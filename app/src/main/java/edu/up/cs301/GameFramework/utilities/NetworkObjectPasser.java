@@ -206,7 +206,7 @@ public abstract class NetworkObjectPasser {
                 try {
                     Logger.debugLog(TAG, "Ready to read object");
                     Object obj = in.readObject();
-                    Logger.debugLog(TAG, "object read ("+obj.getClass()+")"); //TODO: toString
+                    Logger.debugLog(TAG, "object read ("+obj.getClass()+")");
                     onReceiveObject(obj);
                 }
                 catch (Exception x) {
