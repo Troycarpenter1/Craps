@@ -553,8 +553,8 @@ public abstract class GameMainActivity extends Activity implements
         }
 
         if (id == R.id.delete_game) {
-            Logger.log(TAG, "This is the delete button!");
-            MessageBox.popUpDeleteGame("Select the Game to Delete: ", this);
+            Logger.log(TAG, "This is the instructions button!");
+            MessageBox.popUpMessage("How to play:" ,this);
             return true;
         }
 
