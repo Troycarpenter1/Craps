@@ -56,22 +56,22 @@ public abstract class GameMainActivity extends Activity implements
     private static final String TAG = "GameMainActivity";
 
     private static final String INSTRUCTIONS = "How to play: Craps is a dice" +
-            " game in which players bet on the outcomes of the roll of a pair of dice. " +
+            " game in which players bet on the outcomes of the roll of a pair of dice.\n\n" +
             "If the \"Shoot\" text is red it means it's your turn to shoot." +
-            " If shoot is black then it's the other player's turn. Both players" +
-            " must be ready for the shooter to shoot (including the shooter)." +
-            " Readying indicates to the game that you're done making adjustments" +
-            " to bets. Click the ready button to ready/unready. Red text on the" +
-            " Ready button indicates you're ready, Black indicates you're not ready." +
-            "You can bet as long as you're not ready. Adjust the slider to adjust the" +
-            " amount of your bet. Press the radio buttons to adjust the increment of" +
-            " your bet. Click on any place on the board to place a bet. A bet will" +
-            " highlight gold if a bet has been placed there. To remove a bet, adjust" +
-            " the slider to 0 and click a place on the board. (Note, you must adjust" +
-            " the slider once after the game starts before you can place a bet.) " +
+            "If shoot is black then it's the other player's turn.\nBoth players" +
+            " must be ready for the shooter to shoot (including the shooter).\n" +
+            "Readying indicates to the game that you're done making adjustments" +
+            " to bets. Click the ready button to ready/unready.\nRed text on the" +
+            " Ready button indicates you're ready, black indicates you're not ready.\n" +
+            "You can bet as long as you're not ready.\n\nAdjust the slider to adjust the" +
+            " amount of your bet.\nPress the radio buttons to adjust the increment of" +
+            " your bet.\n\nClick on any place on the board to place a bet. A bet will" +
+            " highlight gold if a bet has been placed there.\nTo remove a bet, adjust" +
+            " the slider to 0 and click a place on the board.\n(Note, you must adjust" +
+            " the slider once after the game starts before you can place a bet.)\n\n" +
             "You win if the other player has lost all their money (including money they" +
-            " have placed on bets.) You lose if you lose all your money (including all" +
-            " money you placed on bets). For example, you would lose if you bet all your" +
+            " have placed on bets.)\nYou lose if you lose all your money (including all" +
+            " money you placed on bets).\nFor example, you would lose if you bet all your" +
             " money on a place and you lost the bet.";
     /*
      * ====================================================================
