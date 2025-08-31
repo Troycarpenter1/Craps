@@ -1,8 +1,11 @@
 package edu.up.cs301.craps;
 
 import android.util.Log;
+
 import androidx.annotation.NonNull;
+
 import java.util.Random;
+
 import edu.up.cs301.GameFramework.infoMessage.GameState;
 
 /**
@@ -47,12 +50,13 @@ public class CrapsState extends GameState {
     public static final boolean ON = true;
     public static final boolean OFF = false;
 
-
-    //purpose is to prevent one roll counting double
-    //local variable used to indicate if 7 was the last number rolled(turn switch)
+    /*
+    purpose is to prevent one roll counting double
+    false = a new roll has been made
+    true = we're still on the 7 from last time
+     */
     private boolean playerSwitched;
-    //false = a new roll has been made
-    //true = we're still on the 7 from last time
+
 
     /**
      * CrapsState
@@ -73,6 +77,8 @@ public class CrapsState extends GameState {
                 this.bets[p][b] = new Bet(b);
             }
         }
+        // makes the 2nd player ready by default in case there is no player 2
+        this.ready[1] = true;
     }
 
     /**
@@ -100,7 +106,7 @@ public class CrapsState extends GameState {
     }
 
 
-     // getter methods for instance variables
+    // getter methods for instance variables
     public int getPlayerTurn() {
         return this.playerTurn;
     }
@@ -130,6 +136,7 @@ public class CrapsState extends GameState {
     }
 
     //setters
+
     /**
      * setDice
      * sets both dice sets the total after it finds the sum
@@ -150,7 +157,6 @@ public class CrapsState extends GameState {
      */
     public void changeTurn() {
         this.playerTurn = 1 - this.playerTurn;
-        Log.d("die", "Player turn just switched to:" + this.playerTurn);
     }
 
     /**
@@ -174,10 +180,11 @@ public class CrapsState extends GameState {
         String player0 = this.toString(0);
         String player1 = this.toString(1);
         String gameON = this.offOn ? "ON" : "OFF";
-        String gameStats = "The game is " + gameON + " The current dice are "
-                + this.die1CurrVal + " and " + this.die2CurrVal + " which total to "
-                + this.dieTotal + " The first dice roll of this shooter was "
-                + this.firstDieShot + " the current shooter is player" + this.playerTurn;
+        String gameStats = "The game is " + gameON +
+                " The current dice are " + this.die1CurrVal + " and " + this.die2CurrVal +
+                " which total to " + this.dieTotal +
+                " The first dice roll of this shooter was " + this.firstDieShot +
+                " the current shooter is player" + this.playerTurn;
         String gameStory = gameStats + "\nAll Player Stats: \n" + player0 + "\n" + player1;
         return gameStory.trim(); //snip, snip
     }
@@ -200,11 +207,13 @@ public class CrapsState extends GameState {
                 betString = betString + ("\t" + this.bets[id][b].toString() + ", \n");
             }
         }
-        if (betString.length() < 3) {
+        //checks if the String list of bets contains any bets
+        if (betString.length() < 2) {
             betString = "NO BETS PLACED";
         }
-        return "Player" + id + " is " + readyOrNot + " has $" + this.funds[id]
-                + " and has the following bets:\n" + betString;
+        return "Player" + id + " is " + readyOrNot +
+                " has $" + this.funds[id] +
+                " and has the following bets:\n" + betString;
     }
 
     /*
@@ -256,7 +265,7 @@ public class CrapsState extends GameState {
         }
 
         //1. Change the state to add the new bet
-        //2. assumes that a bet's bet ID is the same as it's position in the array
+        //2. a bet's bet ID is the same as it's position in the array
         //3. get the bet from the proper location based on the ID
         //4. adds the bet's new amount to it's current amount
         this.bets[action.playerId][action.betID].setBetAmount
@@ -289,7 +298,7 @@ public class CrapsState extends GameState {
         }
 
         //player shouldn't be able to remove bet if they're already ready
-        if (ready[action.playerId]){
+        if (ready[action.playerId]) {
             return false;
         }
 
@@ -311,27 +320,31 @@ public class CrapsState extends GameState {
      * @return boolean value that dictates if this action is a legal move
      */
     public boolean ready(Ready2CrapAction action) {
-        //what conditions should a person ready under...
-        //might have to time that later
-
-        System.out.println("Received ready action from player " + action.playerID);
-
-        //note this is only for 2 players right now :)
-        //if ready then changes appropriate player to ready
+        /*
+        If ready then changes appropriate player to ready
+        Note: this is only for 2 players right now
+         */
         if (action.playerID == 0) {
             this.ready[0] = action.isReady;
+            return true;
         } else if (action.playerID == 1) {
             this.ready[1] = action.isReady;
+            return true;
         }
-
-        return true;
+        return false;
     }//Ready2CrapAction
 
 
-    public void payoutOnetime(RollAction action){
-        for(int p=0;p< bets.length;p++){
+    /**
+     * payoutOnetime
+     * This method pays out all of the bets that are paid every roll (if won)
+     *
+     * @param action the roll action being passed to the craps game state
+     */
+    public void payoutOnetime(RollAction action) {
+        for (int p = 0; p < bets.length; p++) {
             //sets to look at only bets that pay out after a single roll
-            for(int b=11;b<bets[p].length;b++){
+            for (int b = 11; b < bets[p].length; b++) {
                 // calculates how much money the player has won
                 int newFunds = this.funds[action.playerId] +
                         this.bets[p][b].payoutBet(this.die1CurrVal, this.die2CurrVal,
@@ -343,14 +356,21 @@ public class CrapsState extends GameState {
             }
         }
     }
-    public void payoutAccordance(RollAction action){
-        for(int p=0;p< bets.length;p++){
+
+    /**
+     * payoutAccordance
+     * This method pays out all of the bets that last as long as the game is ON (if won)
+     *
+     * @param action the roll action being passed to the craps game state
+     */
+    public void payoutAccordance(RollAction action) {
+        for (int p = 0; p < bets.length; p++) {
             //sets to look at only bets that pay out continuously through a round
-            for(int b=0;b<12;b++){
+            for (int b = 0; b < 12; b++) {
                 //removes the lasting bet depending on on/off
-                if(!offOn){
+                if (!offOn) {
                     this.bets[p][b].setBetAmount(0);
-                }else {
+                } else {
                     // calculates how much money the player has won
                     int newFunds = this.funds[action.playerId] +
                             this.bets[p][b].payoutBet(this.die1CurrVal, this.die2CurrVal,
@@ -390,17 +410,22 @@ public class CrapsState extends GameState {
             //updates the first roll of the round
             this.firstDieShot = this.dieTotal;
         }
-
-        if(!isFirstRoll){
+        if (!isFirstRoll) {
             payoutAccordance(action);
             payoutOnetime(action);
         }
 
-        //sets the value for the on/off button and makes sure that the roll is the first of the "round"
+        /*
+        sets the value for the on/off button and makes sure that
+        the roll is the first of the "round"
+         */
         if (this.offOn == OFF && this.isFirstRoll) {
             //makes sure the roll is a valid place bet
             if ((this.dieTotal > 3 && this.dieTotal < 11) && this.dieTotal != 7) {
-                //sets the first roll variable, and sets the other booleans to appropriate values
+                /*
+                sets the first roll variable,
+                and sets the other booleans to appropriate values
+                 */
                 this.isFirstRoll = false;
                 this.firstDieShot = this.dieTotal;
                 this.offOn = ON;
@@ -408,18 +433,18 @@ public class CrapsState extends GameState {
                 payoutAccordance(action);
                 payoutOnetime(action);
             }
-        }else if(this.offOn==ON){
-            if(this.dieTotal==firstDieShot){
+        } else if (this.offOn == ON) {
+            if (this.dieTotal == firstDieShot) {
                 //resets instance variables for the next round
-                this.offOn=OFF;
-                this.isFirstRoll=true;
-                this.firstDieShot=0;
+                this.offOn = OFF;
+                this.isFirstRoll = true;
+                this.firstDieShot = 0;
 
                 //pays out and removes all bets upon round end
                 payoutOnetime(action);
                 payoutAccordance(action);
-                for(int p=0;p< bets.length;p++){
-                    for(int b=0;b<bets[p].length;b++){
+                for (int p = 0; p < bets.length; p++) {
+                    for (int b = 0; b < bets[p].length; b++) {
                         bets[p][b].setBetAmount(0);
                     }
                 }
@@ -441,13 +466,13 @@ public class CrapsState extends GameState {
             //set playerSwitched to true since the shooter lost
             this.playerSwitched = true;
             this.firstDieShot = 0;
-            this.isFirstRoll=true;
-            this.offOn=OFF;
+            this.isFirstRoll = true;
+            this.offOn = OFF;
             //pays out and removes all bets upon turn switching
             payoutOnetime(action);
             payoutAccordance(action);
-            for(int p=0;p< bets.length;p++){
-                for(int b=0;b<bets[p].length;b++){
+            for (int p = 0; p < bets.length; p++) {
+                for (int b = 0; b < bets[p].length; b++) {
                     bets[p][b].setBetAmount(0);
                 }
             }

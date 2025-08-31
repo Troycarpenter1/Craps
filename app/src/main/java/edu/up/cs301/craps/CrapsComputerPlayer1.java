@@ -10,7 +10,7 @@ import edu.up.cs301.GameFramework.utilities.Tickable;
 
 /**
  * Dumb Computer Player
- *
+ * <p>
  * Doesn't place any bets when the human is the shooter.
  * Will bet about every roll when it is the shooter, $100
  * on the pass line each time, until it runs out of money.
@@ -127,7 +127,7 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
                 ready();
             }
             //if other player ready then roll
-            if (crapsState.getPlayerReady(this.playerNum - 1)){
+            if (crapsState.getPlayerReady(this.playerNum - 1)) {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -136,11 +136,11 @@ public class CrapsComputerPlayer1 extends GameComputerPlayer implements Tickable
                 roll();
             }
 
-        //if I'm not the shooter
+            //if I'm not the shooter
         } else {
             if (crapsState.getPlayerReady(this.playerNum)) {
                 System.out.println("COMPUTER: already ready.");
-            //if I'm not ready, then send a ready action
+                //if I'm not ready, then send a ready action
             } else {
                 ready();
             }

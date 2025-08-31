@@ -94,7 +94,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      * sends a bet action
      *
      * @param button the button that was clicked to bet
-     * @param id the id of the bet in the bet class
+     * @param id     the id of the bet in the bet class
      */
     public void bet(View button, int id) {
         Button but = (Button) button;
@@ -138,12 +138,11 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             Ready2CrapAction P1Ready = new Ready2CrapAction(this, !this.isReady, this.playerNum);
             game.sendAction(P1Ready);
 
-        //check shoot button
+            //check shoot button
         } else if (myActivity.findViewById(R.id.shoot) == button) {
             //create and send the roll action
             RollAction roll = new RollAction(this, this.playerNum);
             game.sendAction(roll);
-
         } else if (myActivity.findViewById(R.id.passLine1) == button) {  //pass line 1
             this.bet(myActivity.findViewById(R.id.passLine1), 1);
         } else if (myActivity.findViewById(R.id.passLine2) == button) {  //pass line 1
@@ -278,7 +277,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     /**
      * updateButton
      * helper method for receiveInfo
-     *
+     * <p>
      * Takes in a bet from the state's bet array
      * and updates the appropriate button text color.
      * on the GUI
@@ -286,9 +285,9 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      * @param thisBet //the bet in the bet array
      * @param buttons //this list of buttons associated with that bet
      */
-    public void updateButton(Bet thisBet, List<Integer> buttons){
+    public void updateButton(Bet thisBet, List<Integer> buttons) {
 
-        if (buttons == null){
+        if (buttons == null) {
             return;
         }
 
@@ -302,7 +301,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             if (thisBet.getAmount() != 0) {
                 button.setTextColor(Color.parseColor("#FFA500"));
 
-            //else, no bet. revert to original color
+                //else, no bet. revert to original color
             } else {
                 button.setTextColor(Color.parseColor(colortable.get(buttonId)));
             }
@@ -313,10 +312,11 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      * updateDie
      * helper for receiveInfo
      * updates one die based on the die value in the state
+     *
      * @param dieCurrValue //current value of dice to change
-     * @param die //imageview of dice to change
+     * @param die          //imageview of dice to change
      */
-    public void updateDie(int dieCurrValue, ImageView die){
+    public void updateDie(int dieCurrValue, ImageView die) {
 
         if (dieCurrValue == 1) {
             die.setImageDrawable(myActivity.getDrawable(R.drawable.side1dice));
@@ -328,7 +328,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             die.setImageDrawable(myActivity.getDrawable(R.drawable.side4dice));
         } else if (dieCurrValue == 5) {
             die.setImageDrawable(myActivity.getDrawable(R.drawable.side5dice));
-        } else if (dieCurrValue== 6) {
+        } else if (dieCurrValue == 6) {
             die.setImageDrawable(myActivity.getDrawable(R.drawable.side6dice));
         }
     }
@@ -337,9 +337,10 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      * updateOnOff
      * helper method for receiveInfo
      * updates the onOff image appropriately based on the first roll
+     *
      * @param firstRoll
      */
-    public void updateOnOff(int firstRoll){
+    public void updateOnOff(int firstRoll) {
 
         //if it is the first roll of turn, change the on/off bar appropriately
         ImageView onOff = myActivity.findViewById(R.id.onOff);
@@ -356,7 +357,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             onOff.setImageDrawable(myActivity.getDrawable(R.drawable.nine));
         } else if (firstRoll == 10) {
             onOff.setImageDrawable(myActivity.getDrawable(R.drawable.ten));
-        } else if(firstRoll==0){
+        } else if (firstRoll == 0) {
             onOff.setImageDrawable(myActivity.getDrawable(R.drawable.off));
         }
     }
@@ -370,13 +371,15 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      * color-int-from-color-resource
      * Solution: Used ContextCompat
      */
+
     /**
      * updateReadyColor
      * helper method for receiveInfo
      * changes ready to red if player ready, black if not
+     *
      * @param isReady //whether or not human is ready according to state
      */
-    public void updateReadyColor(boolean isReady){
+    public void updateReadyColor(boolean isReady) {
 
         Button ready = myActivity.findViewById(R.id.ready);
 
@@ -395,9 +398,10 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      * updateShootColor
      * helper method for receiveInfo
      * updates shoot button to red if player's turn, black if not
+     *
      * @param isMyTurn //is it the player's turn
      */
-    public void updateShootColor(boolean isMyTurn){
+    public void updateShootColor(boolean isMyTurn) {
 
         Button shoot = myActivity.findViewById(R.id.shoot);
         //if it's your turn then the shooter button is red
@@ -417,7 +421,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      *
      * @param info the message
      */
-    //TODO make receiveInfo less bulky
     @Override
     public void receiveInfo(GameInfo info) {
 
@@ -434,13 +437,13 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             in the setAsGui method
             written by Sydney
         */
-        for (int i = 0; i < 23; i++){
+        for (int i = 0; i < 23; i++) {
 
             //get the bet at this index
             Bet thisBet = state.getBet(this.playerNum, i);
 
             //get all the the buttons (button IDs) associated with bet at index
-            List <Integer> buttons = buttontable.get(i);
+            List<Integer> buttons = buttontable.get(i);
 
             //update the color of this button's text
             updateButton(thisBet, buttons);
@@ -454,7 +457,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
         updateDie(state.getDie2CurrVal(), dice2);
 
         //update the onOff based on first roll
-        //todo: get this to stay on a single image instead of change every roll
         updateOnOff(state.getFirstRoll());
 
         //change shoot color based on roll
@@ -470,16 +472,16 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
     } //receiveInfo
 
     /**
-     *  fillButtontable
-     *  Fills hashtable buttontable mapping all spots in the bet array to their
-     *  corresponding buttons.
-     *
-     *  This hashtable needs to exist for updateButton
-     *  to work
-     *
-     *  Called in setAsGui
+     * fillButtontable
+     * Fills hashtable buttontable mapping all spots in the bet array to their
+     * corresponding buttons.
+     * <p>
+     * This hashtable needs to exist for updateButton
+     * to work
+     * <p>
+     * Called in setAsGui
      */
-    public void fillButtontable(){
+    public void fillButtontable() {
 
         List<Integer> passlist = new ArrayList<Integer>();
         passlist.add(R.id.passLine1);
@@ -590,12 +592,11 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      * called in setAsGui
      * Fills hashtable color table mapping all IDs to
      * the colors they should be originally.
-     *
+     * <p>
      * This hashtable needs to exist for updateButton
      * to work
-     *
      */
-    public void fillColortable(){
+    public void fillColortable() {
 
         colortable.put(R.id.come, "#D61818"); //red
 
@@ -648,7 +649,7 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
      * setAsGui
      * callback method--our game has been chosen/rechosen to be the GUI,
      * called from the GUI thread
-     *
+     * <p>
      * creates all listeners
      * calls helpers to fill the buttontable and the colortable hashtables
      * starts music
@@ -811,13 +812,6 @@ public class CrapsHumanPlayer extends GameHumanPlayer implements OnClickListener
             receiveInfo(state);
         }
     } //setAsGui
-
-    /**
-     * getters & setters
-     */
-    public int getAmountBet() {
-        return amountBet;
-    }
 
     /**
      * Unused methods  to satisfy implementing all of the listeners in this class

@@ -13,7 +13,7 @@ import java.util.Random;
 
 /**
  * Dumb Computer Player
- *
+ * <p>
  * Doesn't place any bets when the human is the shooter.
  * Will bet about every roll when it is the shooter, $100
  * on a random bet each time, until it runs out of money.
@@ -28,9 +28,7 @@ import java.util.Random;
  */
 public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
 
-    /*
-     * instance variables
-     */
+    //instance variables
 
     // the most recent game state, as given to us by the CounterLocalGame
     private CrapsState currentGameState = null;
@@ -84,9 +82,9 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
     }
 
     /**
-     *  placeBet
-     *  Sends a PlaceBetAction to the crapState
-     *  Will place a random bet on the board whenever called
+     * placeBet
+     * Sends a PlaceBetAction to the crapState
+     * Will place a random bet on the board whenever called
      */
     @Override
     public void placeBet() {
@@ -98,7 +96,6 @@ public class CrapsComputerPlayer2 extends CrapsComputerPlayer1 {
             this.amountBet = 100;
         }
 
-        // bet on the pass line every time
         // make a random bet
         Random rand = new Random();
         int betNum = rand.nextInt(22) + 1;

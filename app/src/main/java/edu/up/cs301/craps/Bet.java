@@ -3,19 +3,19 @@ package edu.up.cs301.craps;
 import java.io.Serializable;
 
 /**
- * @author Wes H.       Last Revision: 4/22/2024
- * @author Troy C.      Last Revision: TBD
- * @author Rowena A.    Last Revision: TBD
- * @author Sydney D.    Last Revision: TBD
- * @version 4/22/2024
+ * Bet Class
  * <p>
- * Important notes for this version:
- * Completed:
- * Instance variables, public static final variables, constructors (including deep copy),
- * getters, setters, toString, checkPair, checkSum, checkFieldBet, checkCrapsBet, checkComeBetWon,
- * checkComeBetVal
- * Incomplete:
- * checkThisBetWon method (includes most helper methods)
+ * The Bet Class contains information about a singular bet
+ * that a player has made in the game of craps. The methods
+ * in this class are used to help the CrapsState class know
+ * if a player has won a bet and how much to pay the player
+ * that has that bet.
+ *
+ * @author Wes H.       Last Revision: April 2024
+ * @author Troy C.      Last Revision: April 2024
+ * @author Rowena A.    Last Revision: April 2024
+ * @author Sydney D.    Last Revision: April 2024
+ * @version April 2024
  */
 
 public class Bet implements Serializable {
@@ -45,12 +45,12 @@ public class Bet implements Serializable {
             /* Dont Pass Bet: */ 1.0,
             /* Come Bet: */      1.0,
             /* Field Bet: */     1.0,
-            /* 4: */             9.0/5.0,
-            /* 5: */             7.0/5.0,
-            /* 6: */             7.0/6.0,
-            /* 8: */             7.0/6.0,
-            /* 9: */             7.0/5.0,
-            /* 10: */            9.0/5.0,
+            /* 4: */             9.0 / 5.0,
+            /* 5: */             7.0 / 5.0,
+            /* 6: */             7.0 / 6.0,
+            /* 8: */             7.0 / 6.0,
+            /* 9: */             7.0 / 5.0,
+            /* 10: */            9.0 / 5.0,
             /* C: */             15.0,
             /* E: */             15.0,
             /* 7 (4 to 1): */    4.0,
@@ -83,20 +83,22 @@ public class Bet implements Serializable {
         this.oneTimeOnly = (this.ID >= 11);
     }
 
-    //simple getter methods
+    /**
+     * getAmount
+     * this method is just a simple getter method that
+     * returns this Bet's amount
+     *
+     * @return int of the amount that this bet has been bet on
+     */
     public int getAmount() {
         return this.amount;
     }
 
-    public int getID() {
-        return this.ID;
-    }
-
-    public boolean isOneTimeBet() {
-        return oneTimeOnly;
-    }
-
-    //set bet amount
+    /**
+     * setBetAmount
+     * <p>
+     * This method sets the bet amount
+     */
     public void setBetAmount(int newAmount) {
         this.amount = newAmount;
     }
@@ -117,7 +119,7 @@ public class Bet implements Serializable {
             if (this.name.equals("FIELD") && (diceTotal == 2 || diceTotal == 12)) { // checks double pay out on field bets
                 return (int) this.payout * this.amount * 2;
             }
-            return (int)(this.payout * this.amount)+this.amount;
+            return (int) (this.payout * this.amount) + this.amount;
         } else { //takes your money if you lose haha
             return 0;
         }
@@ -148,7 +150,7 @@ public class Bet implements Serializable {
                 }
                 return false;
             case "DON'T PASS":
-                if (firstRoll == 2 || firstRoll == 3 || (firstRoll!= 7 && diceTotal == 7)) {
+                if (firstRoll == 2 || firstRoll == 3 || (firstRoll != 7 && diceTotal == 7)) {
                     return true;
                 }
                 return false;
@@ -233,8 +235,9 @@ public class Bet implements Serializable {
 
     /**
      * checkPairOfN
-     *
+     * <p>
      * checks if the dice are pairs of given int n
+     *
      * @param die1 int dice 1
      * @param die2 int dice 2
      * @param n    int desired pair of dice
@@ -249,8 +252,9 @@ public class Bet implements Serializable {
 
     /**
      * checkDiceSum
-     *
+     * <p>
      * checks if the sum of the die are equal to the winning value
+     *
      * @param dieSum
      * @param winningVal
      * @return
@@ -261,6 +265,7 @@ public class Bet implements Serializable {
 
     /**
      * toString method
+     *
      * @return string value of all information about this bet
      */
     @Override
