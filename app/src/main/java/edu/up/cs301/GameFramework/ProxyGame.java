@@ -147,6 +147,9 @@ public class ProxyGame implements Game {
             Logger.debugLog(TAG, "Player "+player.getClass()+" already bound");
             return;
         }
+        else{
+
+        }
 
         // if the player array somehow something other than
         // a single element, ignore
